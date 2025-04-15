@@ -1,7 +1,7 @@
 /**
  * Represents an individual card to be passed into the CardList class.
  * @author Luke Soda
- * @version 1.0
+ * @version 1.01
  */
 public class Card {
     protected String cardRank; // The rank of the card
@@ -17,6 +17,15 @@ public class Card {
     public Card(String cardRank, String cardSuit) {
         this.cardRank = cardRank;
         this.cardSuit = cardSuit;
+    }
+
+    /**
+     * Copy constructor for Card class
+     * @param duplicate Card to be duplicated (For returning references)
+     */
+    public Card(Card duplicate) {
+        this.cardRank = duplicate.cardRank;
+        this.cardSuit = duplicate.cardSuit;
     }
 
     /**
