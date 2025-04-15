@@ -1,10 +1,11 @@
 public class Demo {
     public static void main(String[] args) {
-        CardList deck = new CardList(false); // Create a full 52 card deck
-        System.out.println(deck); // Print the deck to verify functionality
-        deck.remove(new Card("2", "S")); // Remove the 2 of spades
-        System.out.println(deck);
-        deck.add(new Card("2", "S")); // Add back the 2 of spades
-        System.out.println(deck);
+        Player[] players = new Player[3];
+        players[0] = new Player("p1", 30, false);
+        players[1] = new Player("p2", 20, false);
+        players[2] = new Player("p3", 10, true);
+        CardGame game = new CardGame(players);
+        game.deal(3);
+        System.out.println(game);
     }
 }
