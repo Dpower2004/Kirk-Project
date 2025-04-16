@@ -6,6 +6,8 @@
 public class Card {
     protected String cardRank; // The rank of the card
     protected String cardSuit; // The suit of the card
+    protected boolean hidden = true; // Whether or not card is flipped up or down.
+                                     // Card will be face down be default
 
     /**
      * Constructor for Card object
@@ -58,6 +60,14 @@ public class Card {
      */
     public String getSuit() {
         return cardSuit;
+    }
+
+    /**
+     * Determines whether or not the card is hidden or visible (flipped or not)
+     * @param hidden Boolean deciding if hidden or not
+     */
+    public void setFlip(boolean hidden) {
+        this.hidden = hidden;
     }
 
     /**
