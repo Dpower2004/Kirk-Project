@@ -85,6 +85,16 @@ public class Holdem extends CardGame {
     }
 
     /**
+     * Initiates the flop. First 3 community cards
+     */
+    public void flop() {
+        for (int i = 0 ; i < 3 ; i++) {
+            communityCards.add(super.deck[0]);
+            super.deck.remove(0);
+        }
+    }
+
+    /**
      * toString for Holdem class
      */
     @Override

@@ -10,9 +10,7 @@ public class Demo {
         System.out.println(game);
         game.bettingRound();
         System.out.println(game);
-        game.bettingRound();
-        System.out.println(game);
-        game.bettingRound();
+        game.flop();
         System.out.println(game);
     }
 }
