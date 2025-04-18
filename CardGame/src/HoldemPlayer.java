@@ -6,10 +6,9 @@ import java.util.Scanner;
  * @version 1.0
  */
 public class HoldemPlayer extends Player {
-    protected Blind blind; // Which blind is the player, BIG, SMALL, NONE
     protected int inChips; // Chips up for a given round
-    protected int toBet; // Holds number to bet that is stored in the scanner. User input
-    protected Scanner scanner;
+    protected int raise; // Holds number to bet that is stored in the scanner. User input
+    protected Scanner playerInput;
     protected String currentAction; // Current action the player is taking for a current round
                                     // of betting (C/B/F)
     protected boolean isActive; // Is the player still playing? (Have they folded)
@@ -20,13 +19,12 @@ public class HoldemPlayer extends Player {
      * @param isMain Is the player the user?
      * @param blind Blind of the player (BIG, SMALL, NONE)
      */
-    public HoldemPlayer(int chips, boolean isMain, Blind blind) {
+    public HoldemPlayer(int chips, boolean isMain) {
         super(chips, isMain); // Super constructor for abstract player class
         isActive = true; // Player is set to active by default (they have not folded)
-        this.blind = blind; // Set the blind
         if (isMain) { // Only create a new scanner class if the player is the user (Not needed
                       // for CPUs)
-            scanner = new Scanner(System.in);
+            playerInput = new Scanner(System.in);
         }
     }
 
@@ -35,9 +33,9 @@ public class HoldemPlayer extends Player {
      * Used on calls, checks, bets, raises
      * @param bet
      */
-    public void addInChips(int bet) {
-        chips -= bet; // Subtract the bet from the total chips owned
-        inChips += bet; // Add the bet to the chips in play for the round
+    public void setInChips(int inChips) {
+        //totalChips -= bet; // Subtract the bet from the total chips owned
+        this.inChips = inChips; // Add the bet to the chips in play for the round
     }
 
     /**
@@ -51,19 +49,21 @@ public class HoldemPlayer extends Player {
      * Handles CPUs choosing their action for a round
      * Handles user input for main player
      */
-    @Override 
-    public void chooseAction() {
-        toBet = 0; // Reset value set by scanner for betting
+    public void chooseAction(int highBet) {
+        currentAction = "";
+        raise = 0; // Reset value set by scanner for betting
         if (isMain) { // If player is user, prompt in console
-            System.out.print("Check/Call, Bet/Raise, Fold? (C/B/F): ");
-            currentAction = scanner.nextLine(); // Current action = user input string
-            if (currentAction.equals("B")) { // If user wants to bet...
+            System.out.print("Check/Call, Bet/Raise, Fold? (C/R/F): ");
+            currentAction = playerInput.nextLine(); // Current action = user input string
+            if (currentAction.equals("R")) { // If user wants to bet...
                 System.out.print("Enter bet: "); // Prompt a bet amount
-                toBet = scanner.nextInt(); // Set the toBet to the user input int
+                raise = playerInput.nextInt(); // Set the toBet to the user input int
+                playerInput.nextLine(); // Consume extra \n from int
             }
         }
         else {
-            currentAction = "C"; // CPUs always call for now
+            currentAction = "R"; // CPUs always call for now
+            raise = 10;
         }
     }
 
@@ -73,6 +73,6 @@ public class HoldemPlayer extends Player {
      */
     @Override
     public String toString() {
-        return  super.toString() + "\nBlind: " + blind + "\n" + "inChips: " + inChips + "\n\n";
+        return super.toString() + "\nChips in: " + inChips + "\nAction Taken: " + currentAction + "\n\n";
     }
 }
