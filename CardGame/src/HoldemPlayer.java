@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.Random;
 
 /**
  * Class representing the game texas holdem. It inherits the abstract game class
@@ -7,11 +8,12 @@ import java.util.Scanner;
  */
 public class HoldemPlayer extends Player {
     protected int inChips; // Chips up for a given round
-    protected int raise; // Holds number to bet that is stored in the scanner. User input
-    protected Scanner playerInput;
     protected String currentAction; // Current action the player is taking for a current round
                                     // of betting (C/B/F)
     protected boolean isActive; // Is the player still playing? (Have they folded)
+
+    private Scanner input;
+    private int maxChips = super.totalChips;
 
     /**
      * HoldemPlayer constructor, pass in chips, is the player main, and type of blind
@@ -24,7 +26,7 @@ public class HoldemPlayer extends Player {
         isActive = true; // Player is set to active by default (they have not folded)
         if (isMain) { // Only create a new scanner class if the player is the user (Not needed
                       // for CPUs)
-            playerInput = new Scanner(System.in);
+            input = new Scanner(System.in);
         }
     }
 
@@ -34,7 +36,7 @@ public class HoldemPlayer extends Player {
      * @param bet
      */
     public void setInChips(int inChips) {
-        //totalChips -= bet; // Subtract the bet from the total chips owned
+        totalChips = maxChips - inChips;
         this.inChips = inChips; // Add the bet to the chips in play for the round
     }
 
@@ -49,32 +51,37 @@ public class HoldemPlayer extends Player {
      * Handles CPUs choosing their action for a round
      * Handles user input for main player
      */
-    public void chooseAction(int highBet, boolean betMade) {
-        currentAction = "";
-        raise = 0; // Reset value set by scanner for betting
+    public String chooseAction(int highBet, boolean betMade) {
         if (isMain) { // If player is user, prompt in console
-            if (!betMade) {
-                System.out.print("Check, Bet, Fold? (C/B/F): ");
+            if (!betMade && inChips == 0) {
+                currentAction = InputValidator.validateCustomPrompt(input, "C, B, F", "Check, Bet, Fold? (C/B/F): ");
             }
             else {
-                System.out.print("Call, Raise, Fold? (C/R/F): ");
-            }
-            currentAction = playerInput.nextLine(); // Current action = user input string
-            if (currentAction.equals("R") || currentAction.equals("B")) { // If user wants to bet...
-                System.out.print("Bet/Raise: "); // Prompt a bet amount
-                raise = playerInput.nextInt(); // Set the toBet to the user input int
-                playerInput.nextLine(); // Consume extra \n from int
+                currentAction = InputValidator.validateCustomPrompt(input, "C, R, F", "Check, Raise, Fold? (C/R/F): ");
             }
         }
         else {
-            if (!betMade) {
-                currentAction = "B";
+            currentAction = "C";
+
+            /*if (inChips != 0 || betMade == true) {
+                currentAction = "R";
             }
             else {
-                currentAction = "C"; // CPUs always call for now
-            }
-            raise = 10;
+                currentAction = "B";
+            }*/
         }
+        return currentAction;
+    }
+
+    public int promptAmount() {
+        int bet = InputValidator.validateBet(input, "Amount: ");
+        return bet;
+    }
+
+    public int cpuBet() {
+        Random rand = new Random();
+        int bet = rand.nextInt(20 - 3 + 1) + 3;
+        return bet;
     }
 
     /**

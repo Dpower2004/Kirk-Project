@@ -9,35 +9,35 @@ import java.util.Scanner;
 
 public class Holdem extends CardGame {
     protected HoldemState gameState; // Game state
-    protected int buyIn; // Minimum number of chips to play
-    protected int highBet; // Holds current highest bet for a current betting round. Is also used as passed in
-                           // big blind for first round of bettings
-    protected CardList communityCards = new CardList(true); // 5 community cards that make up the river
+
+    protected int highBet; // Current highest bet for a round. Contains big blind at start
     protected int pot; // Total pot that is taken at the end of each game
+
+    protected CardList communityCards = new CardList(true); // 5 community cards that make up the river
     protected ArrayList<HoldemPlayer> activePlayers = new ArrayList<>(); // List of players who haven't folded
+
     private Scanner advanceIn = new Scanner(System.in);
     private boolean betMade; // Keeps track of if a bet has been made to change raise / bet prompt
 
     /**
      * Constructor for a round of texas holdem
      * @param playerList // List of players in the game. Will always be 4 including the dealer for our purposes
-     * @param buyIn // Minimum number of chips a player needs to have in order to play
      * @param highBet // Stores initial big blind for the first round of betting
      */
-    public Holdem(Player[] playerList, int buyIn, int highBet) {
+    public Holdem(Player[] playerList, int highBet) {
         super(playerList); // Calls super class, abstract game, passing in playerList for creation
-        this.buyIn = buyIn;
         this.highBet = highBet;
     }
 
     /**
      * Function called to setup a round of holdem
+     * Adds all players to the list of active players (People who haven't folded)
+     * Sets up initial bet values for the blinds
      */
     @Override
     public void setup() {
-        for (int i = 0; i < playerList.length ; i++) { // Cycle through all players to determine who needs to put
-                                                       // money in first
-            HoldemPlayer currentPlayer = (HoldemPlayer) playerList[i]; // Uses type casting to allow HoldemPlayer method calls
+        for (int i = 0; i < playerList.length ; i++) { // Cycle through all players to set up blinds
+            HoldemPlayer currentPlayer = (HoldemPlayer) playerList[i]; // Type casting for HoldemPlayer method calls
             activePlayers.add(currentPlayer); // Add all players to active players arrayList
             if (i == 1) { // Player at index 1 will ALWAYS be little blind
                 currentPlayer.setInChips(highBet / 2);
@@ -47,57 +47,90 @@ public class Holdem extends CardGame {
             }
         }
         super.deal(2); // Deal 2 cards to all players
-        consoleOut();
+        consoleOut(); // Update the console on whats going on
     }
 
     /**
      * Initiates a single betting round for all players
      */
     public void bettingRound() {
-        int pTurn = 3; // Keeps track of player turn, start at 2, always player to the left of the big blind
-        for (int i = 0 ; i < playerList.length ; i++, pTurn++) { // Iterate a number of time = how many players
-                                                                           // Also keep track of number of bets
-            if (pTurn > playerList.length - 1) { // If turn goes above player count, cycle back to player 0
+        int pTurn = 3; // Keeps track of player turn. The player to the left of the big blind will always go first (3)
+        // Iterate through through the loop for a number of turns. Also update pTurn int for each iteration
+        for (int remainingTurns = playerList.length ; remainingTurns > 0 ; remainingTurns--, pTurn++) {
+            // If turn goes above player count, cycle back to player 0
+            if (pTurn > playerList.length - 1) {
                 pTurn = 0;
             }
-            HoldemPlayer currentPlayer = (HoldemPlayer) playerList[pTurn]; // Uses type casting to allow HoldemPlayer method calls
-            currentPlayer.chooseAction(highBet, betMade); // Prompts each player for their choise to check, raise, or fold
-            switch (currentPlayer.currentAction) {
-                case "C": // If check
-                    currentPlayer.setInChips(highBet); // Match the current bet
+            /* pTurn and remainingTurns must be held seperate. This allows for all players to respond to a bet or raise if
+               they have already gone once. */
+            HoldemPlayer currentPlayer = (HoldemPlayer) playerList[pTurn]; // Type casting for HoldemPlayer method calls
+            String choice = currentPlayer.chooseAction(highBet, betMade); // Prompt player for choice in betting round
+            switch (choice) {
+                case "C": // If check / call
+                    currentPlayer.setInChips(highBet); // Match the current high bet
                     break;
                 case "B": // If bet
-                    betMade = true;
+                    int bet = getBet(currentPlayer);
+                    currentPlayer.setInChips(bet); // Set chips in to players bet input
+                    highBet = bet; // Update highBet to be the current bet
+                    resetPlayerResponses(currentPlayer, pTurn); // Resets the responses of all other players
+                    betMade = true; // Tell the game that a bet was made 
+                    remainingTurns = 4; // RESET the number of turns remaining, other players must respond
+                    break;
                 case "R": // If raise
-                    currentPlayer.setInChips(highBet + currentPlayer.raise); // Add bet onto player's chips
-                    highBet = currentPlayer.inChips; // Update high bet to be the highest player's chip value
-                    int rTurn = pTurn + 1; // reset turn needs to start one more than current turn
-                    // This for loop is to reset the currentAction of all OTHER players on a raise. They need to react to raise
-                    for (int j = 0 ; j < playerList.length - 1 ; j++, rTurn++) { // Iterate number of players - 1. Don't erase current
-                        if (rTurn > playerList.length - 1) { // If reset turn goes above player count, cycle back to player 0
-                            rTurn = 0;
-                        }
-                        HoldemPlayer resetPlayer = (HoldemPlayer) playerList[rTurn]; // Use casting to select current rTurn player
-                        resetPlayer.currentAction = ""; // Reset current rTurn player
-                    }
-                    i = 0; // RESET the number iterations, allows for all players to respond to the new bet
+                    int raise = getBet(currentPlayer); // Get the raise to be put up
+                    currentPlayer.setInChips(highBet + raise); // Set chips in to highBet + the raise
+                    highBet += raise; // Add the raise onto the current highBet
+                    resetPlayerResponses(currentPlayer, pTurn); // Resets the responses of other players
+                    remainingTurns = 4; // // RESET the number of turns remaining, other players must respond
                     break;
                 case "F": // If fold
                     currentPlayer.fold(); // isActive = false
                     activePlayers.remove(currentPlayer); // Remove player from the active list
                     break;
             }
-            consoleOut();
+            consoleOut(); // Update the console to show player action
         }
-        // Reset for next round
-        for (int i = 0 ; i < playerList.length ; i++) { // For all the players...
-            HoldemPlayer hp = (HoldemPlayer) playerList[i];
+        // Reset players for next round
+        for (Player p : playerList) { // For all the players...
+            HoldemPlayer hp = (HoldemPlayer) p; // Type casting for HoldemPlayer method calls
             pot += hp.inChips; // Add their chips into the pot
-            highBet = 0; // Reset highBet
-            betMade = false; // Reset betMade;
             hp.inChips = 0; // Reset what they have up to 0
             hp.currentAction = ""; // Erase current action
         }
+        // Reset bets for next round
+        highBet = 0; // Reset highBet
+        betMade = false; // Reset betMade;
+    }
+
+    /**
+     * Resets responses for all players EXCEPT the current player
+     * Used to allow all players to respond to change in the bet / raise
+     * @param currentPlayer Current player in loop
+     * @param pTurn Index of current player in playerList
+     */
+    public void resetPlayerResponses(HoldemPlayer currentPlayer, int pTurn) {
+        ; // Update high bet to be the highest player's chip value
+        int rTurn = pTurn + 1; // reset turn needs to start one more than current turn
+        // This for loop is to reset the currentAction of all OTHER players on a raise. They need to react to raise
+        for (int j = 0 ; j < playerList.length - 1 ; j++, rTurn++) { // Iterate number of players - 1. Don't erase current
+            if (rTurn > playerList.length - 1) { // If reset turn goes above player count, cycle back to player 0
+                rTurn = 0;
+            }
+            HoldemPlayer resetPlayer = (HoldemPlayer) playerList[rTurn]; // Use casting to select current rTurn player
+            resetPlayer.currentAction = ""; // Reset current rTurn player
+        }
+    }
+
+    public int getBet(HoldemPlayer currentPlayer) {
+        int bet;
+        if (currentPlayer.isMain) {
+            bet = currentPlayer.promptAmount(); // Get the bet to be put up
+        }
+        else {
+            bet = currentPlayer.cpuBet();
+        }
+        return bet;
     }
 
     /**
@@ -116,6 +149,7 @@ public class Holdem extends CardGame {
         for (int i = 0 ; i < 3 ; i++) { // Deals 3 cards from the deck to the community cards
             addCommunityCard();
         }
+        consoleOut();
     }
 
     /**
@@ -123,6 +157,7 @@ public class Holdem extends CardGame {
      */
     public void turn() {
         addCommunityCard();
+        consoleOut();
     }
 
     /**
@@ -130,6 +165,7 @@ public class Holdem extends CardGame {
      */
     public void river() {
         addCommunityCard();
+        consoleOut();
     }
 
     /**
@@ -152,28 +188,24 @@ public class Holdem extends CardGame {
         gameState = HoldemState.RIVER;
         river();
         gameState = HoldemState.FINAL_BET;
+        bettingRound();
     }
 
     public void consoleOut() {
         String statusString = "Round: " + gameState + "\n";
-        switch (gameState) {
-            case HoldemState.SETUP:
-            case HoldemState.FIRST_BET:
-                for (Player p : playerList) {
-                    HoldemPlayer hp = (HoldemPlayer) p;
-                    statusString += hp.toString();
-                }
-                break;
-            case HoldemState.FLOP:
-            case HoldemState.SECOND_BET:
-                for (Player p : playerList) {
-                    HoldemPlayer hp = (HoldemPlayer) p;
-                    statusString += hp.toString();
-                }
-                statusString += "\nFlop: " + communityCards;
-        }
+        statusString += playerStrings();
+        statusString += "\nPot: " + pot + "\nCommunity Cards: " + communityCards;
         System.out.println(statusString);
         consoleAdvance(advanceIn);
+    }
+
+    public String playerStrings() {
+        String statusString = "";
+        for (Player p : playerList) {
+            HoldemPlayer hp = (HoldemPlayer) p;
+            statusString += hp.toString();
+        }
+        return statusString;
     }
 
     public void consoleAdvance(Scanner advanceIn) {

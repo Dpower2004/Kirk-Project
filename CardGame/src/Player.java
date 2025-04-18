@@ -31,6 +31,6 @@ public abstract class Player {
      */
     @Override
     public String toString() {
-        return ("\nPlayer " + playerID);
+        return "\nPlayer " + playerID + "\nBank: " + totalChips;
     }
 }

@@ -5,7 +5,7 @@ public class Demo {
         players[1] = new HoldemPlayer(50, false);
         players[2] = new HoldemPlayer(150, true);
         players[3] = new HoldemPlayer(60, false);
-        Holdem game = new Holdem(players, 50, 2);
+        Holdem game = new Holdem(players, 2);
         game.startGame();
     }
 }
