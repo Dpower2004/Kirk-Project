@@ -89,8 +89,8 @@ public class Holdem extends CardGame {
      */
     public void flop() {
         for (int i = 0 ; i < 3 ; i++) {
-            communityCards.add(super.deck[0]);
-            super.deck.remove(0);
+            communityCards.add(super.deck.getCard[0]);
+            super.deck.remove(null);;
         }
     }
 
