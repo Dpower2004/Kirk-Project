@@ -1,6 +1,6 @@
 /**
  * Represents an individual card to be passed into the CardList class.
- * @author Luke Soda
+ * @author Luke Soda test
  * @version 1.01
  */
 public class Card {
