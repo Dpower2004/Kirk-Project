@@ -16,6 +16,7 @@ public class Holdem extends CardGame {
     protected int pot; // Total pot that is taken at the end of each game
     protected ArrayList<HoldemPlayer> activePlayers = new ArrayList<>(); // List of players who haven't folded
     private Scanner advanceIn = new Scanner(System.in);
+    private boolean betMade; // Keeps track of if a bet has been made to change raise / bet prompt
 
     /**
      * Constructor for a round of texas holdem
@@ -55,16 +56,19 @@ public class Holdem extends CardGame {
     public void bettingRound() {
         int pTurn = 3; // Keeps track of player turn, start at 2, always player to the left of the big blind
         for (int i = 0 ; i < playerList.length ; i++, pTurn++) { // Iterate a number of time = how many players
+                                                                           // Also keep track of number of bets
             if (pTurn > playerList.length - 1) { // If turn goes above player count, cycle back to player 0
                 pTurn = 0;
             }
             HoldemPlayer currentPlayer = (HoldemPlayer) playerList[pTurn]; // Uses type casting to allow HoldemPlayer method calls
-            currentPlayer.chooseAction(highBet); // Prompts each player for their choise to check, raise, or fold
+            currentPlayer.chooseAction(highBet, betMade); // Prompts each player for their choise to check, raise, or fold
             switch (currentPlayer.currentAction) {
                 case "C": // If check
                     currentPlayer.setInChips(highBet); // Match the current bet
                     break;
-                case "R": // If bet
+                case "B": // If bet
+                    betMade = true;
+                case "R": // If raise
                     currentPlayer.setInChips(highBet + currentPlayer.raise); // Add bet onto player's chips
                     highBet = currentPlayer.inChips; // Update high bet to be the highest player's chip value
                     int rTurn = pTurn + 1; // reset turn needs to start one more than current turn
@@ -85,10 +89,14 @@ public class Holdem extends CardGame {
             }
             consoleOut();
         }
+        // Reset for next round
         for (int i = 0 ; i < playerList.length ; i++) { // For all the players...
             HoldemPlayer hp = (HoldemPlayer) playerList[i];
             pot += hp.inChips; // Add their chips into the pot
+            highBet = 0; // Reset highBet
+            betMade = false; // Reset betMade;
             hp.inChips = 0; // Reset what they have up to 0
+            hp.currentAction = ""; // Erase current action
         }
     }
 
@@ -133,25 +141,38 @@ public class Holdem extends CardGame {
         setup();
         gameState = HoldemState.FIRST_BET;
         bettingRound();
+        gameState = HoldemState.FLOP;
+        flop();
+        gameState = HoldemState.SECOND_BET;
+        bettingRound();
+        gameState = HoldemState.TURN;
+        turn();
+        gameState = HoldemState.THIRD_BET;
+        bettingRound();
+        gameState = HoldemState.RIVER;
+        river();
+        gameState = HoldemState.FINAL_BET;
     }
 
     public void consoleOut() {
         String statusString = "Round: " + gameState + "\n";
         switch (gameState) {
             case HoldemState.SETUP:
-                for (Player p : playerList) {
-                    HoldemPlayer hp = (HoldemPlayer) p;
-                    statusString += hp.toString();
-                }
-                break;
             case HoldemState.FIRST_BET:
                 for (Player p : playerList) {
                     HoldemPlayer hp = (HoldemPlayer) p;
                     statusString += hp.toString();
                 }
                 break;
+            case HoldemState.FLOP:
+            case HoldemState.SECOND_BET:
+                for (Player p : playerList) {
+                    HoldemPlayer hp = (HoldemPlayer) p;
+                    statusString += hp.toString();
+                }
+                statusString += "\nFlop: " + communityCards;
         }
-        System.out.print(statusString);
+        System.out.println(statusString);
         consoleAdvance(advanceIn);
     }
 

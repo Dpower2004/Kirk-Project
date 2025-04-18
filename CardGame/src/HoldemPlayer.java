@@ -49,20 +49,30 @@ public class HoldemPlayer extends Player {
      * Handles CPUs choosing their action for a round
      * Handles user input for main player
      */
-    public void chooseAction(int highBet) {
+    public void chooseAction(int highBet, boolean betMade) {
         currentAction = "";
         raise = 0; // Reset value set by scanner for betting
         if (isMain) { // If player is user, prompt in console
-            System.out.print("Check/Call, Bet/Raise, Fold? (C/R/F): ");
+            if (!betMade) {
+                System.out.print("Check, Bet, Fold? (C/B/F): ");
+            }
+            else {
+                System.out.print("Call, Raise, Fold? (C/R/F): ");
+            }
             currentAction = playerInput.nextLine(); // Current action = user input string
-            if (currentAction.equals("R")) { // If user wants to bet...
-                System.out.print("Enter bet: "); // Prompt a bet amount
+            if (currentAction.equals("R") || currentAction.equals("B")) { // If user wants to bet...
+                System.out.print("Bet/Raise: "); // Prompt a bet amount
                 raise = playerInput.nextInt(); // Set the toBet to the user input int
                 playerInput.nextLine(); // Consume extra \n from int
             }
         }
         else {
-            currentAction = "R"; // CPUs always call for now
+            if (!betMade) {
+                currentAction = "B";
+            }
+            else {
+                currentAction = "C"; // CPUs always call for now
+            }
             raise = 10;
         }
     }
@@ -73,6 +83,11 @@ public class HoldemPlayer extends Player {
      */
     @Override
     public String toString() {
-        return super.toString() + "\nChips in: " + inChips + "\nAction Taken: " + currentAction + "\n\n";
+        String retString = super.toString() + "\nChips in: " + inChips + "\nAction Taken: " + currentAction;
+        if (isMain) {
+            retString += ("\nHand: " + cards);
+        }
+        retString += "\n";
+        return retString;
     }
 }
