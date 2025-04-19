@@ -190,6 +190,8 @@ public class Holdem extends CardGame {
         river();
         gameState = HoldemState.FINAL_BET;
         bettingRound();
+        HoldemResults sort = new HoldemResults(playerList, communityCards);
+        sort.sortAll();
     }
 
     public void consoleOut() {

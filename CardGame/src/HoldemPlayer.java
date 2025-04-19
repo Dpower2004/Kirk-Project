@@ -61,13 +61,13 @@ public class HoldemPlayer extends Player {
             }
         }
         else {
-            //currentAction = "C";
-            if (handChips.chipAmount != 0 || betMade == true) {
+            currentAction = "C";
+            /*if (handChips.chipAmount != 0 || betMade == true) {
                 currentAction = "R";
             }
             else {
                 currentAction = "B";
-            }
+            }*/
         }
         return currentAction;
     }
