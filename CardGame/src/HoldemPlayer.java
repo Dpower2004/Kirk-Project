@@ -62,7 +62,6 @@ public class HoldemPlayer extends Player {
         }
         else {
             currentAction = "C";
-
             /*if (inChips != 0 || betMade == true) {
                 currentAction = "R";
             }
