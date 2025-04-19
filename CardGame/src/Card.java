@@ -7,7 +7,7 @@ public class Card {
     protected String cardRank; // The rank of the card
     protected String cardSuit; // The suit of the card
     protected boolean hidden = true; // Whether or not card is flipped up or down.
-                                     // Card will be face down be default
+    protected int value;
 
     /**
      * Constructor for Card object
@@ -19,6 +19,7 @@ public class Card {
     public Card(String cardRank, String cardSuit) {
         this.cardRank = cardRank;
         this.cardSuit = cardSuit;
+        assignValue();
     }
 
     /**
@@ -28,6 +29,35 @@ public class Card {
     public Card(Card duplicate) {
         this.cardRank = duplicate.cardRank;
         this.cardSuit = duplicate.cardSuit;
+        assignValue();
+    }
+
+    public void assignValue() {
+        switch (cardRank) {
+            case "2":
+            case "3":
+            case "4":
+            case "5":
+            case "6":
+            case "7":
+            case "8":
+            case "9":
+            case "10":
+                value = Integer.parseInt(cardRank);
+                break;
+            case "J":
+                value = 11;
+                break;
+            case "Q":
+                value = 12;
+                break;
+            case "K":
+                value = 13;
+                break;
+            case "A":
+                value = 14;
+                break;
+        }
     }
 
     /**

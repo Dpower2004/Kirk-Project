@@ -40,10 +40,10 @@ public class Holdem extends CardGame {
             HoldemPlayer currentPlayer = (HoldemPlayer) playerList[i]; // Type casting for HoldemPlayer method calls
             activePlayers.add(currentPlayer); // Add all players to active players arrayList
             if (i == 1) { // Player at index 1 will ALWAYS be little blind
-                currentPlayer.setInChips(highBet / 2);
+                currentPlayer.setHandChips(highBet / 2);
             } 
             else if (i == 2) { // Player at index 2 will ALWAYS be big blind
-                currentPlayer.setInChips(highBet);
+                currentPlayer.setHandChips(highBet);
             }
         }
         super.deal(2); // Deal 2 cards to all players
@@ -67,11 +67,11 @@ public class Holdem extends CardGame {
             String choice = currentPlayer.chooseAction(highBet, betMade); // Prompt player for choice in betting round
             switch (choice) {
                 case "C": // If check / call
-                    currentPlayer.setInChips(highBet); // Match the current high bet
+                    currentPlayer.handChips.setChips(highBet); // Match the current high bet
                     break;
                 case "B": // If bet
                     int bet = getBet(currentPlayer);
-                    currentPlayer.setInChips(bet); // Set chips in to players bet input
+                    currentPlayer.setHandChips(bet); // Set chips in to players bet input
                     highBet = bet; // Update highBet to be the current bet
                     resetPlayerResponses(currentPlayer, pTurn); // Resets the responses of all other players
                     betMade = true; // Tell the game that a bet was made 
@@ -79,7 +79,7 @@ public class Holdem extends CardGame {
                     break;
                 case "R": // If raise
                     int raise = getBet(currentPlayer); // Get the raise to be put up
-                    currentPlayer.setInChips(highBet + raise); // Set chips in to highBet + the raise
+                    currentPlayer.setHandChips(highBet + raise); // Set chips in to highBet + the raise
                     highBet += raise; // Add the raise onto the current highBet
                     resetPlayerResponses(currentPlayer, pTurn); // Resets the responses of other players
                     remainingTurns = 4; // // RESET the number of turns remaining, other players must respond
@@ -94,8 +94,9 @@ public class Holdem extends CardGame {
         // Reset players for next round
         for (Player p : playerList) { // For all the players...
             HoldemPlayer hp = (HoldemPlayer) p; // Type casting for HoldemPlayer method calls
-            pot += hp.inChips; // Add their chips into the pot
-            hp.inChips = 0; // Reset what they have up to 0
+            pot += hp.handChips.chipAmount; // Add their chips into the pot
+            hp.handChips.setChips(0); // Reset what they have up to 0
+            hp.maxRoundChips = hp.bank.chipAmount;
             hp.currentAction = ""; // Erase current action
         }
         // Reset bets for next round
