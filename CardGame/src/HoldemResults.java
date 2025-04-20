@@ -47,22 +47,55 @@ public class HoldemResults {
         boolean fourKind = false;
         boolean fullHouse = false;
         Map<String, Integer> suitCount = new HashMap<>(); // Maps and integer to a string (the suit)
-        Map<String, Integer> rankCount = new HashMap<>();
+        Map<Integer, Integer> rankCount = new HashMap<>();
         for (Card card : combinedList) { // Iterate through cards
             String suit = card.cardSuit; // suit = the current card's suit
-            String rank = card.cardRank;
+            int value = card.value;
             /* If the given suit is already in the map, get its count. If it is not, set it to 0 by
                default. Regardless, we add 1 to the count and move on */
             suitCount.put(suit, suitCount.getOrDefault(suit, 0) + 1);
-            rankCount.put(rank, rankCount.getOrDefault(rank, 0) + 1);
+            rankCount.put(value, rankCount.getOrDefault(value, 0) + 1);
         }
-        for (Map.Entry<String, Integer> entry : suitCount.entrySet()) {
-            if (entry.getValue() > 4) {
+
+        // FIND FLUSH //
+        for (Map.Entry<String, Integer> entry : suitCount.entrySet()) { // Go through all of the flush values from the map
+            if (entry.getValue() > 4) { // If any are greater than 4 you have a flush
                 flush = true;
             }
         }
-        System.out.println("");
-        for (Map.Entry<String, Integer> entry : rankCount.entrySet()) {
+
+        // FIND STRAIGHT //
+        // Remove duplicate values
+        ArrayList<Card> flushList = new ArrayList<Card>(combinedList);
+        for (int i = 0; i < flushList.size(); i++) {
+            int current = flushList.get(i).value;
+            for (int j = i + 1; j < flushList.size(); j++) {
+                if (current == flushList.get(j).value) {
+                    flushList.remove(j);
+                    j--; // Decrement j since list shifts left after removal
+                }
+            }
+        }
+        boolean consec = true;
+        if (flushList.size() < 5) {
+            straight = false;
+        }
+        else {
+            for (int i = 0; i < flushList.size() - 1; i++) {
+                int j = i + 1;
+                if (flushList.get(j).value - flushList.get(i).value != 1) {
+                    consec = false;
+                }
+            }
+            if (consec == true) {
+                straight = true;
+            }
+            else {
+                straight = false;
+            }
+        }
+
+        for (Map.Entry<Integer, Integer> entry : rankCount.entrySet()) {
             int count = entry.getValue();
             switch (count) {
                 case 2:
@@ -75,9 +108,12 @@ public class HoldemResults {
                     fourKind = true;
                     break;
             }
+            //System.out.println(entry.getKey() + ": " + entry.getValue());
         }
         System.out.println("pairCount: " + pairCount);
         System.out.println("threeKind: " + threeKind);
         System.out.println("fourKind: " + fourKind);
+        System.out.println("flush: " + flush);
+        System.out.println("straight: " + straight);
     }
 }

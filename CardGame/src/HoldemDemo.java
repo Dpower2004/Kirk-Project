@@ -4,11 +4,11 @@ public class HoldemDemo {
         HoldemPlayer sample = new HoldemPlayer(10000000, false);
         players[0] = sample;
         sample.cards.add(new Card("2", "S"));
-        sample.cards.add(new Card("2", "C"));
+        sample.cards.add(new Card("3", "S"));
         
         CardList communityCards = new CardList(true);
-        communityCards.add(new Card("2", "H"));
-        communityCards.add(new Card("3", "D"));
+        communityCards.add(new Card("4", "H"));
+        communityCards.add(new Card("5", "D"));
         communityCards.add(new Card("6", "S"));
         communityCards.add(new Card("7", "S"));
         communityCards.add(new Card("8", "S"));
