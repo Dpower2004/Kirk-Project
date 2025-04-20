@@ -39,13 +39,6 @@ public class HoldemResults {
     }
 
     public void getBestHand(ArrayList<Card> combinedList) {
-        int pairCount = 0;
-        boolean flush = false;
-        boolean straight = false;
-        boolean royal = false;
-        boolean threeKind = false;
-        boolean fourKind = false;
-        boolean fullHouse = false;
         Map<String, Integer> suitCount = new HashMap<>(); // Maps and integer to a string (the suit)
         Map<Integer, Integer> rankCount = new HashMap<>();
         for (Card card : combinedList) { // Iterate through cards
@@ -57,63 +50,55 @@ public class HoldemResults {
             rankCount.put(value, rankCount.getOrDefault(value, 0) + 1);
         }
 
-        // FIND FLUSH //
+        boolean straightFlush = false;
+        // Look for royal flush
+        
+    }
+
+    public boolean isFlush(Map<String, Integer> suitCount) {
+        boolean isFlush = false;
         for (Map.Entry<String, Integer> entry : suitCount.entrySet()) { // Go through all of the flush values from the map
             if (entry.getValue() > 4) { // If any are greater than 4 you have a flush
-                flush = true;
+                return true;
             }
         }
+        return isFlush;
+    }
 
-        // FIND STRAIGHT //
-        // Remove duplicate values
-        ArrayList<Card> flushList = new ArrayList<Card>(combinedList);
-        for (int i = 0; i < flushList.size(); i++) {
-            int current = flushList.get(i).value;
-            for (int j = i + 1; j < flushList.size(); j++) {
-                if (current == flushList.get(j).value) {
-                    flushList.remove(j);
+    public boolean isStraight(ArrayList<Card> combinedList) {
+        ArrayList<Card> straightList = new ArrayList<Card>(combinedList);
+        int consecCount = 0;
+        // Remove all repeated values from the flushList
+        for (int i = 0; i < straightList.size(); i++) {
+            int current = straightList.get(i).value;
+            for (int j = i + 1; j < straightList.size(); j++) {
+                if (current == straightList.get(j).value) { // If current index = j index, remove j index
+                    straightList.remove(j);
                     j--; // Decrement j since list shifts left after removal
                 }
             }
         }
-        boolean consec = true;
-        if (flushList.size() < 5) {
-            straight = false;
+        System.out.println("remCards: " + straightList);
+        // If less than 5 cards are left we know that a straight is not around
+        if (straightList.size() < 5) {
+            return false;
         }
-        else {
-            for (int i = 0; i < flushList.size() - 1; i++) {
-                int j = i + 1;
-                if (flushList.get(j).value - flushList.get(i).value != 1) {
-                    consec = false;
+        if (straightList.contains())
+        else { // If 5 cards present...
+            for (int i = 0; i < straightList.size() - 1; i++) { // Cycle through cards
+                int j = i + 1; // Index j = next index (current + 1)
+                // If the difference between next and current is anything other than 1, the cards are not consecutive
+                if (straightList.get(j).value - straightList.get(i).value == 1) {
+                    consecCount++; // Increments on in betweens in list 
+                                   // meaning that 5 consecutive cards would = consecCount of 4 
                 }
             }
-            if (consec == true) {
-                straight = true;
+            if (consecCount >= 4) { // Return true if there are at least 4 consec gaps
+                return true;
             }
             else {
-                straight = false;
+                return false;
             }
         }
-
-        for (Map.Entry<Integer, Integer> entry : rankCount.entrySet()) {
-            int count = entry.getValue();
-            switch (count) {
-                case 2:
-                    pairCount++;
-                    break;
-                case 3:
-                    threeKind = true;
-                    break;
-                case 4:
-                    fourKind = true;
-                    break;
-            }
-            //System.out.println(entry.getKey() + ": " + entry.getValue());
-        }
-        System.out.println("pairCount: " + pairCount);
-        System.out.println("threeKind: " + threeKind);
-        System.out.println("fourKind: " + fourKind);
-        System.out.println("flush: " + flush);
-        System.out.println("straight: " + straight);
     }
 }

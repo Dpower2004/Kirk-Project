@@ -66,7 +66,7 @@ public class Card {
      * @param foreignCard Card to be compared to calling object
      * @return boolean indicating if the two cards are equal
      */
-    public boolean equals (Card foreignCard) {
+    public boolean equals(Card foreignCard) {
         // If both suit and rank are equal, return true. Else, return false
         if (this.cardRank == foreignCard.getRank() && this.cardSuit == foreignCard.getSuit()) {
             return true;
