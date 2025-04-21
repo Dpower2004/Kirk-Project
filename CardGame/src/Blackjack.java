@@ -48,11 +48,12 @@ public class Blackjack extends CardGame
             BlackjackPlayer bp = (BlackjackPlayer) p;
             while (bp.isHitting())
             {
+                // add card from deck if hit
                 Card card = deck.getCard(0);
                 bp.cards.add(card);
                 deck.remove(card);
                 System.out.println("Player " + bp.playerID + " hits and gets " + card);
-                if (bp.getScore() > 21)
+                if (bp.getScore() > 21) // bust of score > 21
                 {
                     System.out.println("Player " + bp.playerID + " busts!");
                     break;
@@ -60,9 +61,10 @@ public class Blackjack extends CardGame
             }
         }
 
-        // Dealer plays
+        // Dealer plays -- must hit if score < 17
         while (dealer.getScore() < 17)
         {
+            // draw card
             Card card = deck.getCard(0);
             dealer.cards.add(card);
             deck.remove(card);
@@ -79,13 +81,16 @@ public class Blackjack extends CardGame
             if (score > 21)
             {
                 System.out.println("Player " + bp.playerID + " loses.");
-            } else if (dealerScore > 21 || score > dealerScore)
+            }
+            else if (dealerScore > 21 || score > dealerScore)
             {
                 System.out.println("Player " + bp.playerID + " wins!");
-            } else if (score == dealerScore)
+            }
+            else if (score == dealerScore)
             {
                 System.out.println("Player " + bp.playerID + " pushes.");
-            } else
+            }
+            else
             {
                 System.out.println("Player " + bp.playerID + " loses.");
             }
