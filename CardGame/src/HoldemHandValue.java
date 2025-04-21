@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class HoldemHandValue {
+public final class HoldemHandValue {
     protected HoldemPlayer player;
     protected CardList communityCards;
     protected ArrayList<Card> combinedList;
@@ -113,17 +113,15 @@ public class HoldemHandValue {
         int fourCount = 0;
         int threeCount = 0;
         int twoCount = 0;
-        Map<String, Integer> rankMatchStats = new HashMap<>();
+        rankMatchStats = new HashMap<>();
         for (Integer key : rankCount.keySet()) {
             Integer count = rankCount.get(key);
-            if (count == 4) {
-                fourCount++;
-            }
-            else if (count == 3) {
-                threeCount++;
-            }
-            else if (count == 2) {
-                twoCount++;
+            switch (count) {
+                case 4 -> fourCount++;
+                case 3 -> threeCount++;
+                case 2 -> twoCount++;
+                default -> {
+                }
             }
         }
         rankMatchStats.put("4k", fourCount);
@@ -133,7 +131,7 @@ public class HoldemHandValue {
     }
 
     public Map<String, Integer> getSuitCount(ArrayList<Card> cards) {
-        Map<String, Integer> suitCount = new HashMap<>();
+        suitCount = new HashMap<>();
         for (Card card : cards) { // Iterate through cards
             String suit = card.cardSuit; // suit = the current card's suit
             /* If the given suit is already in the map, get its count. If it is not, set it to 0 by
@@ -144,7 +142,7 @@ public class HoldemHandValue {
     }
 
     public Map<Integer, Integer> getRankCount(ArrayList<Card> cards) {
-        Map<Integer, Integer> rankCount = new HashMap<>();
+        rankCount = new HashMap<>();
         for (Card card : cards) { // Iterate through cards
             int rank = card.value; // rank = the current card's suit
             /* If the given rank is already in the map, get its count. If it is not, set it to 0 by
@@ -206,7 +204,7 @@ public class HoldemHandValue {
     }
 
     public String getFiveCardSuit() {
-        String fiveCardSuit = "N";
+        fiveCardSuit = "N";
         for (Map.Entry<String, Integer> entry : suitCount.entrySet()) { // Go through all of the suit values from the map
             if (entry.getValue() > 4) { // If any are greater than 4 you have a flush
                 fiveCardSuit = entry.getKey();
@@ -216,12 +214,7 @@ public class HoldemHandValue {
     }
 
     public boolean isFlush() {
-        if (fiveCardSuit.equals("N")) {
-            return false;
-        }
-        else {
-            return true;
-        }
+        return !fiveCardSuit.equals("N");
     }
 
     @Override
