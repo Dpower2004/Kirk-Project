@@ -57,6 +57,9 @@ public class Card {
             case "A":
                 value = 14;
                 break;
+            case "V": // Low ace
+                value = 1;
+                break;
         }
     }
 
