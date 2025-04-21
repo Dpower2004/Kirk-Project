@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 /**
  * Represents an individual card to be passed into the CardList class.
  * @author Luke Soda
@@ -57,9 +59,6 @@ public class Card {
             case "A":
                 value = 14;
                 break;
-            case "V": // Low ace
-                value = 1;
-                break;
         }
     }
 
@@ -69,14 +68,17 @@ public class Card {
      * @param foreignCard Card to be compared to calling object
      * @return boolean indicating if the two cards are equal
      */
-    public boolean equals(Card foreignCard) {
-        // If both suit and rank are equal, return true. Else, return false
-        if (this.cardRank == foreignCard.getRank() && this.cardSuit == foreignCard.getSuit()) {
-            return true;
-        }
-        else {
-            return false;
-        }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Card)) return false;
+        Card card = (Card) o;
+        return cardRank.equals(card.cardRank) && cardSuit.equals(card.cardSuit);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cardRank, cardSuit);
     }
 
     /**
