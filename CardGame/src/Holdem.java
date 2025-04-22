@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Class representing the game texas holdem. It inherits the abstract game class
@@ -16,7 +18,7 @@ public class Holdem extends CardGame {
     protected CardList communityCards = new CardList(true); // 5 community cards that make up the river
     protected ArrayList<HoldemPlayer> activePlayers = new ArrayList<>(); // List of players who haven't folded
 
-    private Scanner advanceIn = new Scanner(System.in);
+    private final Scanner advanceIn = new Scanner(System.in);
     private boolean betMade; // Keeps track of if a bet has been made to change raise / bet prompt
 
     /**
@@ -40,10 +42,10 @@ public class Holdem extends CardGame {
             HoldemPlayer currentPlayer = (HoldemPlayer) playerList[i]; // Type casting for HoldemPlayer method calls
             activePlayers.add(currentPlayer); // Add all players to active players arrayList
             if (i == 1) { // Player at index 1 will ALWAYS be little blind
-                currentPlayer.setInChips(highBet / 2);
+                currentPlayer.setHandChips(highBet / 2);
             } 
             else if (i == 2) { // Player at index 2 will ALWAYS be big blind
-                currentPlayer.setInChips(highBet);
+                currentPlayer.setHandChips(highBet);
             }
         }
         super.deal(2); // Deal 2 cards to all players
@@ -66,36 +68,39 @@ public class Holdem extends CardGame {
             HoldemPlayer currentPlayer = (HoldemPlayer) playerList[pTurn]; // Type casting for HoldemPlayer method calls
             String choice = currentPlayer.chooseAction(highBet, betMade); // Prompt player for choice in betting round
             switch (choice) {
-                case "C": // If check / call
-                    currentPlayer.setInChips(highBet); // Match the current high bet
-                    break;
-                case "B": // If bet
+                case "C" -> // If check / call
+                    currentPlayer.handChips.setChips(highBet); // Match the current high bet
+                case "B" -> {
+                    // If bet
                     int bet = getBet(currentPlayer);
-                    currentPlayer.setInChips(bet); // Set chips in to players bet input
+                    currentPlayer.setHandChips(bet); // Set chips in to players bet input
                     highBet = bet; // Update highBet to be the current bet
                     resetPlayerResponses(currentPlayer, pTurn); // Resets the responses of all other players
                     betMade = true; // Tell the game that a bet was made 
                     remainingTurns = 4; // RESET the number of turns remaining, other players must respond
-                    break;
-                case "R": // If raise
+                }
+                case "R" -> {
+                    // If raise
                     int raise = getBet(currentPlayer); // Get the raise to be put up
-                    currentPlayer.setInChips(highBet + raise); // Set chips in to highBet + the raise
+                    currentPlayer.setHandChips(highBet + raise); // Set chips in to highBet + the raise
                     highBet += raise; // Add the raise onto the current highBet
                     resetPlayerResponses(currentPlayer, pTurn); // Resets the responses of other players
                     remainingTurns = 4; // // RESET the number of turns remaining, other players must respond
-                    break;
-                case "F": // If fold
+                }
+                case "F" -> {
+                    // If fold
                     currentPlayer.fold(); // isActive = false
                     activePlayers.remove(currentPlayer); // Remove player from the active list
-                    break;
+                }
             }
             consoleOut(); // Update the console to show player action
         }
         // Reset players for next round
         for (Player p : playerList) { // For all the players...
             HoldemPlayer hp = (HoldemPlayer) p; // Type casting for HoldemPlayer method calls
-            pot += hp.inChips; // Add their chips into the pot
-            hp.inChips = 0; // Reset what they have up to 0
+            pot += hp.handChips.chipAmount; // Add their chips into the pot
+            hp.handChips.setChips(0); // Reset what they have up to 0
+            hp.maxRoundChips = hp.bank.chipAmount;
             hp.currentAction = ""; // Erase current action
         }
         // Reset bets for next round
@@ -110,7 +115,7 @@ public class Holdem extends CardGame {
      * @param pTurn Index of current player in playerList
      */
     public void resetPlayerResponses(HoldemPlayer currentPlayer, int pTurn) {
-        ; // Update high bet to be the highest player's chip value
+        // Update high bet to be the highest player's chip value
         int rTurn = pTurn + 1; // reset turn needs to start one more than current turn
         // This for loop is to reset the currentAction of all OTHER players on a raise. They need to react to raise
         for (int j = 0 ; j < playerList.length - 1 ; j++, rTurn++) { // Iterate number of players - 1. Don't erase current
@@ -189,6 +194,13 @@ public class Holdem extends CardGame {
         river();
         gameState = HoldemState.FINAL_BET;
         bettingRound();
+        Map<Integer, Hand> playerHands = new HashMap<>();
+        for (Player p : playerList) {
+            HoldemPlayer hp = (HoldemPlayer) p;
+            HoldemHandValue playerHandValue = new HoldemHandValue(hp, communityCards);
+            playerHands.put(playerHandValue.player.playerID, playerHandValue.hand);
+        }
+        System.out.println(playerHands);
     }
 
     public void consoleOut() {

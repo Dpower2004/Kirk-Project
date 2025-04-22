@@ -7,13 +7,12 @@ import java.util.Random;
  * @version 1.0
  */
 public class HoldemPlayer extends Player {
-    protected int inChips; // Chips up for a given round
+    protected ChipStack handChips; // Chips up for a given round
     protected String currentAction; // Current action the player is taking for a current round
-                                    // of betting (C/B/F)
     protected boolean isActive; // Is the player still playing? (Have they folded)
+    protected int maxRoundChips = bank.chipAmount;
 
-    private Scanner input;
-    private int maxChips = super.totalChips;
+    private Scanner input; // User input
 
     /**
      * HoldemPlayer constructor, pass in chips, is the player main, and type of blind
@@ -24,6 +23,7 @@ public class HoldemPlayer extends Player {
     public HoldemPlayer(int chips, boolean isMain) {
         super(chips, isMain); // Super constructor for abstract player class
         isActive = true; // Player is set to active by default (they have not folded)
+        handChips = new ChipStack(0);
         if (isMain) { // Only create a new scanner class if the player is the user (Not needed
                       // for CPUs)
             input = new Scanner(System.in);
@@ -35,9 +35,9 @@ public class HoldemPlayer extends Player {
      * Used on calls, checks, bets, raises
      * @param bet
      */
-    public void setInChips(int inChips) {
-        totalChips = maxChips - inChips;
-        this.inChips = inChips; // Add the bet to the chips in play for the round
+    public void setHandChips(int amount) {
+        bank.setChips(maxRoundChips - amount);
+        handChips.setChips(amount); // Add the bet to the chips in play for the round
     }
 
     /**
@@ -53,7 +53,7 @@ public class HoldemPlayer extends Player {
      */
     public String chooseAction(int highBet, boolean betMade) {
         if (isMain) { // If player is user, prompt in console
-            if (!betMade && inChips == 0) {
+            if (!betMade && handChips.chipAmount == 0) {
                 currentAction = InputValidator.validateCustomPrompt(input, "C, B, F", "Check, Bet, Fold? (C/B/F): ");
             }
             else {
@@ -62,8 +62,7 @@ public class HoldemPlayer extends Player {
         }
         else {
             currentAction = "C";
-
-            /*if (inChips != 0 || betMade == true) {
+            /*if (handChips.chipAmount != 0 || betMade == true) {
                 currentAction = "R";
             }
             else {
@@ -86,11 +85,11 @@ public class HoldemPlayer extends Player {
 
     /**
      * toString for HoldemPlayer
-     * Contains player string, blind, and inChips
+     * Contains player string, blind, and handChips
      */
     @Override
     public String toString() {
-        String retString = super.toString() + "\nChips in: " + inChips + "\nAction Taken: " + currentAction;
+        String retString = super.toString() + "\nChips in: " + handChips + "\nAction Taken: " + currentAction;
         if (isMain) {
             retString += ("\nHand: " + cards);
         }
