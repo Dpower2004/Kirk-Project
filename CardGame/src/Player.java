@@ -5,8 +5,6 @@
  */
 
 public abstract class Player {
-    public static int playerCount; // Static int used to keep track of the number of players
-
     protected int playerID; // The player's ID
     protected CardList cards; // A card list, the player's hand
     protected ChipStack bank; // Amount of chips (Will probably be an object later, this is a placeholder)
@@ -19,8 +17,6 @@ public abstract class Player {
      */
     public Player (int chips, boolean isMain) {
         this.isMain = isMain;
-        playerID = playerCount;
-        playerCount++;
         bank = new ChipStack(chips);
         cards = new CardList(true); // Create new empty hand for the player
     }

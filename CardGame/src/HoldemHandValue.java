@@ -12,6 +12,7 @@ public final class HoldemHandValue {
     protected String fiveCardSuit;
     protected Hand hand;
     protected Card highCard;
+    protected Card tempHighCard;
 
     public HoldemHandValue(HoldemPlayer player, CardList communityCards) {
         this.player = player;
@@ -68,6 +69,7 @@ public final class HoldemHandValue {
 
         if (rankMatchStats.get("3k") == 2 || (rankMatchStats.get("3k") == 1 && rankMatchStats.get("2k") >= 1)) {
             hand = Hand.FULL_HOUSE;
+            highCard = tempHighCard;
             return hand;
         }
         
@@ -86,7 +88,7 @@ public final class HoldemHandValue {
             return hand;
         }
         
-        if (rankMatchStats.get("2k") == 2) {
+        if (rankMatchStats.get("2k") >= 2) {
             hand = Hand.TWO_PAIR;
             return hand;
         }
@@ -137,12 +139,16 @@ public final class HoldemHandValue {
     }
 
     public Map<Integer, Integer> getRankCount(ArrayList<Card> cards) {
+        tempHighCard = new Card("V", "S");
         rankCount = new HashMap<>();
         for (Card card : cards) { // Iterate through cards
             int rank = card.value; // rank = the current card's suit
             /* If the given rank is already in the map, get its count. If it is not, set it to 0 by
                default. Regardless, we add 1 to the count and move on */
             rankCount.put(rank, rankCount.getOrDefault(rank, 0) + 1);
+            if (rankCount.get(rank) >= 2 && card.value > tempHighCard.value) {
+                tempHighCard = card;
+            }
         }
         return rankCount;
     }

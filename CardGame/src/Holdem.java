@@ -39,6 +39,7 @@ public class Holdem extends CardGame {
     @Override
     public void setup() {
         for (int i = 0; i < playerList.length ; i++) { // Cycle through all players to set up blinds
+            playerList[i].playerID = i;
             HoldemPlayer currentPlayer = (HoldemPlayer) playerList[i]; // Type casting for HoldemPlayer method calls
             activePlayers.add(currentPlayer); // Add all players to active players arrayList
             if (i == 1) { // Player at index 1 will ALWAYS be little blind
@@ -68,6 +69,7 @@ public class Holdem extends CardGame {
             HoldemPlayer currentPlayer = (HoldemPlayer) playerList[pTurn]; // Type casting for HoldemPlayer method calls
             String choice = currentPlayer.chooseAction(highBet, betMade); // Prompt player for choice in betting round
             switch (choice) {
+            
                 case "C" -> // If check / call
                     currentPlayer.handChips.setChips(highBet); // Match the current high bet
                 case "B" -> {
