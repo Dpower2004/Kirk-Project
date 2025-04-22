@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Class representing the game texas holdem. It inherits the abstract game class
@@ -192,6 +194,13 @@ public class Holdem extends CardGame {
         river();
         gameState = HoldemState.FINAL_BET;
         bettingRound();
+        Map<Integer, Hand> playerHands = new HashMap<>();
+        for (Player p : playerList) {
+            HoldemPlayer hp = (HoldemPlayer) p;
+            HoldemHandValue playerHandValue = new HoldemHandValue(hp, communityCards);
+            playerHands.put(playerHandValue.player.playerID, playerHandValue.hand);
+        }
+        System.out.println(playerHands);
     }
 
     public void consoleOut() {

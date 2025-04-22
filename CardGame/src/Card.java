@@ -59,6 +59,9 @@ public class Card {
             case "A":
                 value = 14;
                 break;
+            case "V":
+                value = 1;
+                break;
         }
     }
 

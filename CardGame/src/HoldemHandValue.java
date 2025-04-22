@@ -17,8 +17,8 @@ public final class HoldemHandValue {
         this.player = player;
         combinedList = new ArrayList<>(player.cards.getCardList());
         combinedList.addAll(communityCards.getCardList());
-        highCard();
         sortAll();
+        System.out.println(combinedList);
         valueHand();
     }
 
@@ -39,15 +39,7 @@ public final class HoldemHandValue {
                 sorted = true;
             }
         }
-    }
-
-    public void highCard() {
-        highCard = combinedList.get(0);
-        for (Card card : combinedList) {
-            if (card.value > highCard.value) {
-                highCard = card;
-            }
-        }
+        highCard = combinedList.get(6);
     }
 
     public Hand valueHand() {
@@ -74,7 +66,7 @@ public final class HoldemHandValue {
             return hand;
         }
 
-        if (rankMatchStats.get("3k") >= 1 && rankMatchStats.get("2k") >= 1) {
+        if (rankMatchStats.get("3k") == 2 || (rankMatchStats.get("3k") == 1 && rankMatchStats.get("2k") >= 1)) {
             hand = Hand.FULL_HOUSE;
             return hand;
         }
@@ -137,6 +129,9 @@ public final class HoldemHandValue {
             /* If the given suit is already in the map, get its count. If it is not, set it to 0 by
                default. Regardless, we add 1 to the count and move on */
             suitCount.put(suit, suitCount.getOrDefault(suit, 0) + 1);
+            if (suitCount.get(suit) >= 5) {
+                highCard = card;
+            }
         }
         return suitCount;
     }
@@ -167,12 +162,19 @@ public final class HoldemHandValue {
     public boolean isStraightFlush(ArrayList<Card> cards) {
         ArrayList<Card> isolatedFlush = new ArrayList<>(cards);
         isolatedFlush = isolateFlush(isolatedFlush);
-        System.out.println(cards);
         return isStraight(isolatedFlush);
     }
     
     public boolean isStraight(ArrayList<Card> cards) {
         int consecGapCount = 0;
+        for (int i = 0; i < cards.size(); i++) {
+            Card currentCard = cards.get(i);
+            if (currentCard.cardRank.equals("A")) {
+                String suit = currentCard.cardSuit;
+                combinedList.add(0, new Card("V", suit));
+                i++;
+            }
+        }
         // Get the number of consecutive gaps to be compared to 4
         for (int i = 0; i < cards.size() - 1; i++) { // Cycle through cards
             int j = i + 1; // Index j = next index (current + 1)
@@ -180,7 +182,10 @@ public final class HoldemHandValue {
             int valueDif = cards.get(j).value - cards.get(i).value; // Diffence in next value and current
             if (valueDif == 1) {  // If the difference is one...
                 consecGapCount++; // Increment the number of consecutive gaps found in the list
-                                    // meaning that 5 consecutive cards would = consecCount of 4 
+                                  // meaning that 5 consecutive cards would = consecCount of 4 
+                if (consecGapCount == 4) {
+                    highCard = cards.get(j);
+                }
             }
             else if (consecGapCount < 4 && (valueDif != 1 && valueDif != 0)) {
                 consecGapCount = 0;
