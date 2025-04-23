@@ -7,13 +7,14 @@ import java.util.Random;
  * @version 1.0
  */
 public class HoldemPlayer extends Player {
-    protected int inChips; // Chips up for a given round
+    protected ChipStack handChips; // Chips up for a given round
     protected String currentAction; // Current action the player is taking for a current round
-                                    // of betting (C/B/F)
     protected boolean isActive; // Is the player still playing? (Have they folded)
+    protected int maxRoundChips = chipBank.chipAmount;
+    protected Hand handValue;
+    protected Card highCard;
 
-    private Scanner input;
-    private int maxChips = super.totalChips;
+    private Scanner input; // User input
 
     /**
      * HoldemPlayer constructor, pass in chips, is the player main, and type of blind
@@ -24,6 +25,7 @@ public class HoldemPlayer extends Player {
     public HoldemPlayer(int chips, boolean isMain) {
         super(chips, isMain); // Super constructor for abstract player class
         isActive = true; // Player is set to active by default (they have not folded)
+        handChips = new ChipStack(0);
         if (isMain) { // Only create a new scanner class if the player is the user (Not needed
                       // for CPUs)
             input = new Scanner(System.in);
@@ -35,9 +37,9 @@ public class HoldemPlayer extends Player {
      * Used on calls, checks, bets, raises
      * @param bet
      */
-    public void setInChips(int inChips) {
-        totalChips = maxChips - inChips;
-        this.inChips = inChips; // Add the bet to the chips in play for the round
+    public void setHandChips(int amount) {
+        chipBank.setChips(maxRoundChips - amount);
+        handChips.setChips(amount); // Add the bet to the chips in play for the round
     }
 
     /**
@@ -53,7 +55,7 @@ public class HoldemPlayer extends Player {
      */
     public String chooseAction(int highBet, boolean betMade) {
         if (isMain) { // If player is user, prompt in console
-            if (!betMade && inChips == 0) {
+            if (!betMade && handChips.chipAmount == 0) {
                 currentAction = InputValidator.validateCustomPrompt(input, "C, B, F", "Check, Bet, Fold? (C/B/F): ");
             }
             else {
@@ -61,36 +63,65 @@ public class HoldemPlayer extends Player {
             }
         }
         else {
-            currentAction = "C";
-
-            /*if (inChips != 0 || betMade == true) {
-                currentAction = "R";
+            Random rand = new Random();
+            int actionInt = rand.nextInt(100);
+            if (actionInt < 60) { // Check / Call
+                currentAction = "C";
+            }
+            else if (actionInt >= 60 && actionInt < 90) {
+                if (highBet < chipBank.chipAmount) {
+                    if (handChips.chipAmount != 0 || betMade == true) {
+                        currentAction = "R";
+                    }
+                    else {
+                        currentAction = "B";
+                    }
+                }
+                else {
+                    currentAction = "C";
+                }
             }
             else {
-                currentAction = "B";
-            }*/
+                currentAction = "F";
+            }
         }
         return currentAction;
     }
 
     public int promptAmount() {
-        int bet = InputValidator.validateBet(input, "Amount: ");
+        int bet = InputValidator.validateBet(input, "Amount: ", chipBank.chipAmount);
         return bet;
     }
 
-    public int cpuBet() {
+    public int cpuBet(int highBet) {
         Random rand = new Random();
-        int bet = rand.nextInt(20 - 3 + 1) + 3;
+        int bet = rand.nextInt(50) + 1;
+        if (currentAction.equals("R") && highBet + bet > chipBank.chipAmount) {
+            bet = maxRoundChips - highBet;
+        }
+        if (currentAction.equals("B") && bet > chipBank.chipAmount) {
+            bet = maxRoundChips;
+        }
         return bet;
+    }
+
+    public void assignHandValue(CardList communityCards) {
+        HoldemHandValue value = new HoldemHandValue(this, communityCards);
+        handValue = value.hand;
+        highCard = value.highCard;
+    }
+
+    public int getHandValue() {
+        return handValue.VALUE;
     }
 
     /**
      * toString for HoldemPlayer
-     * Contains player string, blind, and inChips
+     * Contains player string, blind, and handChips
      */
     @Override
     public String toString() {
-        String retString = super.toString() + "\nChips in: " + inChips + "\nAction Taken: " + currentAction;
+        String retString = super.toString() + "\nChips in: " + handChips + "\nAction Taken: " + currentAction + "\nIn: " + isActive;
         if (isMain) {
             retString += ("\nHand: " + cards);
         }

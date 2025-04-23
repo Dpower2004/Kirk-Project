@@ -9,14 +9,19 @@ public class InputValidator {
      * Prompts the user for a positive non-zero integer and validates the input
      * without using a try-catch block.
      */
-    public static int validateBet(Scanner scanner, String prompt) {
+    public static int validateBet(Scanner scanner, String prompt, int playerBank) {
         while (true) {
             System.out.print(prompt);
             String input = scanner.nextLine();
 
             // Check if the input is all digits and not starting with zero (unless it's just "0")
             if (input.matches("[1-9][0-9]*")) {
-                return Integer.parseInt(input);
+                if (Integer.parseInt(input) <= playerBank) {
+                    return Integer.parseInt(input);
+                }
+                else {
+                    System.out.println("Value exceeds bank!");
+                }
             }
         }
     }
