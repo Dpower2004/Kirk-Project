@@ -2,32 +2,49 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Class evaluates the hand of a given player
+ * @author Luke Soda
+ * @version 1.0
+ */
 public final class HoldemHandValue {
-    protected HoldemPlayer player;
-    protected CardList communityCards;
-    protected ArrayList<Card> combinedList;
-    protected Map<String, Integer> suitCount;
-    protected Map<Integer, Integer> rankCount;
-    protected Map<String, Integer> rankMatchStats;
-    protected String fiveCardSuit;
-    protected Hand hand;
-    protected Card highCard;
-    protected Card tempHighCard;
+    protected HoldemPlayer player; // The player passed in
+    protected CardList communityCards; // The 5 shared cards
+    protected ArrayList<Card> combinedList; // Combined list of shared and player
 
+    protected Map<String, Integer> suitCount; // Keeps the count of all 4 suits
+    protected Map<Integer, Integer> rankCount; // Keeps the count of all 13 cards
+    protected Map<String, Integer> rankMatchStats; // Holds number of pair, 3 kind, 4 kimd
+
+    protected String fiveCardSuit; // If there is a flush, this stores the suit of it
+    protected Hand hand; // Enum representing the type of hand
+
+    protected Card highCard; // High card in 5 card hand
+    protected Card tempHighCard; // High card set if conditions are met
+
+    /**
+     * HoldemHandValue constructor
+     * Sets up combined list and calls sort and value methods
+     * @param player
+     * @param communityCards
+     */
     public HoldemHandValue(HoldemPlayer player, CardList communityCards) {
         this.player = player;
-        combinedList = new ArrayList<>(player.cards.getCardList());
-        combinedList.addAll(communityCards.getCardList());
-        sortAll();
-        valueHand();
+        combinedList = new ArrayList<>(player.cards.getCardList()); // Copy player cards
+        combinedList.addAll(communityCards.getCardList()); // Add community onto copied cards
+        sortAll(); // Sorts the hand
+        valueHand(); // Values the hand
     }
 
+    /**
+     * sortAll methods sorts the combined list of card by card value
+     */
     public void sortAll() {
-        boolean sorted = false;
+        boolean sorted = false; // While continues till this is true
         while (!sorted) { // Continue until no swaps are needed
-            boolean swapped = false;
+            boolean swapped = false; // does current itteration have a swap
             for (int i = 1; i < combinedList.size() ; i++) { // Iterate through valid elements
-                int j = i - 1;
+                int j = i - 1; // j = next index
                 if (combinedList.get(j).value > combinedList.get(i).value) { // Swap if elements are out of order
                     swapped = true;
                     Card temp = combinedList.get(j); // Put j element in temp var
@@ -39,15 +56,19 @@ public final class HoldemHandValue {
                 sorted = true;
             }
         }
-        highCard = combinedList.get(6);
+        highCard = combinedList.get(6); // Original high card is set the the highest card in the sort
     }
 
+    /**
+     * Calls methods that populates required fields for valuing the hand
+     * @return
+     */
     public Hand valueHand() {
         suitCount = getSuitCount(combinedList); // Maps an integer to a string (the suit)
         rankCount = getRankCount(combinedList); // Maps an integer to an integer (the rank)
-        rankMatchStats = getRankMatchStats();
-        fiveCardSuit = getFiveCardSuit();
-        return getHandValue();
+        rankMatchStats = getRankMatchStats(); // Gets number of pairs, 3 kinds, 4 kinds into hashmap
+        fiveCardSuit = getFiveCardSuit(); // If a flush exists, set its suit to fiveCardSuit
+        return getHandValue(); // Returns the type of hand found in getHandValue()
     }
 
     public Hand getHandValue() {
@@ -84,16 +105,19 @@ public final class HoldemHandValue {
         
         if (rankMatchStats.get("3k") == 1) {
             hand = Hand.THREE_KIND;
+            highCard = tempHighCard;
             return hand;
         }
         
         if (rankMatchStats.get("2k") >= 2) {
             hand = Hand.TWO_PAIR;
+            highCard = tempHighCard;
             return hand;
         }
         
         if (rankMatchStats.get("2k") == 1) {
             hand = Hand.PAIR;
+            highCard = tempHighCard;
             return hand;
         }
         
@@ -146,7 +170,12 @@ public final class HoldemHandValue {
                default. Regardless, we add 1 to the count and move on */
             rankCount.put(rank, rankCount.getOrDefault(rank, 0) + 1);
             if (rankCount.get(rank) >= 2 && card.value > tempHighCard.value) {
-                tempHighCard = card;
+                if (player.cards.getCard(0).value > player.cards.getCard(1).value) {
+                    tempHighCard = player.cards.getCard(0);
+                }
+                else {
+                    tempHighCard = player.cards.getCard(1);
+                }
             }
         }
         return rankCount;

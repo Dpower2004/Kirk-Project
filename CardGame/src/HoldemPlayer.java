@@ -1,5 +1,5 @@
-import java.util.Scanner;
 import java.util.Random;
+import java.util.Scanner;
 
 /**
  * Class representing the game texas holdem. It inherits the abstract game class
@@ -13,6 +13,7 @@ public class HoldemPlayer extends Player {
     protected int maxRoundChips = chipBank.chipAmount;
     protected Hand handValue;
     protected Card highCard;
+    protected Card matchCard;
 
     private Scanner input; // User input
 
@@ -109,6 +110,7 @@ public class HoldemPlayer extends Player {
         HoldemHandValue value = new HoldemHandValue(this, communityCards);
         handValue = value.hand;
         highCard = value.highCard;
+        matchCard = value.matchCard;
     }
 
     public int getHandValue() {
