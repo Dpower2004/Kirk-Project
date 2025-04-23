@@ -63,13 +63,27 @@ public class HoldemPlayer extends Player {
             }
         }
         else {
-            currentAction = "C";
-            /*if (handChips.chipAmount != 0 || betMade == true) {
-                currentAction = "R";
+            Random rand = new Random();
+            int actionInt = rand.nextInt(100);
+            if (actionInt < 60) { // Check / Call
+                currentAction = "C";
+            }
+            else if (actionInt >= 60 && actionInt < 90) {
+                if (highBet < chipBank.chipAmount) {
+                    if (handChips.chipAmount != 0 || betMade == true) {
+                        currentAction = "R";
+                    }
+                    else {
+                        currentAction = "B";
+                    }
+                }
+                else {
+                    currentAction = "C";
+                }
             }
             else {
-                currentAction = "B";
-            }*/
+                currentAction = "F";
+            }
         }
         return currentAction;
     }
@@ -79,9 +93,15 @@ public class HoldemPlayer extends Player {
         return bet;
     }
 
-    public int cpuBet() {
+    public int cpuBet(int highBet) {
         Random rand = new Random();
-        int bet = rand.nextInt(20 - 3 + 1) + 3;
+        int bet = rand.nextInt(50) + 1;
+        if (currentAction.equals("R") && highBet + bet > chipBank.chipAmount) {
+            bet = maxRoundChips - highBet;
+        }
+        if (currentAction.equals("B") && bet > chipBank.chipAmount) {
+            bet = maxRoundChips;
+        }
         return bet;
     }
 
