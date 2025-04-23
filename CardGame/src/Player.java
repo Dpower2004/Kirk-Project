@@ -30,4 +30,9 @@ public abstract class Player {
     public String toString() {
         return "\nPlayer " + playerID + "\nBank: " + chipBank.chipAmount;
     }
+
+    public void setPlayerID(int id)
+    {
+        this.playerID = id;
+    }
 }

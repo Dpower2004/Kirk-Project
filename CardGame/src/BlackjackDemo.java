@@ -8,8 +8,10 @@ public class BlackjackDemo
 {
     public static void main(String[] args)
     {
-        Player[] players = new Player[1];
+        Player[] players = new Player[3];
         players[0] = new BlackjackPlayer(100, true);
+        players[1] = new BlackjackPlayer(100, false);
+        players[2] = new BlackjackPlayer(100, false);
 
         Blackjack game = new Blackjack(players);
         game.setup();

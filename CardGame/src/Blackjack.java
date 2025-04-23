@@ -29,6 +29,7 @@ public class Blackjack extends CardGame
     @Override
     public void setup()
     {
+        playerList[0].playerID = 0;
         super.deal(2); // deals 2 cards
         dealer.cards = new CardList(true);
         dealer.cards.add(deck.getCard(0));
@@ -42,10 +43,13 @@ public class Blackjack extends CardGame
      */
     public void play()
     {
-        System.out.println("Dealer reveals a [" + dealer.cards.getCard(0) + "] ...");
-        for (Player p : playerList) // for each player
+        System.out.println("How much would you like to bet? (Min = 5 chips, Max = 5 chips)");
+        System.out.println("\nDealer reveals a [" + dealer.cards.getCard(0) + "] ...");
+        for (int i = 0; i < playerList.length; i++) // for each player
         {
+            Player p = playerList[i];
             BlackjackPlayer bp = (BlackjackPlayer) p;
+            bp.playerID = playerList[i].playerID + i + 1;
             while (bp.isHitting())
             {
                 // add card from deck if hit
@@ -70,8 +74,16 @@ public class Blackjack extends CardGame
             deck.remove(card);
             System.out.println("Dealer hits and gets " + card);
         }
-        System.out.println("Dealer's final hand: " + dealer.cards + " (Score: " + dealer.getScore() + ")");
-
+        if (dealer.getScore() > 21)
+        {
+            System.out.println("Dealer's final hand: " + dealer.cards + " (Score: " + dealer.getScore() + ")");
+            System.out.println("Dealer busts!");
+        }
+        else
+        {
+            System.out.println("Dealer's final hand: " + dealer.cards + " (Score: " + dealer.getScore() + ")");
+        }
+        
         // Determine winners
         for (Player p : playerList)
         {
