@@ -10,7 +10,9 @@ public class HoldemPlayer extends Player {
     protected ChipStack handChips; // Chips up for a given round
     protected String currentAction; // Current action the player is taking for a current round
     protected boolean isActive; // Is the player still playing? (Have they folded)
-    protected int maxRoundChips = bank.chipAmount;
+    protected int maxRoundChips = chipBank.chipAmount;
+    protected Hand handValue;
+    protected Card highCard;
 
     private Scanner input; // User input
 
@@ -36,7 +38,7 @@ public class HoldemPlayer extends Player {
      * @param bet
      */
     public void setHandChips(int amount) {
-        bank.setChips(maxRoundChips - amount);
+        chipBank.setChips(maxRoundChips - amount);
         handChips.setChips(amount); // Add the bet to the chips in play for the round
     }
 
@@ -73,7 +75,7 @@ public class HoldemPlayer extends Player {
     }
 
     public int promptAmount() {
-        int bet = InputValidator.validateBet(input, "Amount: ");
+        int bet = InputValidator.validateBet(input, "Amount: ", chipBank.chipAmount);
         return bet;
     }
 
@@ -83,13 +85,23 @@ public class HoldemPlayer extends Player {
         return bet;
     }
 
+    public void assignHandValue(CardList communityCards) {
+        HoldemHandValue value = new HoldemHandValue(this, communityCards);
+        handValue = value.hand;
+        highCard = value.highCard;
+    }
+
+    public int getHandValue() {
+        return handValue.VALUE;
+    }
+
     /**
      * toString for HoldemPlayer
      * Contains player string, blind, and handChips
      */
     @Override
     public String toString() {
-        String retString = super.toString() + "\nChips in: " + handChips + "\nAction Taken: " + currentAction;
+        String retString = super.toString() + "\nChips in: " + handChips + "\nAction Taken: " + currentAction + "\nIn: " + isActive;
         if (isMain) {
             retString += ("\nHand: " + cards);
         }

@@ -1,7 +1,5 @@
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Class representing the game texas holdem. It inherits the abstract game class
@@ -13,10 +11,12 @@ public class Holdem extends CardGame {
     protected HoldemState gameState; // Game state
 
     protected int highBet; // Current highest bet for a round. Contains big blind at start
-    protected int pot; // Total pot that is taken at the end of each game
+    protected ChipStack pot = new ChipStack(0); // Total pot that is taken at the end of each game
 
     protected CardList communityCards = new CardList(true); // 5 community cards that make up the river
     protected ArrayList<HoldemPlayer> activePlayers = new ArrayList<>(); // List of players who haven't folded
+    protected ArrayList<HoldemPlayer> winners = new ArrayList<>();
+    protected boolean tie;
 
     private final Scanner advanceIn = new Scanner(System.in);
     private boolean betMade; // Keeps track of if a bet has been made to change raise / bet prompt
@@ -100,9 +100,9 @@ public class Holdem extends CardGame {
         // Reset players for next round
         for (Player p : playerList) { // For all the players...
             HoldemPlayer hp = (HoldemPlayer) p; // Type casting for HoldemPlayer method calls
-            pot += hp.handChips.chipAmount; // Add their chips into the pot
+            pot.addChips(hp.handChips.chipAmount); // Add their chips into the pot
             hp.handChips.setChips(0); // Reset what they have up to 0
-            hp.maxRoundChips = hp.bank.chipAmount;
+            hp.maxRoundChips = hp.chipBank.chipAmount;
             hp.currentAction = ""; // Erase current action
         }
         // Reset bets for next round
@@ -196,13 +196,32 @@ public class Holdem extends CardGame {
         river();
         gameState = HoldemState.FINAL_BET;
         bettingRound();
-        Map<Integer, Hand> playerHands = new HashMap<>();
+        int highHandVal = -1;
         for (Player p : playerList) {
             HoldemPlayer hp = (HoldemPlayer) p;
-            HoldemHandValue playerHandValue = new HoldemHandValue(hp, communityCards);
-            playerHands.put(playerHandValue.player.playerID, playerHandValue.hand);
+            hp.assignHandValue(communityCards);
+            System.out.println("Player " + hp.playerID + " got a " + hp.handValue + "\nHand: " + hp.cards + "\n");
+            if (highHandVal < hp.getHandValue()) {
+                highHandVal = hp.getHandValue();
+                winners.clear();
+                winners.add(hp);
+            }
+            else if (highHandVal == hp.getHandValue()) {
+                if (winners.get(0).highCard.value < hp.highCard.value) {
+                    winners.clear();
+                    winners.add(hp);
+                }
+                else {
+                    winners.add(hp);
+                }
+            }
         }
-        System.out.println(playerHands);
+        int take = pot.chipAmount / winners.size();
+        for (HoldemPlayer winner : winners) {
+            System.out.println("Player " + winner.playerID + " wins! +" + take + " chips.");
+            winner.chipBank.addChips(take);
+            System.out.println(winner.chipBank.chipAmount);
+        }
     }
 
     public void consoleOut() {

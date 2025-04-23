@@ -6,8 +6,9 @@
 
 public abstract class Player {
     protected int playerID; // The player's ID
+    protected int money;
     protected CardList cards; // A card list, the player's hand
-    protected ChipStack bank; // Amount of chips (Will probably be an object later, this is a placeholder)
+    protected ChipStack chipBank; // Amount of chips (Will probably be an object later, this is a placeholder)
     protected boolean isMain; // Is the player the user?
 
     /**
@@ -17,7 +18,7 @@ public abstract class Player {
      */
     public Player (int chips, boolean isMain) {
         this.isMain = isMain;
-        bank = new ChipStack(chips);
+        chipBank = new ChipStack(chips);
         cards = new CardList(true); // Create new empty hand for the player
     }
 
@@ -27,6 +28,6 @@ public abstract class Player {
      */
     @Override
     public String toString() {
-        return "\nPlayer " + playerID + "\nBank: " + bank.chipAmount;
+        return "\nPlayer " + playerID + "\nBank: " + chipBank.chipAmount;
     }
 }

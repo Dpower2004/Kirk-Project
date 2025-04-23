@@ -19,7 +19,6 @@ public final class HoldemHandValue {
         combinedList = new ArrayList<>(player.cards.getCardList());
         combinedList.addAll(communityCards.getCardList());
         sortAll();
-        System.out.println(combinedList);
         valueHand();
     }
 
