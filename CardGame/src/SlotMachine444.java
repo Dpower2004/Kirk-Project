@@ -33,7 +33,7 @@ public class SlotMachine444 extends Application {
 
     private ImageView[] reelImages;   // array to hold the three reel image views
     private TextField betInput;       
-        private Label balanceLabel;       // Label displaying current balance
+        private Label balanceLabel;       // label displaying current balance
     private Label resultLabel;       
     private Random random;            // Random number generator for symbol selection
     //ill change this once we have the bank and real balance
