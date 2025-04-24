@@ -1,3 +1,4 @@
+import java.io.File;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -14,8 +15,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.scene.media.AudioClip;
+
 
 import java.util.Random;
+import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  *once we have a bank, ill add a refrence to a bank system and a contructor to recieve it 
@@ -30,19 +35,38 @@ public class SlotMachine444 extends Application {
     {
         "cherry.png", "lemon.png", "orange.png", "grape.png", "kirkDealer.png"
     };
+    
+    // Probability weights for each symbol
+    private static final double[] SYMBOL_WEIGHTS = {
+        0.35,  // cherry - common
+        0.30,  // lemon  
+        0.20,  // orange
+        0.10,  // grape
+        0.05   // kirkDealer - rare but achievable
+    };
+    
+    // Probability to enforce three different symbols (40% chance)
+        private static final double THREE_DIFFERENT_SYMBOLS_PROBABILITY = 0.40;
+    
+    // Probability of including kirkDealer in the symbol selection when doing three different symbols
+    // This gives kirkDealer a chance to appear even in the "three different" scenario
+    private static final double KIRK_DEALER_IN_DIFFERENT_PROBABILITY = 0.15;
 
     private ImageView[] reelImages;   // array to hold the three reel image views
     private TextField betInput;       
-        private Label balanceLabel;       // label displaying current balance
+    private Label balanceLabel;       // Label displaying current balance
     private Label resultLabel;       
-    private Random random;            // Random number generator for symbol selection
+    private Random random;  // Random number generator for symbol selection
+
+    private AudioClip spinSound;           
     //ill change this once we have the bank and real balance
     private double balance = 10000000; // Initial player balance (placeholder value)
 
     @Override
     public void start(Stage primaryStage) 
     {
-        random = new Random();                  // Initialize random number generator
+        random = new Random();   
+        spinSound = new AudioClip(new File("spin_sound_trimmed.mp3").toURI().toString());              // Initialize random number generator
         reelImages = new ImageView[3];          // Create array for 3 reel images
 
         primaryStage.setTitle("Slot Machine");  // Set window title
@@ -91,7 +115,7 @@ public class SlotMachine444 extends Application {
 
         // Container for bet label and input field
         HBox betBox = new HBox(15);              
-                betBox.setAlignment(Pos.CENTER);         // Center align contents
+        betBox.setAlignment(Pos.CENTER);         // Center align contents
 
         // Create and style bet label
         Label betLabel = new Label("Your Bet: $");
@@ -119,9 +143,40 @@ public class SlotMachine444 extends Application {
         BorderPane.setMargin(controlsBox, new Insets(40, 0, 0, 0)); // Add margin above controls
 
         // Create the main scene and set it on the stage
-        Scene scene = new Scene(root, 1366, 768);
+        Scene scene = new Scene(root, 1280, 720);
         primaryStage.setScene(scene);
         primaryStage.show();                     // Display the window
+    }
+
+    /**
+     * Returns a random symbol index based on the defined probability weights
+     */
+    private int getWeightedRandomSymbol() {
+        double random = this.random.nextDouble();
+        double cumulativeProbability = 0.0;
+        
+        for (int i = 0; i < SYMBOL_WEIGHTS.length; i++) {
+            cumulativeProbability += SYMBOL_WEIGHTS[i];
+            if (random < cumulativeProbability) {
+                return i;
+            }
+        }
+        
+        // Fallback (shouldn't happen if weights sum to 1)
+        return 0;
+    }
+    
+    /**
+     * Returns a random symbol index (0-4) with adjustable chance for kirkDealer
+     */
+    private int getRandomSymbol(boolean allowKirkDealer) {
+        // If kirkDealer is allowed and we roll the probability check
+        if (allowKirkDealer && random.nextDouble() < KIRK_DEALER_IN_DIFFERENT_PROBABILITY) {
+            return 4; // Return kirkDealer index
+        } else {
+            // Only include indices 0-3 (fruits)
+            return random.nextInt(4);
+        }
     }
 
     /**
@@ -147,6 +202,7 @@ public class SlotMachine444 extends Application {
 
             // Deduct bet from balance
             balance -= betAmount;
+            spinSound.play();
             // Update balance display
             balanceLabel.setText("Balance: $" + String.format("%.2f", balance));
             // Show spinning message
@@ -154,13 +210,38 @@ public class SlotMachine444 extends Application {
 
             // Start the reels animation
             animateReels(() -> {
-                // Generate random results for each reel
                 int[] results = new int[3];
-                for (int i = 0; i < 3; i++) {
-                    // Pick a random symbol index
-                    results[i] = random.nextInt(SYMBOL_FILES.length);
-                    // Set the image for this reel
-                    reelImages[i].setImage(new Image("file:" + SYMBOL_FILES[results[i]]));
+                
+                // Determine if this spin will have three different symbols (40% chance)
+                boolean isThreeDifferentSymbols = random.nextDouble() < THREE_DIFFERENT_SYMBOLS_PROBABILITY;
+                
+                if (isThreeDifferentSymbols) {
+                    // Create a set to track which symbols we've already selected
+                    HashSet<Integer> selectedSymbols = new HashSet<>();
+                    
+                    // For each reel
+                    for (int i = 0; i < 3; i++) {
+                        int symbolIndex;
+                        
+                        // Keep generating random symbols until we get one we haven't used yet
+                        do {
+                            // Allow kirkDealer to possibly appear in the mix
+                            symbolIndex = getRandomSymbol(true);
+                        } while (selectedSymbols.contains(symbolIndex));
+                        
+                        // Add this symbol to our selected set
+                        selectedSymbols.add(symbolIndex);
+                        
+                        // Set this reel to show the symbol
+                        results[i] = symbolIndex;
+                        reelImages[i].setImage(new Image("file:" + SYMBOL_FILES[symbolIndex]));
+                    }
+                } else {
+                    // Generate results using weighted probability
+                    for (int i = 0; i < 3; i++) {
+                        results[i] = getWeightedRandomSymbol();
+                        reelImages[i].setImage(new Image("file:" + SYMBOL_FILES[results[i]]));
+                    }
                 }
 
                 // Calculate winnings based on results
@@ -191,7 +272,7 @@ public class SlotMachine444 extends Application {
      */
     private void animateReels(Runnable onFinished) {
         Timeline timeline = new Timeline();  // Create animation timeline
-        int cycles = 20;                     // Number of animation frames
+        int cycles = 30;                     // Number of animation frames
 
         // Create animation frames
         for (int i = 0; i < cycles; i++) {
@@ -200,7 +281,7 @@ public class SlotMachine444 extends Application {
             timeline.getKeyFrames().add(new KeyFrame(Duration.millis(i * 75), e -> {
                 // For each reel, show a random symbol during animation
                 for (int j = 0; j < reelImages.length; j++) {
-                    int symbolIndex = random.nextInt(SYMBOL_FILES.length);
+                    int symbolIndex = getWeightedRandomSymbol();
                     reelImages[j].setImage(new Image("file:" + SYMBOL_FILES[symbolIndex]));
                 }
             }));
@@ -234,17 +315,17 @@ public class SlotMachine444 extends Application {
                 switch (i) 
                 {
                     case 0: return betAmount * 3;   // cherry - 3x multiplier
-                   case 1: return betAmount * 5;   // lemon - 5x multiplier
+                    case 1: return betAmount * 5;   // lemon - 5x multiplier
                     case 2: return betAmount * 8;   // orange - 8x multiplier
                     case 3: return betAmount * 10;  // grape - 10x multiplier
-                    case 4: return betAmount *  30;  // kirkDealer - 30x multiplier
+                    case 4: return betAmount * 30;  // kirkDealer - 30x multiplier
                 }
             }
         }
 
         // Check for double matches (2 of the same symbol)
-        if (counts[0] == 2) return betAmount * 0.1;  // 2 cherries - 10% return
-        if (counts[1] == 2) return betAmount * 0.2;  // 2 lemons - 20% return
+        if (counts[0] == 2) return betAmount * 0.15;  // 2 cherries - 15% return
+        if (counts[1] == 2) return betAmount * 0.25;  // 2 lemons - 25% return
         if (counts[2] == 2) return betAmount * 0.3;  // 2 oranges - 30% return
         if (counts[3] == 2) return betAmount * 0.4;  // 2 grapes - 40% return
 
@@ -260,5 +341,5 @@ public class SlotMachine444 extends Application {
      */
     public static void main(String[] args) {
         launch(args);  
-            }
+    }
 }
