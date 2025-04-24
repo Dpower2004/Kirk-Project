@@ -61,7 +61,8 @@ public class SlotMachine444 extends Application {
     private Label resultLabel;       
     private Random random;  // Random number generator for symbol selection
 
-    private AudioClip spinSound;           
+    private AudioClip spinSound;
+    private AudioClip loseSound;           
     //ill change this once we have the bank and real balance
     private double balance = 1000; // Initial player balance (placeholder value)
 
@@ -69,7 +70,9 @@ public class SlotMachine444 extends Application {
     public void start(Stage primaryStage) 
     {
         random = new Random();   
-        spinSound = new AudioClip(new File("spin_sound_trimmed.mp3").toURI().toString());              // Initialize random number generator
+        spinSound = new AudioClip(new File("spin_sound_trimmed.mp3").toURI().toString());  
+        loseSound = new AudioClip(new File("youtube__asNhzXq72w_audio.mp3").toURI().toString());        
+            // Initialize random number generator
         reelImages = new ImageView[3];          // Create array for 3 reel images
 
         primaryStage.setTitle("Slot Machine");  // Set window title
@@ -226,30 +229,28 @@ public class SlotMachine444 extends Application {
                 double spinType = random.nextDouble();
 
                 // Force three different symbols (25% chance)
-                if (spinType < THREE_DIFFERENT_SYMBOLS_PROBABILITY) 
-                {
-                    // Create a set to track which symbols we've already selected
-                    HashSet<Integer> selectedSymbols = new HashSet<>();
-                    
-                    // For each reel
-                    for (int i = 0; i < 3; i++) 
-                    {
-                        int symbolIndex;
-                        
-                        // Keep generating random symbols until we get one we haven't used yet
-                        do {
-                            // Allow kirkDealer to possibly appear in the mix
-                            symbolIndex = getRandomSymbol(true);
-                        } while (selectedSymbols.contains(symbolIndex));
-                        
-                        // Add this symbol to our selected set
-                        selectedSymbols.add(symbolIndex);
-                        
-                        // Set this reel to show the symbol
-                        results[i] = symbolIndex;
-                        reelImages[i].setImage(new Image("file:" + SYMBOL_FILES[symbolIndex]));
-                    }
-                } 
+               if (spinType < THREE_DIFFERENT_SYMBOLS_PROBABILITY) 
+{
+    // Create a set to track which symbols we've already selected
+    HashSet<Integer> selectedSymbols = new HashSet<>();
+
+    // For each reel
+    for (int i = 0; i < 3; i++) 
+    {
+        int symbolIndex;
+        // Keep generating random symbols until we get one we haven't used yet
+        do {
+            symbolIndex = getRandomSymbol(true);
+        } while (selectedSymbols.contains(symbolIndex));
+        
+        selectedSymbols.add(symbolIndex);
+        results[i] = symbolIndex;
+        reelImages[i].setImage(new Image("file:" + SYMBOL_FILES[symbolIndex]));
+    }
+
+    // All 3 are guaranteed to be different, so it's a loss
+    loseSound.play();
+} 
                 //  Force three matching symbols (25% chance)
                 else if (spinType < THREE_DIFFERENT_SYMBOLS_PROBABILITY + THREE_MATCHING_SYMBOLS_PROBABILITY) {
                     // Select one random symbol using weighted probabilities
