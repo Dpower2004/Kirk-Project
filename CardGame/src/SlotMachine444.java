@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
-//Shaina Xhelilaj
+
  *once we have a bank, ill add a refrence to a bank system and a contructor to recieve it 
  *going to add some sort of help box to learn how to play, and some sound effects
  *also going to adjust the layout once the background is finisb
