@@ -8,20 +8,19 @@ import java.util.Scanner;
  */
 
 public class Holdem extends CardGame {
-    protected boolean finishGame;
-    protected HoldemState gameState; // Game state
+    protected HoldemState gameState; // Enum representing the state of the game
 
     protected int highBet; // Current highest bet for a round. Contains big blind at start
     protected ChipStack pot = new ChipStack(0); // Total pot that is taken at the end of each game
 
-    protected CardList communityCards = new CardList(true); // 5 community cards that make up the river
+    protected CardList communityCards = new CardList(true); // 5 community cards that make up the river. Start empty
     protected ArrayList<HoldemPlayer> activePlayers = new ArrayList<>(); // List of players who haven't folded
-    protected ArrayList<HoldemPlayer> winners = new ArrayList<>();
-    protected boolean tie;
+    protected ArrayList<HoldemPlayer> winners = new ArrayList<>(); // List of players who split the pot at the end of the game
 
-    private final Scanner advanceIn = new Scanner(System.in);
+    private final Scanner advanceIn = new Scanner(System.in); // Used for advancing the game by pressing enter
     private boolean betMade; // Keeps track of if a bet has been made to change raise / bet prompt
-    private boolean allIn;
+    private boolean allIn; // Keeps track of if a player has gone all in. I didn't have time to implement side pots. If someone
+                           // goes all in, no more betting happens and the round advances to the end of the game
 
     /**
      * Constructor for a round of texas holdem
@@ -156,7 +155,7 @@ public class Holdem extends CardGame {
     public int getBet(HoldemPlayer currentPlayer) {
         int bet;
         if (currentPlayer.isMain) {
-            bet = currentPlayer.promptAmount(); // Get the bet to be put up
+            bet = currentPlayer.promptAmount(highBet); // Get the bet to be put up
         }
         else {
             bet = currentPlayer.cpuBet(highBet);
@@ -226,19 +225,25 @@ public class Holdem extends CardGame {
         for (Player p : activePlayers) {
             HoldemPlayer hp = (HoldemPlayer) p;
             hp.assignHandValue(communityCards);
-            System.out.println("Player " + hp.playerID + " got a " + hp.handValue + "\nHand: " + hp.cards + "\n");
-            if (highHandVal < hp.getHandValue()) {
+            System.out.println("Player " + hp.playerID + " got a " + hp.handValue + "\nHand: " + hp.cards + "\nHigh Card: " + hp.highCard + "\n");
+            if (hp.getHandValue() > highHandVal) {
                 highHandVal = hp.getHandValue();
                 winners.clear();
                 winners.add(hp);
             }
-            else if (highHandVal == hp.getHandValue()) {
+            else if (hp.getHandValue() == highHandVal) {
                 if (winners.get(0).highCard.value < hp.highCard.value) {
                     winners.clear();
                     winners.add(hp);
                 }
-                else {
-                    winners.add(hp);
+                else if (winners.get(0).highCard.value == hp.highCard.value) {
+                    if (winners.get(0).secondHighCard.value < hp.secondHighCard.value) {
+                        winners.clear();
+                        winners.add(hp);
+                    }
+                    else if (winners.get(0).secondHighCard.value == hp.secondHighCard.value) {
+                        winners.add(hp);
+                    }
                 }
             }
         }
@@ -302,5 +307,51 @@ public class Holdem extends CardGame {
     @Override
     public String toString() {
         return super.toString() + "Pot: " + pot + "\nCommunity Cards: " + communityCards + "\nDeck: " + super.deck;
+    }
+
+    
+    public void test() {
+        for (int i = 0; i < playerList.length ; i++) { // Cycle through all players to set up blinds
+            playerList[i].playerID = i;
+            HoldemPlayer currentPlayer = (HoldemPlayer) playerList[i]; // Type casting for HoldemPlayer method calls
+            activePlayers.add(currentPlayer); // Add all players to active players arrayList
+        }
+        activePlayers.get(0).cards.add(new Card("9", "H"));
+        activePlayers.get(0).cards.add(new Card("A", "C"));
+        activePlayers.get(1).cards.add(new Card("Q", "C"));
+        activePlayers.get(1).cards.add(new Card("A", "H"));
+        communityCards.add(new Card("5", "D"));
+        communityCards.add(new Card("8", "H"));
+        communityCards.add(new Card("5", "C"));
+        communityCards.add(new Card("3", "S"));
+        communityCards.add(new Card("3", "H"));
+        System.out.println(communityCards);
+        int highHandVal = -1;
+        for (Player p : activePlayers) {
+            HoldemPlayer hp = (HoldemPlayer) p;
+            hp.assignHandValue(communityCards);
+            System.out.println("Player " + hp.playerID + " got a " + hp.handValue + "\nHand: " + hp.cards + "\nHigh Card: " + hp.highCard + "\n");
+            if (hp.getHandValue() > highHandVal) {
+                highHandVal = hp.getHandValue();
+                winners.clear();
+                winners.add(hp);
+            }
+            else if (hp.getHandValue() == highHandVal) {
+                if (winners.get(0).highCard.value < hp.highCard.value) {
+                    winners.clear();
+                    winners.add(hp);
+                }
+                else if (winners.get(0).highCard.value == hp.highCard.value) {
+                    if (winners.get(0).secondHighCard.value < hp.secondHighCard.value) {
+                        winners.clear();
+                        winners.add(hp);
+                    }
+                    else if (winners.get(0).secondHighCard.value == hp.secondHighCard.value) {
+                        winners.add(hp);
+                    }
+                }
+            }
+        }
+        showWinner();
     }
 }

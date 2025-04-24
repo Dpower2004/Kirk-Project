@@ -13,7 +13,7 @@ public class HoldemPlayer extends Player {
     protected int maxRoundChips = chipBank.chipAmount;
     protected Hand handValue;
     protected Card highCard;
-    protected Card matchCard;
+    protected Card secondHighCard;
 
     private Scanner input; // User input
 
@@ -89,8 +89,8 @@ public class HoldemPlayer extends Player {
         return currentAction;
     }
 
-    public int promptAmount() {
-        int bet = InputValidator.validateBet(input, "Amount: ", chipBank.chipAmount);
+    public int promptAmount(int highBet) {
+        int bet = InputValidator.validateBet(input, "Amount: ", chipBank.chipAmount, highBet);
         return bet;
     }
 
@@ -108,9 +108,9 @@ public class HoldemPlayer extends Player {
 
     public void assignHandValue(CardList communityCards) {
         HoldemHandValue value = new HoldemHandValue(this, communityCards);
-        handValue = value.hand;
+        handValue = value.handValue;
         highCard = value.highCard;
-        matchCard = value.matchCard;
+        secondHighCard = value.secondHighCard;
     }
 
     public int getHandValue() {
