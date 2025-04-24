@@ -37,7 +37,8 @@ public class SlotMachine444 extends Application {
     };
     
     // Probability weights for each symbol
-    private static final double[] SYMBOL_WEIGHTS = {
+    private static final double[] SYMBOL_WEIGHTS = 
+    {
         0.35,  // cherry - common
         0.30,  // lemon  
         0.20,  // orange
@@ -45,11 +46,13 @@ public class SlotMachine444 extends Application {
         0.05   // kirkDealer - rare but achievable
     };
     
-    // Probability to enforce three different symbols (40% chance)
-        private static final double THREE_DIFFERENT_SYMBOLS_PROBABILITY = 0.40;
+    //  0.25 to allow more matching possibilities
+    private static final double THREE_DIFFERENT_SYMBOLS_PROBABILITY = 0.25;
     
-    // Probability of including kirkDealer in the symbol selection when doing three different symbols
-    // This gives kirkDealer a chance to appear even in the "three different" scenario
+    //  Add probability to force three matching symbols (25% chance)
+    private static final double THREE_MATCHING_SYMBOLS_PROBABILITY = 0.25;
+    
+        // This gives kirkDealer a chance to appear even in the "three different" scenario
     private static final double KIRK_DEALER_IN_DIFFERENT_PROBABILITY = 0.15;
 
     private ImageView[] reelImages;   // array to hold the three reel image views
@@ -60,7 +63,7 @@ public class SlotMachine444 extends Application {
 
     private AudioClip spinSound;           
     //ill change this once we have the bank and real balance
-    private double balance = 10000000; // Initial player balance (placeholder value)
+    private double balance = 1000; // Initial player balance (placeholder value)
 
     @Override
     public void start(Stage primaryStage) 
@@ -151,13 +154,16 @@ public class SlotMachine444 extends Application {
     /**
      * Returns a random symbol index based on the defined probability weights
      */
-    private int getWeightedRandomSymbol() {
+    private int getWeightedRandomSymbol()
+     {
         double random = this.random.nextDouble();
         double cumulativeProbability = 0.0;
         
-        for (int i = 0; i < SYMBOL_WEIGHTS.length; i++) {
+        for (int i = 0; i < SYMBOL_WEIGHTS.length; i++)
+         {
             cumulativeProbability += SYMBOL_WEIGHTS[i];
-            if (random < cumulativeProbability) {
+            if (random < cumulativeProbability) 
+            {
                 return i;
             }
         }
@@ -169,11 +175,14 @@ public class SlotMachine444 extends Application {
     /**
      * Returns a random symbol index (0-4) with adjustable chance for kirkDealer
      */
-    private int getRandomSymbol(boolean allowKirkDealer) {
+    private int getRandomSymbol(boolean allowKirkDealer)
+     {
         // If kirkDealer is allowed and we roll the probability check
-        if (allowKirkDealer && random.nextDouble() < KIRK_DEALER_IN_DIFFERENT_PROBABILITY) {
+        if (allowKirkDealer && random.nextDouble() < KIRK_DEALER_IN_DIFFERENT_PROBABILITY)
+         {
             return 4; // Return kirkDealer index
-        } else {
+        } else 
+        {
             // Only include indices 0-3 (fruits)
             return random.nextInt(4);
         }
@@ -195,7 +204,8 @@ public class SlotMachine444 extends Application {
             }
 
             // Check if player has enough balance
-            if (betAmount > balance) {
+            if (betAmount > balance) 
+            {
                 resultLabel.setText("Not enough money! Your balance is $" + String.format("%.2f", balance));
                 return;
             }
@@ -212,15 +222,18 @@ public class SlotMachine444 extends Application {
             animateReels(() -> {
                 int[] results = new int[3];
                 
-                // Determine if this spin will have three different symbols (40% chance)
-                boolean isThreeDifferentSymbols = random.nextDouble() < THREE_DIFFERENT_SYMBOLS_PROBABILITY;
-                
-                if (isThreeDifferentSymbols) {
+                // Random number to determine spin type
+                double spinType = random.nextDouble();
+
+                // Force three different symbols (25% chance)
+                if (spinType < THREE_DIFFERENT_SYMBOLS_PROBABILITY) 
+                {
                     // Create a set to track which symbols we've already selected
                     HashSet<Integer> selectedSymbols = new HashSet<>();
                     
                     // For each reel
-                    for (int i = 0; i < 3; i++) {
+                    for (int i = 0; i < 3; i++) 
+                    {
                         int symbolIndex;
                         
                         // Keep generating random symbols until we get one we haven't used yet
@@ -236,9 +249,25 @@ public class SlotMachine444 extends Application {
                         results[i] = symbolIndex;
                         reelImages[i].setImage(new Image("file:" + SYMBOL_FILES[symbolIndex]));
                     }
-                } else {
+                } 
+                //  Force three matching symbols (25% chance)
+                else if (spinType < THREE_DIFFERENT_SYMBOLS_PROBABILITY + THREE_MATCHING_SYMBOLS_PROBABILITY) {
+                    // Select one random symbol using weighted probabilities
+                    int symbolIndex = getWeightedRandomSymbol();
+                    
+                    // Set all three reels to show this symbol
+                    for (int i = 0; i < 3; i++)
+                     {
+                        results[i] = symbolIndex;
+                        reelImages[i].setImage(new Image("file:" + SYMBOL_FILES[symbolIndex]));
+                    }
+                }
+                // Regular weighted spin (now 50% )
+                else {
                     // Generate results using weighted probability
-                    for (int i = 0; i < 3; i++) {
+                    for (int i = 0; i < 3; i++)
+                    
+                     {
                         results[i] = getWeightedRandomSymbol();
                         reelImages[i].setImage(new Image("file:" + SYMBOL_FILES[results[i]]));
                     }
