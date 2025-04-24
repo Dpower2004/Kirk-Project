@@ -280,7 +280,7 @@ public class SlotMachine444 extends Application {
                 // update display based on win/loss
                 if (winnings > 0) {
                     // Add winnings to balance
-                    balance += winnings;
+                    balance += winnings + betAmount;
                     resultLabel.setText("You won $" + String.format("%.2f", winnings) + "!");
                 } else {
                     resultLabel.setText("You lost $" + String.format("%.2f", betAmount));
