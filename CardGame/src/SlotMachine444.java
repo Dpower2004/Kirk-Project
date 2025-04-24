@@ -343,9 +343,9 @@ public class SlotMachine444 extends Application {
             {
                 switch (i) 
                 {
-                    case 0: return betAmount * 3;   // cherry - 3x multiplier
-                    case 1: return betAmount * 5;   // lemon - 5x multiplier
-                    case 2: return betAmount * 8;   // orange - 8x multiplier
+                    case 0: return betAmount * 2;   // cherry - 2x multiplier
+                    case 1: return betAmount * 3;   // lemon - 3x multiplier
+                    case 2: return betAmount * 5;   // orange - 5x multiplier
                     case 3: return betAmount * 10;  // grape - 10x multiplier
                     case 4: return betAmount * 30;  // kirkDealer - 30x multiplier
                 }
