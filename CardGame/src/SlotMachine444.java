@@ -40,9 +40,9 @@ public class SlotMachine444 extends Application {
     // Probability weights for each symbol
     private static final double[] SYMBOL_WEIGHTS = 
     {
-        0.35,  // cherry - common
-        0.30,  // lemon  
-        0.20,  // orange
+        0.20,  // cherry - common
+        0.15,  // lemon  
+        0.12,  // orange
         0.10,  // grape
         0.05   // kirkDealer - rare but achievable
     };
@@ -346,8 +346,8 @@ public class SlotMachine444 extends Application {
             {
                 switch (i) 
                 {
-                    case 0: return betAmount * 1.5;   // cherry - 2x multiplier
-                    case 1: return betAmount * 3;   // lemon - 3x multiplier
+                    case 0: return betAmount * 1.5;   // cherry - 1.5x multiplier
+                    case 1: return betAmount * 2;   // lemon - 2x multiplier
                     case 2: return betAmount * 5;   // orange - 5x multiplier
                     case 3: return betAmount * 10;  // grape - 10x multiplier
                     case 4: return betAmount * 30;  // kirkDealer - 30x multiplier
