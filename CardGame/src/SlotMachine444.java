@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
+//Shaina Xhelilaj
  *once we have a bank, ill add a refrence to a bank system and a contructor to recieve it 
  *going to add some sort of help box to learn how to play, and some sound effects
  *also going to adjust the layout once the background is finisb
@@ -50,7 +51,7 @@ public class SlotMachine444 extends Application {
     private static final double THREE_DIFFERENT_SYMBOLS_PROBABILITY = 0.25;
     
     //  Add probability to force three matching symbols (25% chance)
-    private static final double THREE_MATCHING_SYMBOLS_PROBABILITY = 0.25;
+    private static final double THREE_MATCHING_SYMBOLS_PROBABILITY = 0.20;
     
         // This gives kirkDealer a chance to appear even in the "three different" scenario
     private static final double KIRK_DEALER_IN_DIFFERENT_PROBABILITY = 0.15;
@@ -284,6 +285,7 @@ public class SlotMachine444 extends Application {
                     resultLabel.setText("You won $" + String.format("%.2f", winnings) + "!");
                 } else {
                     resultLabel.setText("You lost $" + String.format("%.2f", betAmount));
+                 loseSound.play();
                 }
 
                 // Update balance display
@@ -344,7 +346,7 @@ public class SlotMachine444 extends Application {
             {
                 switch (i) 
                 {
-                    case 0: return betAmount * 2;   // cherry - 2x multiplier
+                    case 0: return betAmount * 1.5;   // cherry - 2x multiplier
                     case 1: return betAmount * 3;   // lemon - 3x multiplier
                     case 2: return betAmount * 5;   // orange - 5x multiplier
                     case 3: return betAmount * 10;  // grape - 10x multiplier
