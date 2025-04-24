@@ -1,0 +1,705 @@
+//package KirksHouseofKards;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.stage.Stage;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
+import javafx.scene.media.AudioClip;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Random;
+import java.util.ArrayList;
+import java.util.HashSet;
+
+public class StartScreen extends Application {
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage stage) throws IOException {
+
+        final double SCREEN_WIDTH = 1280;
+        final double SCREEN_HEIGHT = 720;
+
+        final double MINI_SCREEN_WIDTH = 960;
+        final double MINI_SCREEN_HEIGHT = 540;
+
+
+
+
+        Button START = new Button("START");
+        START.setPrefSize(200,50);
+        /*Image startImage = new Image("file:icon.png");
+        ImageView startBI = new ImageView(startImage);
+        START.setGraphic(startBI);*/
+        START.setOnAction(e ->{
+            Scene gameScene = createGameSelectScene(stage);
+            stage.setScene(gameScene);
+        });
+
+        Button ACHIEVEMENTS = new Button("ACHIEVEMENTS");
+        ACHIEVEMENTS.setPrefSize(200,50);
+        /*Image AchievementImage = new Image("file:icon.png");
+        ImageView AchievementBI = new ImageView(AchievementImage);
+        ACHIEVEMENTS.setGraphic(AchievementBI);*/
+        ACHIEVEMENTS.setOnAction(e ->{
+
+        });
+
+        Button SAVE = new Button("SAVE");
+        SAVE.setPrefSize(200,50);
+        /*Image saveImage = new Image("file:icon.png");
+        ImageView SaveBI = new ImageView(saveImage);
+        SAVE.setGraphic(SaveBI);*/
+        SAVE.setOnAction(e ->{});
+
+        Button CLOSE = new Button("CLOSE");
+        CLOSE.setPrefSize(200,50);
+        /*Image image = new Image("file:icon.png");
+        ImageView startBI = new ImageView(image);
+        CLOSE.setGraphic(startBI);*/
+        CLOSE.setOnAction(e ->{
+            stage.close();
+        });
+
+
+
+
+        VBox OptionButtons = new VBox(25);
+        OptionButtons.getChildren().addAll(START,ACHIEVEMENTS,SAVE,CLOSE);
+        OptionButtons.setAlignment(Pos.BOTTOM_RIGHT);
+
+
+
+
+
+        VBox SCREEN = new VBox();
+        SCREEN.setPrefSize(1280,720);
+        SCREEN.getChildren().addAll(OptionButtons);
+
+        ImageView backgroundView = new ImageView(new Image("E_title.png"));
+        backgroundView.setPreserveRatio(false);
+        backgroundView.fitWidthProperty().bind(stage.widthProperty());
+        backgroundView.fitHeightProperty().bind(stage.heightProperty());
+
+
+        StackPane root = new StackPane();
+        root.getChildren().addAll(backgroundView, SCREEN);
+
+
+
+
+
+
+
+
+
+
+
+        Scene scene1 = new Scene(root,SCREEN_WIDTH,SCREEN_HEIGHT);
+
+        //Scene scene2 = new Scene(SCREEN,SCREEN_WIDTH,SCREEN_HEIGHT);
+        //Scene scene3 = new Scene(MINI_SCREEN_WIDTH,MINI_SCREEN_HEIGHT);
+        //Scene scene4 = new Scene(MINI_SCREEN_WIDTH,MINI_SCREEN_HEIGHT);
+
+
+
+
+
+
+
+        stage.setTitle("Krik's House of Kards");
+        stage.setScene(scene1);
+        stage.show();
+
+
+
+    }
+    public Scene createGameSelectScene(Stage stage) {
+        final double SCREEN_WIDTH = 1280;
+        final double SCREEN_HEIGHT = 720;
+
+        // Base root that allows layering
+        StackPane root = new StackPane();
+
+        // AnchorPane to place items at specific screen corners
+        AnchorPane gameLayer = new AnchorPane();
+        gameLayer.setPrefSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+
+        // Main game content
+        Button Achievement = new Button("Achievements");
+        Achievement.setLayoutX(100); // Place anywhere
+        Achievement.setLayoutY(100);
+
+        Button mainMenu = new Button("Main Menu");
+        AnchorPane.setTopAnchor(mainMenu, 20.0);
+        AnchorPane.setLeftAnchor(mainMenu, 20.0);
+
+        mainMenu.setOnAction(e -> {
+            try {
+                start(stage);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+
+
+        Button Bank = new Button("Bank");
+        AnchorPane.setTopAnchor(Bank, 20.0);
+        AnchorPane.setRightAnchor(Bank, 20.0);
+        // Create Bank popup
+        VBox popupBank = new VBox(10, new Label("Bank Menu"), new Button("Close"));
+        popupBank.setStyle("-fx-background-color: rgba(50, 50, 50, 0.9); -fx-padding: 20;");
+        popupBank.setMaxSize(960, 540);
+        popupBank.setVisible(false);
+        popupBank.setAlignment(Pos.CENTER);
+
+
+        Button increase10 = new Button();
+        Button decrease10 = new Button();
+        Button increase50 = new Button();
+        Button decrease50 = new Button();
+        Button increase250 = new Button();
+        Button decrease250 = new Button();
+        Button increase1000 = new Button();
+        Button decrease1000 = new Button();
+        Button buy = new Button("Buy");
+
+        Label chipsInCart = new Label("Chips in Cart");
+
+        popupBank.getChildren().addAll(increase10,increase50,increase250,increase1000,decrease10,decrease50,decrease250,decrease1000,buy);
+
+        // Bank button opens it
+        Bank.setOnAction(e -> {
+            popupBank.setVisible(true);
+        });
+
+        // Close button inside Bank popup
+        Button closeBank = (Button) popupBank.getChildren().get(1);
+        closeBank.setOnAction(e -> popupBank.setVisible(false));
+
+        // ⬇️ Popup overlay
+        VBox popup = new VBox(10, new Label("Paused"), new Button("Close"));
+        popup.setStyle("-fx-background-color: rgba(0, 0, 0, 0.8); -fx-padding: 20;");
+        popup.setMaxSize(960, 540);
+        popup.setVisible(false);
+
+        Button unlock1 = new Button("Unlock");
+        Button unlock2 = new Button("Unlock");
+        Button unlock3 = new Button("Unlock");
+        Button unlock4 = new Button("Unlock");
+        popup.getChildren().addAll(unlock1,unlock2,unlock3,unlock4);
+
+
+
+        // Popup control
+        Achievement.setOnAction(e -> popup.setVisible(true));
+        Button resume = (Button) popup.getChildren().get(1);
+        resume.setOnAction(e -> popup.setVisible(false));
+
+
+        Button playBlackJack = new Button("Play BlackJack");
+        playBlackJack.setPrefSize(100, 100);
+        playBlackJack.setLayoutX(600);
+        playBlackJack.setLayoutY(300);
+        playBlackJack.setOnAction(e -> {
+            Scene blackjackScene = createBlackJackScene(stage);
+            stage.setScene(blackjackScene);
+        });
+        
+        // Add Slot Machine button
+        Button playSlots = new Button("Play Slots");
+        playSlots.setPrefSize(100, 100);
+        playSlots.setLayoutX(750);
+        playSlots.setLayoutY(300);
+        playSlots.setOnAction(e -> {
+            Scene slotsScene = createSlotsScene(stage);
+            stage.setScene(slotsScene);
+        });
+
+        // ⬇️ Jukebox layout
+        Label jukeboxLabel = new Label("Kirk's Jukebox");
+        Button Song1 = new Button("Song1");
+        Button Song2 = new Button("Song2");
+        Button Song3 = new Button("Song3");
+        Button Song4 = new Button("Song4");
+
+        VBox jukebox = new VBox(10, jukeboxLabel, Song1, Song2, Song3, Song4);
+        jukebox.setStyle("-fx-background-color: rgba(255,255,255,0.1); -fx-padding: 10;");
+        jukebox.setPrefWidth(200);
+        jukebox.setAlignment(Pos.CENTER);
+
+        // Pin to bottom-right
+        AnchorPane.setBottomAnchor(jukebox, 20.0);
+        AnchorPane.setRightAnchor(jukebox, 20.0);
+
+        // Add all content to game layer
+        gameLayer.getChildren().addAll(Achievement, mainMenu, Bank, jukebox, playBlackJack, playSlots);
+
+
+
+        // StackPane layers it all
+        root.getChildren().addAll(gameLayer, popup, popupBank);
+
+        return new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
+    }
+
+    private Scene createBlackJackScene(Stage stage) {
+        final double SCREEN_WIDTH = 1280;
+        final double SCREEN_HEIGHT = 720;
+
+        StackPane root = new StackPane();
+        Pane gameContent = new Pane();
+        gameContent.setPrefSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+
+        // Game variables (wrapper so we can update inside lambdas)
+        final BlackjackPlayer[] player = new BlackjackPlayer[1];
+        final Blackjack[] game = new Blackjack[1];
+        final BlackjackPlayer[] dealer = new BlackjackPlayer[1];
+
+        // Labels
+        Label dealerLabel = new Label("Dealer: ");
+        dealerLabel.setLayoutX(50);
+        dealerLabel.setLayoutY(50);
+
+        Label playerLabel = new Label("Player: ");
+        playerLabel.setLayoutX(50);
+        playerLabel.setLayoutY(100);
+
+        Label statusLabel = new Label("");
+        statusLabel.setLayoutX(50);
+        statusLabel.setLayoutY(300);
+
+        // Buttons
+        Button hitButton = new Button("Hit");
+        hitButton.setLayoutX(50);
+        hitButton.setLayoutY(200);
+
+        Button standButton = new Button("Stand");
+        standButton.setLayoutX(120);
+        standButton.setLayoutY(200);
+
+        Button playAgainButton = new Button("Play Again");
+        playAgainButton.setLayoutX(200);
+        playAgainButton.setLayoutY(200);
+        playAgainButton.setVisible(false);
+
+        Button closeButton = new Button("Close");
+        closeButton.setLayoutX(1200);
+        closeButton.setLayoutY(650);
+
+        // Method to update card labels
+        Runnable updateUI = () -> {
+            dealerLabel.setText("Dealer: [" + dealer[0].cards.getCard(0) + ", ?]");
+            playerLabel.setText("Player: " + player[0].cards.toString() + " (Score: " + player[0].getScore() + ")");
+        };
+
+        // Reset and start a new game
+        Runnable resetGame = () -> {
+            player[0] = new BlackjackPlayer(100, true);
+            Player[] players = new Player[] { player[0] };
+            game[0] = new Blackjack(players);
+            game[0].setup();
+            dealer[0] = game[0].getDealer();
+
+            updateUI.run();
+            statusLabel.setText("");
+            hitButton.setDisable(false);
+            standButton.setDisable(false);
+            playAgainButton.setVisible(false);
+        };
+
+        // Start first game
+        resetGame.run();
+
+        // Hit logic
+        hitButton.setOnAction(e -> {
+            Card card = game[0].deck.getCard(0);
+            player[0].cards.add(card);
+            game[0].deck.remove(card);
+            updateUI.run();
+
+            if (player[0].getScore() > 21) {
+                statusLabel.setText("You bust!");
+                hitButton.setDisable(true);
+                standButton.setDisable(true);
+                playAgainButton.setVisible(true);
+            }
+        });
+
+        // Stand logic
+        standButton.setOnAction(e -> {
+            while (dealer[0].getScore() < 17) {
+                Card card = game[0].deck.getCard(0);
+                dealer[0].cards.add(card);
+                game[0].deck.remove(card);
+            }
+
+            int playerScore = player[0].getScore();
+            int dealerScore = dealer[0].getScore();
+
+            dealerLabel.setText("Dealer: " + dealer[0].cards + " (Score: " + dealerScore + ")");
+
+            if (playerScore > 21) {
+                statusLabel.setText("You bust!");
+            } else if (dealerScore > 21 || playerScore > dealerScore) {
+                statusLabel.setText("You win!");
+            } else if (playerScore == dealerScore) {
+                statusLabel.setText("Push.");
+            } else {
+                statusLabel.setText("You lose.");
+            }
+
+            hitButton.setDisable(true);
+            standButton.setDisable(true);
+            playAgainButton.setVisible(true);
+        });
+
+        // Play Again
+        playAgainButton.setOnAction(e -> resetGame.run());
+
+        // Close button returns to game select scene
+        closeButton.setOnAction(e -> stage.setScene(createGameSelectScene(stage))); // Replace with your real method
+
+        gameContent.getChildren().addAll(dealerLabel, playerLabel, statusLabel, hitButton, standButton, playAgainButton, closeButton);
+        root.getChildren().add(gameContent);
+
+        return new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
+    }
+
+    private Scene createSlotsScene(Stage stage) {
+        final double SCREEN_WIDTH = 1280;
+        final double SCREEN_HEIGHT = 720;
+        StackPane root = new StackPane();
+        
+        // Create the BorderPane for the slot machine layout
+        BorderPane slotMachineLayout = new BorderPane();
+        slotMachineLayout.setPadding(new Insets(40));
+        
+        // Create and style the header label
+        Label headerLabel = new Label("KIRK'S SLOT MACHINE");
+        headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 48));
+        slotMachineLayout.setTop(headerLabel);
+        BorderPane.setAlignment(headerLabel, Pos.CENTER);
+        BorderPane.setMargin(headerLabel, new Insets(0, 0, 50, 0));
+        
+        // Create container for the slot machine reels
+        HBox reelsBox = new HBox(80);
+        reelsBox.setAlignment(Pos.CENTER);
+        reelsBox.setPadding(new Insets(50));
+        
+        // Initialize the slot machine parameters
+        ImageView[] reelImages = new ImageView[3];
+        Random random = new Random();
+        double balance = 10000000; // Initial balance
+        
+        // Initialize audio for spin sound
+        AudioClip spinSound = null;
+        try {
+            spinSound = new AudioClip(new File("spin_sound_trimmed.mp3").toURI().toString());
+        } catch (Exception ex) {
+            System.out.println("Error loading sound file: " + ex.getMessage());
+        }
+        final AudioClip finalSpinSound = spinSound;
+        
+        // Symbol files and weights
+        final String[] SYMBOL_FILES = {
+            "cherry.png", "lemon.png", "orange.png", "grape.png", "kirkDealer.png"
+        };
+        
+        final double[] SYMBOL_WEIGHTS = {
+            0.35,  // cherry - common
+            0.30,  // lemon  
+            0.20,  // orange
+            0.10,  // grape
+            0.05   // kirkDealer - rare but achievable
+        };
+        
+        // Probability parameters
+        final double THREE_DIFFERENT_SYMBOLS_PROBABILITY = 0.40;
+        final double KIRK_DEALER_IN_DIFFERENT_PROBABILITY = 0.15;
+        
+        // Initialize each of the three reel image views
+        for (int i = 0; i < 3; i++) {
+            reelImages[i] = new ImageView();
+            reelImages[i].setFitWidth(150);
+            reelImages[i].setFitHeight(150);
+            reelsBox.getChildren().add(reelImages[i]);
+        }
+        
+        // Create and style the result message label
+        Label resultLabel = new Label("Place your bet and spin!");
+        resultLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+        
+        // Container for reels and result message
+        VBox centerBox = new VBox(40);
+        centerBox.setAlignment(Pos.CENTER);
+        centerBox.getChildren().addAll(reelsBox, resultLabel);
+        slotMachineLayout.setCenter(centerBox);
+        
+        // Create and style balance display label
+        Label balanceLabel = new Label("Balance: $" + String.format("%.2f", balance));
+        balanceLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+        
+        // Container for bet label and input field
+        HBox betBox = new HBox(15);
+        betBox.setAlignment(Pos.CENTER);
+        
+        // Create and style bet label
+        Label betLabel = new Label("Your Bet: $");
+        betLabel.setFont(Font.font("Arial", 20));
+        
+        // Create and style bet input field
+        TextField betInput = new TextField();
+        betInput.setFont(Font.font("Arial", 20));
+        betInput.setMaxWidth(200);
+        betInput.setPromptText("Enter bet");
+        
+        // Add label and input field to bet container
+        betBox.getChildren().addAll(betLabel, betInput);
+        
+        // Create and style spin button
+        Button spinButton = new Button("SPIN");
+        spinButton.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+        spinButton.setMinWidth(200);
+        spinButton.setMinHeight(60);
+        
+        // Return to main menu button
+        Button backButton = new Button("Return to Main Menu");
+        backButton.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+        backButton.setOnAction(e -> stage.setScene(createGameSelectScene(stage)));
+        
+        // Add all controls to a VBox
+        VBox controlsBox = new VBox(20);
+        controlsBox.setAlignment(Pos.CENTER);
+        controlsBox.getChildren().addAll(balanceLabel, betBox, spinButton, backButton);
+        slotMachineLayout.setBottom(controlsBox);
+        BorderPane.setMargin(controlsBox, new Insets(40, 0, 0, 0));
+        
+        // Method to get weighted random symbol
+        java.util.function.Supplier<Integer> getWeightedRandomSymbol = () -> {
+            double value = random.nextDouble();
+            double cumulativeProbability = 0.0;
+            
+            for (int i = 0; i < SYMBOL_WEIGHTS.length; i++) {
+                cumulativeProbability += SYMBOL_WEIGHTS[i];
+                if (value < cumulativeProbability) {
+                    return i;
+                }
+            }
+            
+            return 0; // Fallback
+        };
+        
+        // Method to get random symbol with kirk dealer possibility
+        java.util.function.BiFunction<Boolean, Integer, Integer> getRandomSymbol = (allowKirkDealer, excludeIndex) -> {
+            if (allowKirkDealer && random.nextDouble() < KIRK_DEALER_IN_DIFFERENT_PROBABILITY) {
+                return 4; // Return kirkDealer index
+            } else {
+                int symbolIndex;
+                do {
+                    symbolIndex = random.nextInt(4); // Only fruits (0-3)
+                } while (symbolIndex == excludeIndex);
+                return symbolIndex;
+            }
+        };
+        
+        // Method to calculate winnings
+        java.util.function.BiFunction<int[], Double, Double> calculateWinnings = (results, betAmount) -> {
+            // Count occurrences of each symbol
+            int[] counts = new int[SYMBOL_FILES.length];
+            for (int r : results) {
+                counts[r]++;
+            }
+            
+            // Check for triple match (3 of the same symbol)
+            for (int i = 0; i < counts.length; i++) {
+                if (counts[i] == 3) {
+                    switch (i) {
+                        case 0: return betAmount * 3;   // cherry - 3x multiplier
+                        case 1: return betAmount * 5;   // lemon - 5x multiplier
+                        case 2: return betAmount * 8;   // orange - 8x multiplier
+                        case 3: return betAmount * 10;  // grape - 10x multiplier
+                        case 4: return betAmount * 30;  // kirkDealer - 30x multiplier
+                    }
+                }
+            }
+            
+            // Check for double matches (2 of the same symbol)
+            if (counts[0] == 2) return betAmount * 0.15;  // 2 cherries - 15% return
+            if (counts[1] == 2) return betAmount * 0.25;  // 2 lemons - 25% return
+            if (counts[2] == 2) return betAmount * 0.3;   // 2 oranges - 30% return
+            if (counts[3] == 2) return betAmount * 0.4;   // 2 grapes - 40% return
+            if (counts[4] == 2) return betAmount * 5;     // 2 kirkDealers - 5x multiplier
+            
+            // No matches
+            return 0.0;  // Player loses their bet
+        };
+        
+        // Create a wrapper for the balance so it can be modified in lambda
+        final double[] balanceWrapper = { balance };
+        
+        // Spin button action
+        spinButton.setOnAction(e -> {
+            try {
+                // Parse bet amount from text field
+                double betAmount = Double.parseDouble(betInput.getText());
+                
+                // Validate bet is positive
+                if (betAmount <= 0) {
+                    resultLabel.setText("Please enter a valid bet amount!");
+                    return;
+                }
+                
+                // Check if player has enough balance
+                if (betAmount > balanceWrapper[0]) {
+                    resultLabel.setText("Not enough money! Your balance is $" + String.format("%.2f", balanceWrapper[0]));
+                    return;
+                }
+                
+                // Deduct bet from balance
+                balanceWrapper[0] -= betAmount;
+                if (finalSpinSound != null) {
+                    finalSpinSound.play();
+                }
+                
+                // Update balance display
+                balanceLabel.setText("Balance: $" + String.format("%.2f", balanceWrapper[0]));
+                
+                // Show spinning message
+                resultLabel.setText("Spinning...");
+                
+                // Start animation
+                Timeline timeline = new Timeline();
+                int cycles = 30;
+                
+                for (int i = 0; i < cycles; i++) {
+                    timeline.getKeyFrames().add(new KeyFrame(Duration.millis(i * 75), event -> {
+                        // For each reel, show a random symbol during animation
+                        for (int j = 0; j < reelImages.length; j++) {
+                            int symbolIndex = getWeightedRandomSymbol.get();
+                            try {
+                                reelImages[j].setImage(new Image("file:" + SYMBOL_FILES[symbolIndex]));
+                            } catch (Exception ex) {
+                                System.out.println("Error loading image: " + SYMBOL_FILES[symbolIndex]);
+                            }
+                        }
+                    }));
+                }
+                
+                // Set action to run when animation completes
+                timeline.setOnFinished(event -> {
+                    int[] results = new int[3];
+                    
+                    // Determine if this spin will have three different symbols (40% chance)
+                    boolean isThreeDifferentSymbols = random.nextDouble() < THREE_DIFFERENT_SYMBOLS_PROBABILITY;
+                    
+                    if (isThreeDifferentSymbols) {
+                        // Create a set to track which symbols we've already selected
+                        HashSet<Integer> selectedSymbols = new HashSet<>();
+                        
+                        // For each reel
+                        for (int i = 0; i < 3; i++) {
+                            int symbolIndex;
+                            
+                            // For first reel, choose any symbol
+                            if (i == 0) {
+                                symbolIndex = random.nextInt(5); // Any symbol including kirkDealer
+                            } else {
+                                // For subsequent reels, choose different symbols
+                                do {
+                                    // Allow kirkDealer to possibly appear in the mix
+                                    symbolIndex = getRandomSymbol.apply(true, -1);
+                                } while (selectedSymbols.contains(symbolIndex));
+                            }
+                            
+                            // Add this symbol to our selected set
+                            selectedSymbols.add(symbolIndex);
+                            
+                            // Set this reel to show the symbol
+                            results[i] = symbolIndex;
+                            try {
+                                reelImages[i].setImage(new Image("file:" + SYMBOL_FILES[symbolIndex]));
+                            } catch (Exception ex) {
+                                System.out.println("Error loading image: " + SYMBOL_FILES[symbolIndex]);
+                            }
+                        }
+                    } else {
+                        // Generate results using weighted probability
+                        for (int i = 0; i < 3; i++) {
+                            results[i] = getWeightedRandomSymbol.get();
+                            try {
+                                reelImages[i].setImage(new Image("file:" + SYMBOL_FILES[results[i]]));
+                            } catch (Exception ex) {
+                                System.out.println("Error loading image: " + SYMBOL_FILES[results[i]]);
+                            }
+                        }
+                    }
+                    
+                    // Calculate winnings based on results
+                    double winnings = calculateWinnings.apply(results, betAmount);
+                    
+                    // Update display based on win/loss
+                    if (winnings > 0) {
+                        // Add winnings to balance
+                        balanceWrapper[0] += winnings;
+                        resultLabel.setText("You won $" + String.format("%.2f", winnings) + "!");
+                    } else {
+                        resultLabel.setText("You lost $" + String.format("%.2f", betAmount));
+                    }
+                    
+                    // Update balance display
+                    balanceLabel.setText("Balance: $" + String.format("%.2f", balanceWrapper[0]));
+                });
+                
+                // Start the animation
+                timeline.play();
+                
+            } catch (NumberFormatException ex) {
+                // Handle case where input is not a valid number
+                resultLabel.setText("Please enter a valid number!");
+            }
+        });
+        
+        root.getChildren().add(slotMachineLayout);
+        
+        return new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
+    }
+    
+    private Scene createTexasHoldemScene(Stage stage) {
+        final double SCREEN_WIDTH = 1366;
+        final double SCREEN_HEIGHT = 768;
+        StackPane root = new StackPane();
+
+        Pane gameContent = new Pane();
+        gameContent.setPrefSize(1366, 768);
+
+        Button closeButton = new Button("Close");
+
+        Button hitButton = new Button("Hit");
+        Button standButton = new Button("Stand");
+        Button betIncrease = new Button("Increase Bet");
+        Button betDecrease = new Button("");
+
+        gameContent.getChildren().add(closeButton);
+        root.getChildren().addAll(gameContent);
+
+        return new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT); // use your defined width/height
+    }
+}
