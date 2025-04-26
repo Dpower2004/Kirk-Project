@@ -1,7 +1,7 @@
 /**
  * Class representing Blackjack player. It inherits the abstract player class 
  * @author Thomas Huber
- * @version 1.0
+ * @version 1.3
  */
 
 import java.util.Scanner;
@@ -16,6 +16,10 @@ public class BlackjackPlayer extends Player
      * Amount of chips computer bets
      */
     protected int comBetAmt;
+    /**
+     * boolean for if player is doubling down
+     */
+    protected boolean isDoubling;
 
     /**
      * Constructor for BlackjackPlayer
@@ -36,16 +40,19 @@ public class BlackjackPlayer extends Player
      * @return getScore() < 17 -- player hits if they're not main and score is < 17
      * OR input.equals("H") -- true if user is hitting (inputs H)
      */
-    public boolean isHitting()
+    public boolean isHitting(int chipAmount, int playerBet)
     {
         if (!isMain)
         {
             return getScore() < 17;// Dealer must hit if less than 17
             // Other computer players will also follow this behavior
         }
-        System.out.print("\nYour hand: " + cards + " (Score: " + getScore() + "). Hit or Stand? (H/S): ");
-        String input = scanner.nextLine().toUpperCase();
-        return input.equals("H");
+        String input = InputValidator.validateHitStandDouble("Hit, Stand or Double Down? (H/S/D): ", scanner);
+        if (input.equals("D"))
+        {
+            isDoubling = InputValidator.validateDoubleDown(chipAmount, playerBet);
+        }
+        return input.equals("H") || input.equals("D");
     }
 
     /**

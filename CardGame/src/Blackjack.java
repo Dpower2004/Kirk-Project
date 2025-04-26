@@ -3,7 +3,7 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * Class representing a game of Blackjack. It inherits the abstract game class.
  * @author Thomas Huber
- * @version 1.0
+ * @version 1.5
  */
 
 public class Blackjack extends CardGame
@@ -14,6 +14,7 @@ public class Blackjack extends CardGame
     private BlackjackPlayer dealer;
     private Scanner reader = new Scanner(System.in);
     private int playerBet = 5;
+    private boolean canDoubleDown = true;
 
     /**
      * Constructor for Blackjack object. Sends array of players to CardGame super class
@@ -42,6 +43,10 @@ public class Blackjack extends CardGame
         deck.remove(deck.getCard(0));
     }
 
+    /**
+     * Some logic to handle blackjack betting fucntionality
+     * @param bp the blackjack player in question
+     */
     public void bet(BlackjackPlayer bp)
     {
         if (bp.isMain == false)
@@ -63,8 +68,9 @@ public class Blackjack extends CardGame
     public void play()
     {
         // betting stuff
-        System.out.println("\nHow much would you like to bet? (Min = 5 chips, Max = 40 chips)");
-        playerBet = reader.nextInt();
+        playerBet = InputValidator.validateBJBet(reader, "\nHow much would you like to bet? (Min = 5 chips, Max = 40 chips) ", playerList[0].chipBank.chipAmount, 40, 5);
+        
+        // loop to show chips
         for (int i = 0; i < playerList.length; i++)
         {
             Player p = playerList[i];
@@ -74,25 +80,52 @@ public class Blackjack extends CardGame
             bet(bp);
             System.out.println("Player " + bp.playerID + "'s chips after bet: "+ bp.chipBank.chipAmount);
         }
-        System.out.println("\nDealer reveals a [" + dealer.cards.getCard(0) + "] ...");
+        //loop to show other player's initial hands
+        for (int i = 1; i < playerList.length; i++)
+        {
+            Player p = playerList[i];
+            BlackjackPlayer bp = (BlackjackPlayer) p;
+            System.out.println("Player " + bp.playerID + "'s intial hand: " + bp.cards + " (Score: " + bp.getScore() + ")");
+        }
+        Player main = playerList[0];
+        BlackjackPlayer bpMain = (BlackjackPlayer) main;
+        System.out.println("\nPlayer " + bpMain.playerID + "'s (your) intial hand: " + bpMain.cards + " (Score: " + bpMain.getScore() + ")");
+        System.out.println("Dealer reveals a [" + dealer.cards.getCard(0) + "] ...");
         for (int i = 0; i < playerList.length; i++) // for each player
         {
             Player p = playerList[i];
             BlackjackPlayer bp = (BlackjackPlayer) p;
             //bp.playerID = playerList[i].playerID + i + 1;
-            while (bp.isHitting())
+            while (bp.isHitting(bp.chipBank.chipAmount, playerBet))
             {
                 // add card from deck if hit
                 Card card = deck.getCard(0);
                 bp.cards.add(card);
                 deck.remove(card);
-                System.out.println("Player " + bp.playerID + " hits and gets " + card);
+                if (bp.isDoubling && canDoubleDown)
+                {
+                    System.out.println("Player " + bp.playerID + " doubles down and gets " + card);
+                    bp.chipBank.chipAmount = bp.chipBank.chipAmount - playerBet;
+                    playerBet = playerBet * 2;
+                    System.out.println("Player " + bp.playerID + "'s new bet: " + playerBet);
+                    System.out.println("Player " + bp.playerID + "'s new chip amount: " + bp.chipBank.chipAmount);
+                    canDoubleDown = false;
+                }
+                else
+                {
+                    System.out.println("Player " + bp.playerID + " hits and gets " + card);
+                }
+                if(bp.isMain)
+                {
+                    System.out.println("Player " + bp.playerID + "'s hand: " + bp.cards + " (Score: " + bp.getScore() + ")");
+                }
                 if (bp.getScore() > 21) // bust of score > 21
                 {
                     System.out.println("Player " + bp.playerID + " busts!");
                     break;
                 }
             }
+            System.out.println("\nPlayer " + bp.playerID + "'s hand: " + bp.cards + " (Score: " + bp.getScore() + ")");
         }
 
         // Dealer plays -- must hit if score < 17
