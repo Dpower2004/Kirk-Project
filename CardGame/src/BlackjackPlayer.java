@@ -12,6 +12,10 @@ public class BlackjackPlayer extends Player
      * Make Scanner object for BlackjackPlayer
      */
     private Scanner scanner;
+    /**
+     * Amount of chips computer bets
+     */
+    protected int comBetAmt;
 
     /**
      * Constructor for BlackjackPlayer
