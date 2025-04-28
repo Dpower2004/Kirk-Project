@@ -965,6 +965,7 @@ public class StartScreen extends Application {
         balanceLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
         Font myFont = Font.loadFont(getClass().getResourceAsStream("/fonts/Super-Mario-64-DS.ttf"), 24);
 
+
         // Container for bet label and input field
         HBox betBox = new HBox(15);
         betBox.setAlignment(Pos.CENTER);
