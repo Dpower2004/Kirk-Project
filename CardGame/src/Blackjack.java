@@ -1,8 +1,10 @@
+package KirksHouseofKards;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 /**
  * Class representing a game of Blackjack. It inherits the abstract game class.
  * @author Thomas Huber
+ *
  * @version 1.5
  */
 
@@ -192,5 +194,8 @@ public class Blackjack extends CardGame
                 System.out.println("Player " + bp.playerID + " chips: " + bp.chipBank.chipAmount);
             }
         }
+    }
+    public BlackjackPlayer getDealer(){
+        return dealer;
     }
 }
