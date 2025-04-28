@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
-
+//Shaina Xhelilaj
  *once we have a bank, ill add a refrence to a bank system and a contructor to recieve it 
  *going to add some sort of help box to learn how to play, and some sound effects
  *also going to adjust the layout once the background is finisb
@@ -80,35 +80,47 @@ public class SlotMachine444 extends Application {
 
         BorderPane root = new BorderPane();     // Main layout container 
         root.setPadding(new Insets(40));        // sdd padding around the borders
+         BackgroundImage backgroundImage = new BackgroundImage(
+        new Image("file:slots.png"),            BackgroundRepeat.NO_REPEAT, 
+        BackgroundRepeat.NO_REPEAT, 
+        BackgroundPosition.CENTER, 
+        new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true));
+    root.setBackground(new Background(backgroundImage));
+
 
         // Create and style the header label
         Label headerLabel = new Label("KIRK'S SLOT MACHINE");
         headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 48));//going to change this to mario
+        headerLabel.setTextFill(javafx.scene.paint.Color.WHITE);
         root.setTop(headerLabel);                              //  header at top of layout
         BorderPane.setAlignment(headerLabel, Pos.CENTER);      // Center align the header
         BorderPane.setMargin(headerLabel, new Insets(0, 0, 50, 0)); // Add margin below header
 
         // Create container for the slot machine reels
-        HBox reelsBox = new HBox(80);           // Horizontal box with 80px spacing
+        HBox reelsBox = new HBox(20);           // Horizontal box with 80px spacing
         reelsBox.setAlignment(Pos.CENTER);      // Center the reels
-        reelsBox.setPadding(new Insets(50));    // Add padding around reels
+        reelsBox.setPadding(new Insets(-400,-420,30,-50));    // Add padding around reels
 
         // Initialize each of the three reel image views
         for (int i = 0; i < 3; i++) 
         {
             reelImages[i] = new ImageView();     // Create new image view for each reel
-            reelImages[i].setFitWidth(150);      // set width of each reel image
-            reelImages[i].setFitHeight(150);     // Set height of each reel image
+            reelImages[i].setFitWidth(100);      // set width of each reel image
+            reelImages[i].setFitHeight(100);     // Set height of each reel image
             reelsBox.getChildren().add(reelImages[i]); // Add image to the reels container
         }
 
         // Create and style the result message label
         resultLabel = new Label("Place your bet and spin!");
         resultLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+        resultLabel.setTextFill(javafx.scene.paint.Color.RED);
+        resultLabel.setAlignment(Pos.CENTER); // Set alignment to center
+        resultLabel.setMinWidth(500);
 
         // Container for reels and result message
         VBox centerBox = new VBox(40);           // Vertical box with 40px spacing
-        centerBox.setAlignment(Pos.CENTER);      // Center align contents
+        centerBox.setAlignment(Pos.CENTER); 
+        centerBox.setPadding(new Insets(200,0,0,-100));     // Center align contents
         centerBox.getChildren().addAll(reelsBox, resultLabel); // Add reels and result label
         root.setCenter(centerBox);               // Place in center of main layout
 
@@ -117,8 +129,9 @@ public class SlotMachine444 extends Application {
         controlsBox.setAlignment(Pos.CENTER);    // Center align controls
 
         // Create and style balance display label
-        balanceLabel = new Label("Balance: $" + String.format("%.2f", balance));
+        balanceLabel = new Label("BALANCE: $" + String.format("%.2f", balance));
         balanceLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+        balanceLabel.setTextFill(javafx.scene.paint.Color.YELLOW);
 
         // Container for bet label and input field
         HBox betBox = new HBox(15);              
@@ -127,26 +140,36 @@ public class SlotMachine444 extends Application {
         // Create and style bet label
         Label betLabel = new Label("Your Bet: $");
         betLabel.setFont(Font.font("Arial", 20));
+        betLabel.setTextFill(javafx.scene.paint.Color.WHITE);
 
         // Create and style bet input field
         betInput = new TextField();
         betInput.setFont(Font.font("Arial", 20));
         betInput.setMaxWidth(200);               // Limit width of text field
-        betInput.setPromptText("Enter bet");     // Placeholder text
+        betInput.setPromptText("Enter bet");
+             // Placeholder text
 
         // Add label and input field to bet container
         betBox.getChildren().addAll(betLabel, betInput);
 
-        // Create and style spin button
         Button spinButton = new Button("SPIN");
-        spinButton.setFont(Font.font("Arial", FontWeight.BOLD, 24));
-        spinButton.setMinWidth(200);             // Set minimum button width
-        spinButton.setMinHeight(60);             // Set minimum button height
-        spinButton.setOnAction(e -> spin());     // Attach spin method to button click
+spinButton.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+spinButton.setMinWidth(70);             // Reduce width to fit on handle
+spinButton.setMinHeight(40);             // Set minimum button height
+spinButton.setOnAction(e -> spin());     // Attach spin method to button click
+spinButton.setTextFill(javafx.scene.paint.Color.RED); // Make button text white
 
+         // Create a stack pane to overlay the spin button on the background
+         StackPane overlayPane = new StackPane();
+         overlayPane.getChildren().add(spinButton);
+         // Position the button to align with handle in the top right
+         StackPane.setAlignment(spinButton, Pos.TOP_RIGHT);
+         StackPane.setMargin(spinButton, new Insets(-70, 160, 40, 30)); 
+         // Set the overlay pane to cover the entire scene
+         root.setRight(overlayPane);
         // Add all controls to the controls container
-        controlsBox.getChildren().addAll(balanceLabel, betBox, spinButton);
-        root.setBottom(controlsBox);             // place controls at bottom of layout
+        controlsBox.getChildren().addAll(balanceLabel, betBox);
+        root.setBottom(controlsBox);           // place controls at bottom of layout
         BorderPane.setMargin(controlsBox, new Insets(40, 0, 0, 0)); // Add margin above controls
 
         // Create the main scene and set it on the stage
@@ -283,6 +306,7 @@ public class SlotMachine444 extends Application {
                     // Add winnings to balance
                     balance += winnings + betAmount;
                     resultLabel.setText("You won $" + String.format("%.2f", winnings) + "!");
+                    
                 } else {
                     resultLabel.setText("You lost $" + String.format("%.2f", betAmount));
                  loseSound.play();
