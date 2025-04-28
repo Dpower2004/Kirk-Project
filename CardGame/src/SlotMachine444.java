@@ -15,7 +15,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javafx.scene.media.AudioClip;
+//import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 
 import java.util.Random;
@@ -50,7 +52,7 @@ public class SlotMachine444 extends Application {
     //  0.25 to allow more matching possibilities
     private static final double THREE_DIFFERENT_SYMBOLS_PROBABILITY = 0.25;
     
-    //  Add probability to force three matching symbols (25% chance)
+    //  Add probability to force three matching symbols (20% chance)
     private static final double THREE_MATCHING_SYMBOLS_PROBABILITY = 0.20;
     
         // This gives kirkDealer a chance to appear even in the "three different" scenario
@@ -62,8 +64,8 @@ public class SlotMachine444 extends Application {
     private Label resultLabel;       
     private Random random;  // Random number generator for symbol selection
 
-    private AudioClip spinSound;
-    private AudioClip loseSound;           
+    private MediaPlayer spinSound;
+    private MediaPlayer loseSound;           
     //ill change this once we have the bank and real balance
     private double balance = 1000; // Initial player balance (placeholder value)
 
@@ -71,8 +73,10 @@ public class SlotMachine444 extends Application {
     public void start(Stage primaryStage) 
     {
         random = new Random();   
-        spinSound = new AudioClip(new File("spin_sound_trimmed.mp3").toURI().toString());  
-        loseSound = new AudioClip(new File("youtube__asNhzXq72w_audio.mp3").toURI().toString());        
+        Media spinMedia = new Media(new File("spin_sound_trimmed.mp3").toURI().toString());
+        spinSound = new MediaPlayer(spinMedia);
+        Media loseMedia = new Media(new File("youtube__asNhzXq72w_audio.mp3").toURI().toString());
+        loseSound = new MediaPlayer(loseMedia);        
             // Initialize random number generator
         reelImages = new ImageView[3];          // Create array for 3 reel images
 
@@ -111,11 +115,26 @@ public class SlotMachine444 extends Application {
         }
 
         // Create and style the result message label
-        resultLabel = new Label("Place your bet and spin!");
-        resultLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
-        resultLabel.setTextFill(javafx.scene.paint.Color.RED);
-        resultLabel.setAlignment(Pos.CENTER); // Set alignment to center
-        resultLabel.setMinWidth(500);
+resultLabel = new Label("Place your bet and spin!");
+resultLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+resultLabel.setTextFill(javafx.scene.paint.Color.RED);
+resultLabel.setAlignment(Pos.CENTER); // Set alignment to center
+resultLabel.setMinWidth(500);
+StackPane.setAlignment(resultLabel, Pos.CENTER_RIGHT);
+
+// Add these lines to create a box around the label
+resultLabel.setBackground(new Background(new BackgroundFill(
+    javafx.scene.paint.Color.rgb(0, 0, 0, 0.7), // Semi-transparent black background
+    new CornerRadii(10), // Rounded corners (10px radius)
+    Insets.EMPTY
+)));
+resultLabel.setBorder(new Border(new BorderStroke(
+    javafx.scene.paint.Color.GREEN, // GREEN border color
+    BorderStrokeStyle.SOLID, // Solid border style
+    new CornerRadii(10), // Rounded corners (10px radius)
+    new BorderWidths(2) // 3px border width
+)));
+resultLabel.setPadding(new Insets(1, 20, 10, 20)); 
 
         // Container for reels and result message
         VBox centerBox = new VBox(40);           // Vertical box with 40px spacing
@@ -153,8 +172,8 @@ public class SlotMachine444 extends Application {
         betBox.getChildren().addAll(betLabel, betInput);
 
         Button spinButton = new Button("SPIN");
-spinButton.setFont(Font.font("Arial", FontWeight.BOLD, 24));
-spinButton.setMinWidth(70);             // Reduce width to fit on handle
+        spinButton.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+        spinButton.setMinWidth(70);             // Reduce width to fit on handle
 spinButton.setMinHeight(40);             // Set minimum button height
 spinButton.setOnAction(e -> spin());     // Attach spin method to button click
 spinButton.setTextFill(javafx.scene.paint.Color.RED); // Make button text white
@@ -239,6 +258,8 @@ spinButton.setTextFill(javafx.scene.paint.Color.RED); // Make button text white
 
             // Deduct bet from balance
             balance -= betAmount;
+            spinSound.stop(); // Stop any currently playing sound
+            spinSound.seek(javafx.util.Duration.ZERO); // Reset to beginning
             spinSound.play();
             // Update balance display
             balanceLabel.setText("Balance: $" + String.format("%.2f", balance));
@@ -273,7 +294,10 @@ spinButton.setTextFill(javafx.scene.paint.Color.RED); // Make button text white
     }
 
     // All 3 are guaranteed to be different, so it's a loss
-    loseSound.play();
+    // And similarly for loseSound:
+       loseSound.stop();
+        loseSound.seek(javafx.util.Duration.ZERO);
+        loseSound.play();
 } 
                 //  Force three matching symbols (25% chance)
                 else if (spinType < THREE_DIFFERENT_SYMBOLS_PROBABILITY + THREE_MATCHING_SYMBOLS_PROBABILITY) {
@@ -309,7 +333,10 @@ spinButton.setTextFill(javafx.scene.paint.Color.RED); // Make button text white
                     
                 } else {
                     resultLabel.setText("You lost $" + String.format("%.2f", betAmount));
-                 loseSound.play();
+                 // And similarly for loseSound:
+loseSound.stop();
+loseSound.seek(javafx.util.Duration.ZERO);
+loseSound.play();
                 }
 
                 // Update balance display
