@@ -7,10 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -49,6 +46,7 @@ public class StartScreen extends Application {
         START.setPrefSize(282,57);
         START.setLayoutX(950);
         START.setLayoutY(350);
+        START.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
 
         ArrayList<Image> uiButtonImages = new ArrayList<Image>();
         uiButtonImages.add(new Image("uiButtonHover.png"));
@@ -57,8 +55,7 @@ public class StartScreen extends Application {
 
         ImageView Starthover = new ImageView((uiButtonImages.get(1)));
 
-        Starthover.setX(1100);
-        Starthover.setY(350);
+
         Starthover.setFitWidth(282);
         Starthover.setFitHeight(57);
         Starthover.setSmooth(true);
@@ -79,16 +76,33 @@ public class StartScreen extends Application {
         /*Image startImage = new Image("file:icon.png");
         ImageView startBI = new ImageView(startImage);
         START.setGraphic(startBI);*/
-        START.setGraphic(Starthover);
+
         START.setOnAction(e ->{
             Scene gameScene = createGameSelectScene(stage);
             stage.setScene(gameScene);
         });
 
-        Button ACHIEVEMENTS = new Button("ACHIEVEMENTS");
+        Button ACHIEVEMENTS = new Button("");
         ACHIEVEMENTS.setPrefSize(282,57);
         ACHIEVEMENTS.setLayoutX(950);
         ACHIEVEMENTS.setLayoutY(425);
+        ACHIEVEMENTS.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
+
+        ImageView Achievementhover = new ImageView((uiButtonImages.get(1)));
+        Achievementhover.setPreserveRatio(false);
+        Achievementhover.setFitWidth(282);
+        Achievementhover.setFitHeight(57);
+        Achievementhover.setSmooth(true);
+
+        ACHIEVEMENTS.setOnMouseEntered(e ->{
+            Achievementhover.setImage(uiButtonImages.get(0));
+        });
+        ACHIEVEMENTS.setOnMouseExited(e ->{
+            Achievementhover.setImage(uiButtonImages.get(1));
+        });
+        ACHIEVEMENTS.setOnMousePressed(e ->{
+            Achievementhover.setImage(uiButtonImages.get(2));
+        });
 
         /*Image AchievementImage = new Image("file:icon.png");
         ImageView AchievementBI = new ImageView(AchievementImage);
@@ -97,20 +111,54 @@ public class StartScreen extends Application {
 
         });
 
-        Button SAVE = new Button("SAVE");
+        Button SAVE = new Button("");
         SAVE.setPrefSize(282,57);
         SAVE.setLayoutX(950);
         SAVE.setLayoutY(500);
+        SAVE.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
+
+        ImageView Savehover = new ImageView((uiButtonImages.get(1)));
+        Savehover.setPreserveRatio(false);
+        Savehover.setFitWidth(282);
+        Savehover.setFitHeight(57);
+        Savehover.setSmooth(true);
+
+        SAVE.setOnMouseEntered(e ->{
+            Savehover.setImage(uiButtonImages.get(0));
+        });
+        SAVE.setOnMouseExited(e ->{
+            Savehover.setImage(uiButtonImages.get(1));
+        });
+        SAVE.setOnMousePressed(e ->{
+            Savehover.setImage(uiButtonImages.get(2));
+        });
 
         /*Image saveImage = new Image("file:icon.png");
         ImageView SaveBI = new ImageView(saveImage);
         SAVE.setGraphic(SaveBI);*/
         SAVE.setOnAction(e ->{});
 
-        Button CLOSE = new Button("CLOSE");
+        Button CLOSE = new Button("");
         CLOSE.setPrefSize(282,57);
         CLOSE.setLayoutX(950);
         CLOSE.setLayoutY(575);
+        CLOSE.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
+
+        ImageView Closehover = new ImageView((uiButtonImages.get(1)));
+        Closehover.setPreserveRatio(false);
+        Closehover.setFitWidth(282);
+        Closehover.setFitHeight(57);
+        Closehover.setSmooth(true);
+
+        CLOSE.setOnMouseEntered(e ->{
+            Closehover.setImage(uiButtonImages.get(0));
+        });
+        CLOSE.setOnMouseExited(e ->{
+            Closehover.setImage(uiButtonImages.get(1));
+        });
+        CLOSE.setOnMousePressed(e ->{
+            Closehover.setImage(uiButtonImages.get(2));
+        });
         /*Image image = new Image("file:icon.png");
         ImageView startBI = new ImageView(image);
         CLOSE.setGraphic(startBI);*/
@@ -118,13 +166,47 @@ public class StartScreen extends Application {
             stage.close();
         });
 
-
-
+        START.setGraphic(Starthover);
+        ACHIEVEMENTS.setGraphic(Achievementhover);
+        SAVE.setGraphic(Savehover);
+        CLOSE.setGraphic(Closehover);
 
         Pane OptionButtons = new Pane();
         OptionButtons.setPrefSize(1280,720);
         OptionButtons.getChildren().addAll(START,ACHIEVEMENTS,SAVE,CLOSE);
 
+        Font myFont = Font.loadFont(getClass().getResourceAsStream("/fonts/Super-Mario-64-DS.ttf"), 20);
+
+        Label startLabel = new Label("START");
+
+        startLabel.setFont(myFont);
+        startLabel.setStyle("-fx-text-fill: white;");
+        startLabel.setLayoutX(1050); // center of 282 minus half label width
+        startLabel.setLayoutY(362);
+        startLabel.setMouseTransparent(true);
+
+        Label achievementsLabel = new Label("ACHIEVEMENTS");
+        achievementsLabel.setFont(myFont);
+        achievementsLabel.setStyle("-fx-text-fill: white;");
+        achievementsLabel.setLayoutX(995);
+        achievementsLabel.setLayoutY(437);
+        achievementsLabel.setMouseTransparent(true);
+
+        Label saveLabel = new Label("SAVE");
+        saveLabel.setFont(myFont);
+        saveLabel.setStyle("-fx-text-fill: white;");
+        saveLabel.setLayoutX(1058);
+        saveLabel.setLayoutY(512);
+        saveLabel.setMouseTransparent(true);
+
+        Label closeLabel = new Label("CLOSE");
+        closeLabel.setFont(myFont);
+        closeLabel.setStyle("-fx-text-fill: white;");
+        closeLabel.setLayoutX(950 + 141 - 35);
+        closeLabel.setLayoutY(587);
+        closeLabel.setMouseTransparent(true);
+
+        OptionButtons.getChildren().addAll(startLabel, achievementsLabel, saveLabel, closeLabel);
 
 
 
@@ -142,7 +224,7 @@ public class StartScreen extends Application {
 
 
         StackPane root = new StackPane();
-        root.getChildren().addAll(backgroundView,SCREEN,Starthover);
+        root.getChildren().addAll(backgroundView,SCREEN,Starthover,Savehover,Achievementhover,Closehover);
 
 
 
@@ -189,6 +271,7 @@ public class StartScreen extends Application {
 
         gameScreen.setPreserveRatio(false);
         gameScreen.setMouseTransparent(true);
+        gameScreen.setSmooth(true);
         Button Achievement = new Button("Achievements");
         Achievement.setLayoutX(910); // Place anywhere
         Achievement.setLayoutY(60);
@@ -230,65 +313,115 @@ public class StartScreen extends Application {
         bankMenu.setLayoutX(460);
         bankMenu.setLayoutY(35);
 
-        Button close = new Button("Close");
-        close.setLayoutX(50);
-        close.setLayoutY(500);
+        Button closeBank = new Button("Close");
+        closeBank.setStyle("-fx-background-radius: 100%; -fx-padding: 0;");
+        closeBank.setPrefSize(105,105);
+
+        closeBank.setLayoutX(15);
+        closeBank.setLayoutY(425);
+        closeBank.setOnAction(e -> popupBank.setVisible(false));
 
 
         Button increase10 = new Button();
-        increase10.setLayoutX(600);
-        increase10.setLayoutY(45);
+        increase10.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
+        increase10.setLayoutX(562);
+        increase10.setLayoutY(50);
+
 
         Button decrease10 = new Button();
-        decrease10.setLayoutX(600);
-        decrease10.setLayoutY(80);
+        decrease10.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
+        decrease10.setLayoutX(525);
+        decrease10.setLayoutY(83);
+        ImageView up10Arrow= new ImageView(new Image("greenArrowHighlight.png"));
+        ImageView down10Arrow= new ImageView(new Image("redArrowHighlight.png"));
+        up10Arrow.setFitWidth(103);
+        up10Arrow.setFitHeight(32);
+        down10Arrow.setFitWidth(103);
+        down10Arrow.setFitHeight(32);
+        increase10.setGraphic(up10Arrow);
+        decrease10.setGraphic(down10Arrow);
+
 
         Button increase50 = new Button();
-        increase50.setLayoutX(600);
-        increase50.setLayoutY(125);
+        increase50.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
+        increase50.setLayoutX(562);
+        increase50.setLayoutY(130);
+
 
         Button decrease50 = new Button();
-        decrease50.setLayoutX(600);
-        decrease50.setLayoutY(160);
+        decrease50.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
+        decrease50.setLayoutX(525);
+        decrease50.setLayoutY(163);
+        ImageView up50Arrow= new ImageView(new Image("greenArrowHighlight.png"));
+        ImageView down50Arrow= new ImageView(new Image("redArrowHighlight.png"));
+        up50Arrow.setFitWidth(103);
+        up50Arrow.setFitHeight(32);
+        down50Arrow.setFitWidth(103);
+        down50Arrow.setFitHeight(32);
+        increase50.setGraphic(up50Arrow);
+        decrease50.setGraphic(down50Arrow);
 
         Button increase250 = new Button();
-        increase250.setLayoutX(600);
-        increase250.setLayoutY(205);
+        increase250.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
+        increase250.setLayoutX(562);
+        increase250.setLayoutY(210);
 
         Button decrease250 = new Button();
-        decrease250.setLayoutX(600);
-        decrease250.setLayoutY(240);
+        decrease250.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
+        decrease250.setLayoutX(525);
+        decrease250.setLayoutY(243);
+        ImageView up250Arrow= new ImageView(new Image("greenArrowHighlight.png"));
+        ImageView down250Arrow= new ImageView(new Image("redArrowHighlight.png"));
+        up250Arrow.setFitWidth(103);
+        up250Arrow.setFitHeight(32);
+        down250Arrow.setFitWidth(103);
+        down250Arrow.setFitHeight(32);
+        increase250.setGraphic(up250Arrow);
+        decrease250.setGraphic(down250Arrow);
 
         Button increase1000 = new Button();
-        increase1000.setLayoutX(600);
-        increase1000.setLayoutY(285);
+        increase1000.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
+        increase1000.setLayoutX(562);
+        increase1000.setLayoutY(290);
 
         Button decrease1000 = new Button();
-        decrease1000.setLayoutX(600);
-        decrease1000.setLayoutY(320);
+        decrease1000.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
+        decrease1000.setLayoutX(525);
+        decrease1000.setLayoutY(323);
+        ImageView up1000Arrow= new ImageView(new Image("greenArrowHighlight.png"));
+        ImageView down1000Arrow= new ImageView(new Image("redArrowHighlight.png"));
+        up1000Arrow.setFitWidth(103);
+        up1000Arrow.setFitHeight(32);
+        down1000Arrow.setFitWidth(103);
+        down1000Arrow.setFitHeight(32);
+        increase1000.setGraphic(up1000Arrow);
+        decrease1000.setGraphic(down1000Arrow);
 
 
 
 
-        Label chipsInCart = new Label("Chips in Cart:");
-        chipsInCart.setTextFill(javafx.scene.paint.Color.BLACK);;
-        chipsInCart.setLayoutX(170);
-        chipsInCart.setLayoutY(100);
+        Label cashBalance = new Label("Cash:");
+        cashBalance.setTextFill(javafx.scene.paint.Color.BLACK);;
+        cashBalance.setLayoutX(170);
+        cashBalance.setLayoutY(50);
+
+        Label chipBalance = new Label("Chips:");
+        chipBalance.setTextFill(javafx.scene.paint.Color.BLACK);;
+        chipBalance.setLayoutX(170);
+        chipBalance.setLayoutY(100);
 
         Button buy = new Button("Buy");
         buy.setLayoutX(480);
         buy.setLayoutY(500);
 
-        popupBank.getChildren().addAll(BankMenuImage,bankMenu,close,increase10,increase50,increase250,increase1000,decrease10,decrease50,decrease250,decrease1000,chipsInCart,buy);
+        popupBank.getChildren().addAll(BankMenuImage,bankMenu,closeBank,increase10,increase50,increase250,increase1000,decrease10,decrease50,decrease250,decrease1000,cashBalance,chipBalance,buy);
 
         // Bank button opens it
         Bank.setOnAction(e -> {
             popupBank.setVisible(true);
         });
 
-        // Close button inside Bank popup
-        Button closeBank = (Button) popupBank.getChildren().get(2);
-        closeBank.setOnAction(e -> popupBank.setVisible(false));
+
 
         // ⬇️ Popup overlay
         Pane popupAchievements = new Pane();
@@ -304,17 +437,77 @@ public class StartScreen extends Application {
         popupAchievements.setLayoutY(100);
         popupAchievements.setVisible(false);
 
-        Label Achievements = new Label("Paused");
+        ArrayList<Image> achievesStatusImage = new ArrayList<Image>();
+        achievesStatusImage.add(new Image("owned.png"));
+        achievesStatusImage.add(new Image("purchase.png"));
+        ImageView ringStatus = new ImageView(achievesStatusImage.get(1));
+        ringStatus.setPreserveRatio(false);
+        ringStatus.setFitWidth(180);
+        ringStatus.setFitHeight(48);
+        ringStatus.setSmooth(true);
+
+        ImageView carStatus = new ImageView(achievesStatusImage.get(1));
+        carStatus.setPreserveRatio(false);
+        carStatus.setFitWidth(180);
+        carStatus.setFitHeight(48);
+        carStatus.setSmooth(true);
+
+        ImageView houseStatus = new ImageView(achievesStatusImage.get(1));
+        houseStatus.setPreserveRatio(false);
+        houseStatus.setFitWidth(180);
+        houseStatus.setFitHeight(48);
+        houseStatus.setSmooth(true);
+
+        ImageView islandStatus = new ImageView(achievesStatusImage.get(1));
+        islandStatus.setPreserveRatio(false);
+        islandStatus.setFitWidth(180);
+        islandStatus.setFitHeight(48);
+        islandStatus.setSmooth(true);
+
+        Label prizes = new Label("Prizes");
+        prizes.setLayoutX(750);
+        prizes.setLayoutY(123);
+
+        Label achieveCashBalance = new Label("$20000");
+        achieveCashBalance.setLayoutX(750);
+        achieveCashBalance.setLayoutY(43);
 
 
 
-        Button closeAchieve = new Button("Close");
+        // Close button inside Achievement popup
+        Button closeAchieve = new Button ();
+        closeAchieve.setStyle("-fx-background-radius: 100%; -fx-padding: 0;");
+        closeAchieve.setPrefSize(105,105);
 
-        Button unlock1 = new Button("Unlock");
-        Button unlock2 = new Button("Unlock");
-        Button unlock3 = new Button("Unlock");
-        Button unlock4 = new Button("Unlock");
-        popupAchievements.getChildren().addAll(AchievementMenuImage,unlock1,unlock2,unlock3,unlock4,Achievements,closeAchieve);
+        closeAchieve.setLayoutX(15);
+        closeAchieve.setLayoutY(425);
+        closeAchieve.setOnAction(e -> popupAchievements.setVisible(false));
+
+        Button unlock1 = new Button("");
+        unlock1.setLayoutX(400);
+        unlock1.setLayoutY(43);
+        unlock1.setGraphic(ringStatus);
+        unlock1.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
+
+        Button unlock2 = new Button("");
+        unlock2.setLayoutX(400);
+        unlock2.setLayoutY(123);
+        unlock2.setGraphic(carStatus);
+        unlock2.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
+
+        Button unlock3 = new Button("");
+        unlock3.setLayoutX(400);
+        unlock3.setLayoutY(203);
+        unlock3.setGraphic(houseStatus);
+        unlock3.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
+
+        Button unlock4 = new Button("");
+        unlock4.setLayoutX(400);
+        unlock4.setLayoutY(283);
+        unlock4.setGraphic(islandStatus);
+        unlock4.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
+
+        popupAchievements.getChildren().addAll(AchievementMenuImage,unlock1,unlock2,unlock3,unlock4,prizes,achieveCashBalance,closeAchieve);
 
 
 
@@ -408,7 +601,7 @@ public class StartScreen extends Application {
 
 
         // StackPane layers it all
-        root.getChildren().addAll(gameScreen,gameLayer, popupAchievements, popupBank);
+        root.getChildren().addAll(gameLayer,gameScreen, popupAchievements, popupBank);
 
         Scene scene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
         gameScreen.fitWidthProperty().bind(scene.widthProperty());
@@ -425,82 +618,143 @@ public class StartScreen extends Application {
         Pane gameContent = new Pane();
         gameContent.setPrefSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-        // Game variables (wrapper so we can update inside lambdas)
+        ImageView blackJackBackGround = new ImageView(new Image("tableBackDrop.png"));
+        blackJackBackGround.setPreserveRatio(false);
+        blackJackBackGround.setMouseTransparent(true);
+        blackJackBackGround.fitWidthProperty().bind(gameContent.widthProperty());
+        blackJackBackGround.fitHeightProperty().bind(gameContent.heightProperty());
+
+        ImageView blackJackTable = new ImageView(new Image("table.png"));
+        blackJackTable.setPreserveRatio(false);
+        blackJackTable.setMouseTransparent(true);
+        blackJackTable.fitWidthProperty().bind(gameContent.widthProperty());
+        blackJackTable.fitHeightProperty().bind(gameContent.heightProperty());
+
+        ImageView kirkDealer = new ImageView(new Image("kirkDealer.png"));
+        kirkDealer.fitWidthProperty().bind(stage.widthProperty().multiply(0.20));
+        kirkDealer.fitHeightProperty().bind(stage.heightProperty().multiply(0.3));
+        kirkDealer.setTranslateY(-104);
+        StackPane imageHolder = new StackPane(kirkDealer);
+        imageHolder.setPrefSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+        root.getChildren().add(imageHolder);
+
         final BlackjackPlayer[] player = new BlackjackPlayer[1];
         final Blackjack[] game = new Blackjack[1];
         final BlackjackPlayer[] dealer = new BlackjackPlayer[1];
 
-        // Labels
-        Label dealerLabel = new Label("Dealer: ");
-        dealerLabel.setLayoutX(50);
-        dealerLabel.setLayoutY(50);
+        Label dealerLabel = new Label("Dealer:");
+        dealerLabel.setLayoutX(100);
+        dealerLabel.setLayoutY(30);
 
-        Label playerLabel = new Label("Player: ");
-        playerLabel.setLayoutX(50);
-        playerLabel.setLayoutY(100);
+        Label playerLabel = new Label("Player:");
+        playerLabel.setLayoutX(100);
+        playerLabel.setLayoutY(550);
 
         Label statusLabel = new Label("");
-        statusLabel.setLayoutX(50);
-        statusLabel.setLayoutY(300);
+        statusLabel.setLayoutX(100);
+        statusLabel.setLayoutY(620);
 
-        // Buttons
+        Label balanceLabel = new Label("Balance: 100 chips");
+        balanceLabel.setLayoutX(100);
+        balanceLabel.setLayoutY(320);
+
+        Label betLabel = new Label("Bet: 10 chips");
+        betLabel.setLayoutX(100);
+        betLabel.setLayoutY(350);
+
+        Button increaseBet = new Button("+");
+        increaseBet.setLayoutX(220);
+        increaseBet.setLayoutY(345);
+        increaseBet.setPrefSize(30, 30);
+
+        Button decreaseBet = new Button("-");
+        decreaseBet.setLayoutX(260);
+        decreaseBet.setLayoutY(345);
+        decreaseBet.setPrefSize(30, 30);
+
+        HBox dealerCardsBox = new HBox(30);
+        dealerCardsBox.setLayoutX(570);
+        dealerCardsBox.setLayoutY(430);
+        dealerCardsBox.setPrefWidth(700);
+
+        HBox playerCardsBox = new HBox(20);
+
+        playerCardsBox.setLayoutX(570);
+        playerCardsBox.setLayoutY(605);
+
         Button hitButton = new Button("Hit");
-        hitButton.setLayoutX(50);
-        hitButton.setLayoutY(200);
+        hitButton.setLayoutX(100);
+        hitButton.setLayoutY(400);
+        hitButton.setPrefSize(120, 50);
 
         Button standButton = new Button("Stand");
-        standButton.setLayoutX(120);
-        standButton.setLayoutY(200);
+        standButton.setLayoutX(240);
+        standButton.setLayoutY(400);
+        standButton.setPrefSize(120, 50);
+
+        Button doubleButton = new Button("Double Down");
+        doubleButton.setLayoutX(100);
+        doubleButton.setLayoutY(470);
+        doubleButton.setPrefSize(260, 50);
 
         Button playAgainButton = new Button("Play Again");
-        playAgainButton.setLayoutX(200);
-        playAgainButton.setLayoutY(200);
+        playAgainButton.setLayoutX(380);
+        playAgainButton.setLayoutY(400);
+        playAgainButton.setPrefSize(150, 50);
         playAgainButton.setVisible(false);
 
         Button closeButton = new Button("Close");
-        closeButton.setLayoutX(1200);
+        closeButton.setLayoutX(1120);
         closeButton.setLayoutY(650);
+        closeButton.setPrefSize(100, 40);
 
-        // Method to update card labels
-        Runnable updateUI = () -> {
-            dealerLabel.setText("Dealer: [" + dealer[0].cards.getCard(0) + ", ?]");
-            playerLabel.setText("Player: " + player[0].cards.toString() + " (Score: " + player[0].getScore() + ")");
-        };
+        closeButton.setOnAction(e -> stage.setScene(createGameSelectScene(stage)));
 
-        // Reset and start a new game
-        Runnable resetGame = () -> {
-            player[0] = new BlackjackPlayer(100, true);
-            Player[] players = new Player[] { player[0] };
-            game[0] = new Blackjack(players);
-            game[0].setup();
-            dealer[0] = game[0].getDealer();
+        resetGame(player, game, dealer, dealerLabel, playerLabel, statusLabel, dealerCardsBox, playerCardsBox, hitButton, standButton, playAgainButton);
 
-            updateUI.run();
-            statusLabel.setText("");
-            hitButton.setDisable(false);
-            standButton.setDisable(false);
-            playAgainButton.setVisible(false);
-        };
+        int[] playerBalance = {100};
+        int[] betAmount = {10};
 
-        // Start first game
-        resetGame.run();
+        balanceLabel.setText("Chip Balance: " + playerBalance[0]);
+        betLabel.setText("Bet: " + betAmount[0] + " chips");
 
-        // Hit logic
+        increaseBet.setOnAction(e -> {
+            if (playerBalance[0] - betAmount[0] >= 10) {
+                betAmount[0] += 10;
+                betLabel.setText("Bet: " + betAmount[0] + " chips");
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Insufficient Chips");
+                alert.setHeaderText(null);
+                alert.setContentText("You do not have enough chips to increase your bet.");
+                alert.showAndWait();
+            }
+        });
+
+        decreaseBet.setOnAction(e -> {
+            if (betAmount[0] > 10) {
+                betAmount[0] -= 10;
+                betLabel.setText("Bet: " + betAmount[0] + " chips");
+            }
+        });
+
         hitButton.setOnAction(e -> {
             Card card = game[0].deck.getCard(0);
             player[0].cards.add(card);
             game[0].deck.remove(card);
-            updateUI.run();
+            updateUI(player[0], dealer[0], dealerLabel, playerLabel, dealerCardsBox, playerCardsBox);
+
+            doubleButton.setDisable(false);
 
             if (player[0].getScore() > 21) {
                 statusLabel.setText("You bust!");
                 hitButton.setDisable(true);
                 standButton.setDisable(true);
+                doubleButton.setDisable(true);
                 playAgainButton.setVisible(true);
             }
         });
 
-        // Stand logic
         standButton.setOnAction(e -> {
             while (dealer[0].getScore() < 17) {
                 Card card = game[0].deck.getCard(0);
@@ -512,33 +766,123 @@ public class StartScreen extends Application {
             int dealerScore = dealer[0].getScore();
 
             dealerLabel.setText("Dealer: " + dealer[0].cards + " (Score: " + dealerScore + ")");
+            updateCardDisplay(dealerCardsBox, dealer[0].cards);
 
             if (playerScore > 21) {
                 statusLabel.setText("You bust!");
             } else if (dealerScore > 21 || playerScore > dealerScore) {
                 statusLabel.setText("You win!");
+                playerBalance[0] += betAmount[0];
             } else if (playerScore == dealerScore) {
                 statusLabel.setText("Push.");
             } else {
                 statusLabel.setText("You lose.");
+                playerBalance[0] -= betAmount[0];
             }
 
+            balanceLabel.setText("Balance: " + playerBalance[0] + " chips");
             hitButton.setDisable(true);
             standButton.setDisable(true);
+            doubleButton.setDisable(true);
             playAgainButton.setVisible(true);
         });
 
-        // Play Again
-        playAgainButton.setOnAction(e -> resetGame.run());
+        doubleButton.setOnAction(e -> {
+            if (playerBalance[0] - betAmount[0] >= betAmount[0]) {
+                playerBalance[0] -= betAmount[0];
+                betAmount[0] *= 2;
+                betLabel.setText("Bet: " + betAmount[0] + " chips");
 
-        // Close button returns to game select scene
-        closeButton.setOnAction(e -> stage.setScene(createGameSelectScene(stage))); // Replace with your real method
+                Card card = game[0].deck.getCard(0);
+                player[0].cards.add(card);
+                game[0].deck.remove(card);
+                updateUI(player[0], dealer[0], dealerLabel, playerLabel, dealerCardsBox, playerCardsBox);
+                hitButton.setDisable(true);
+                doubleButton.setDisable(true);
+                standButton.fire();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Insufficient Chips");
+                alert.setHeaderText(null);
+                alert.setContentText("You do not have enough chips to double down.");
+                alert.showAndWait();
+            }
+        });
 
-        gameContent.getChildren().addAll(dealerLabel, playerLabel, statusLabel, hitButton, standButton, playAgainButton, closeButton);
+        playAgainButton.setOnAction(e -> {
+            resetGame(player, game, dealer, dealerLabel, playerLabel, statusLabel, dealerCardsBox, playerCardsBox, hitButton, standButton, playAgainButton);
+            doubleButton.setDisable(false);
+            betAmount[0] = 10;
+            betLabel.setText("Bet: " + betAmount[0] + " chips");
+            balanceLabel.setText("Balance: " + playerBalance[0] + " chips");
+        });
+
+        gameContent.getChildren().addAll(
+                blackJackBackGround, blackJackTable, imageHolder,
+                dealerLabel, playerLabel, statusLabel, balanceLabel, betLabel, increaseBet, decreaseBet,
+                hitButton, standButton, doubleButton, playAgainButton, closeButton,
+                dealerCardsBox, playerCardsBox
+        );
+
         root.getChildren().add(gameContent);
-
         return new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
     }
+
+
+
+
+
+
+
+    private void updateCardDisplay(HBox box, CardList cards) {
+        box.getChildren().clear();
+        for (Card card : cards.getCardList()) {
+            String imagePath = "/cards/" + card.getRank().toUpperCase() + card.getSuit().toUpperCase().charAt(0) + ".png";
+            Image img = new Image(getClass().getResource(imagePath).toExternalForm());
+            ImageView imageView = new ImageView(img);
+            imageView.setFitWidth(60);
+            imageView.setFitHeight(80);
+            box.getChildren().add(imageView);
+        }
+    }
+
+    private void updateDealerHidden(HBox box, BlackjackPlayer dealer) {
+        box.getChildren().clear();
+        Card visible = dealer.cards.getCard(0);
+        String visiblePath = "/cards/" + visible.getRank().toUpperCase() + visible.getSuit().toUpperCase().charAt(0) + ".png";
+        ImageView card1 = new ImageView(new Image(getClass().getResource(visiblePath).toExternalForm()));
+        card1.setFitWidth(60);
+        card1.setFitHeight(80);
+
+        ImageView card2 = new ImageView(new Image(getClass().getResource("/cards/back.png").toExternalForm()));
+        card2.setFitWidth(60);
+        card2.setFitHeight(80);
+
+        box.getChildren().addAll(card1, card2);
+    }
+
+    private void updateUI(BlackjackPlayer player, BlackjackPlayer dealer, Label dealerLabel, Label playerLabel, HBox dealerBox, HBox playerBox) {
+        dealerLabel.setText("Dealer: [" + dealer.cards.getCard(0) + ", ?]");
+        playerLabel.setText("Player: " + player.cards.toString() + " (Score: " + player.getScore() + ")");
+        updateDealerHidden(dealerBox, dealer);
+        updateCardDisplay(playerBox, player.cards);
+    }
+
+    private void resetGame(BlackjackPlayer[] player, Blackjack[] game, BlackjackPlayer[] dealer, Label dealerLabel, Label playerLabel, Label statusLabel, HBox dealerCardsBox, HBox playerCardsBox, Button hitButton, Button standButton, Button playAgainButton) {
+        player[0] = new BlackjackPlayer(100, true);
+        Player[] players = new Player[]{player[0]};
+        game[0] = new Blackjack(players);
+        game[0].setup();
+        dealer[0] = game[0].getDealer();
+
+        updateUI(player[0], dealer[0], dealerLabel, playerLabel, dealerCardsBox, playerCardsBox);
+        statusLabel.setText("");
+        hitButton.setDisable(false);
+        standButton.setDisable(false);
+        playAgainButton.setVisible(false);
+    }
+
+
 
 
     private Scene createSlotsScene(Stage stage) {
@@ -572,12 +916,20 @@ public class StartScreen extends Application {
         BorderPane root = new BorderPane();
         root.setPadding(new Insets(40));
 
+
         // Create and style the header label
         Label headerLabel = new Label("KIRK'S SLOT MACHINE");
         headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 48));
         root.setTop(headerLabel);
         BorderPane.setAlignment(headerLabel, Pos.CENTER);
         BorderPane.setMargin(headerLabel, new Insets(0, 0, 50, 0));
+
+        ImageView slotsBackground = new ImageView(new Image("slots.png"));
+        slotsBackground.setPreserveRatio(false);
+        slotsBackground.setMouseTransparent(true);
+        slotsBackground.fitWidthProperty().bind(root.widthProperty());
+        slotsBackground.fitHeightProperty().bind(root.heightProperty());
+        root.getChildren().addAll(slotsBackground);
 
         // Create container for the slot machine reels
         HBox reelsBox = new HBox(80);
@@ -611,6 +963,7 @@ public class StartScreen extends Application {
         double balance = 1000; // Initial player balance
         Label balanceLabel = new Label("Balance: $" + String.format("%.2f", balance));
         balanceLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+        Font myFont = Font.loadFont(getClass().getResourceAsStream("/fonts/Super-Mario-64-DS.ttf"), 24);
 
         // Container for bet label and input field
         HBox betBox = new HBox(15);
@@ -822,9 +1175,9 @@ public class StartScreen extends Application {
                         for (int i = 0; i < 3; i++) {
                             results[i] = getWeightedRandomSymbol.get();
                             try {
-                                reelImages[i].setImage(new Image("file:" + SYMBOL_FILES[symbolIndex]));
+                                reelImages[i].setImage(new Image("" + SYMBOL_FILES[results[i]]));
                             } catch (Exception ex) {
-                                System.out.println("Could not load image: " + SYMBOL_FILES[symbolIndex]);
+                                System.out.println("Could not load image: " + SYMBOL_FILES[results[i]]);
                             }
                         }
                     }
@@ -861,6 +1214,7 @@ public class StartScreen extends Application {
         root.setBottom(controlsBox);
         BorderPane.setMargin(controlsBox, new Insets(40, 0, 0, 0));
 
+
         return new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
     }
 
@@ -870,12 +1224,33 @@ public class StartScreen extends Application {
         StackPane root = new StackPane();
 
         Pane gameContent = new Pane();
+        ImageView holdemBackground = new ImageView(new Image("tableBackDrop.png"));
+        holdemBackground.setPreserveRatio(false);
+        holdemBackground.setMouseTransparent(true);
+        holdemBackground.fitWidthProperty().bind(gameContent.widthProperty());
+        holdemBackground.fitHeightProperty().bind(gameContent.heightProperty());
+        ImageView holdemTable = new ImageView(new Image("table.png"));
+        holdemTable.setPreserveRatio(false);
+        holdemTable.setMouseTransparent(true);
+        holdemTable.fitWidthProperty().bind(gameContent.widthProperty());
+        holdemTable.fitHeightProperty().bind(gameContent.heightProperty());
         gameContent.setPrefSize(1366, 768);
+
+        ImageView kirkDealer = new ImageView(new Image("kirkDealer.png"));
+        kirkDealer.fitWidthProperty().bind(stage.widthProperty().multiply(0.3));
+        kirkDealer.fitHeightProperty().bind(stage.heightProperty().multiply(0.3));
+        kirkDealer.setTranslateY(-104);
+        StackPane imageHolder = new StackPane(kirkDealer);
+        imageHolder.setPrefSize(SCREEN_WIDTH, SCREEN_HEIGHT); // match your main screen size
+
+
 
 
 
         Button closeButton = new Button("Close");
-
+        closeButton.setOnAction(e->{
+            stage.setScene(createGameSelectScene(stage));
+        });
         Button hitButton = new Button("Hit");
         Button standButton = new Button("Stand");
         Button betIncrease = new Button("Increase Bet");
@@ -885,7 +1260,7 @@ public class StartScreen extends Application {
 
 
         gameContent.getChildren().add(closeButton);
-        root.getChildren().addAll(gameContent);
+        root.getChildren().addAll(holdemBackground,imageHolder,holdemTable,gameContent);
 
         return new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT); // use your defined width/height
     }
