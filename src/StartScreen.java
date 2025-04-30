@@ -933,8 +933,8 @@ public class StartScreen extends Application {
         blackJackTable.fitHeightProperty().bind(gameContent.heightProperty());
 
         ImageView kirkDealer = new ImageView(new Image("/gameAssets/kirkDealer.png"));
-        kirkDealer.fitWidthProperty().bind(stage.widthProperty().multiply(0.20));
-        kirkDealer.fitHeightProperty().bind(stage.heightProperty().multiply(0.3));
+        kirkDealer.setScaleX(4);
+        kirkDealer.setScaleY(4);
         kirkDealer.setTranslateY(-104);
         StackPane imageHolder = new StackPane(kirkDealer);
         imageHolder.setPrefSize(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -1009,7 +1009,7 @@ public class StartScreen extends Application {
         Button standButton = new Button("");
         standButton.setLayoutX(1040);
         standButton.setLayoutY(400);
-        standButton.setPrefSize(100, 70);
+        standButton.setPrefSize(90, 70);
         standButton.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
 
         ImageView StandImage = new ImageView(new Image("/ui/stand.png"));
@@ -1158,11 +1158,10 @@ public class StartScreen extends Application {
             player1.setChips(playerBalance[0]);
         });
 
+        Pane buttons = new Pane(increaseBet, decreaseBet, playAgainButton, closeButton, hitButton, standButton, doubleButton);
         gameContent.getChildren().addAll(
                 blackJackBackGround, blackJackTable, imageHolder,StandImage,doubleDownImage,hitImage,betAdjust,
-                dealerLabel, playerLabel, statusLabel, balanceLabel, betLabel,
-                increaseBet, decreaseBet, hitButton, standButton, doubleButton,
-                playAgainButton, closeButton, dealerCardPane, playerCardPane
+                dealerLabel, playerLabel, statusLabel, balanceLabel, betLabel, dealerCardPane, playerCardPane, buttons
         );
 
         root.getChildren().add(gameContent);
@@ -1832,9 +1831,29 @@ public class StartScreen extends Application {
         Pane indicatorPane = new Pane(fold0, fold1, fold2, fold3);
 
         Button nextRound = new Button("Start Game");
-        nextRound.setPrefSize(100, 100);
+        nextRound.setGraphic(new ImgExpand(new Image("/ui/roundAdvance.png")));
+        nextRound.setPrefSize(184, 108);
+        
         Button nextTurn = new Button("Next Turn");
-        nextTurn.setPrefSize(100, 100);
+        nextTurn.setGraphic(new ImgExpand(new Image("/ui/turnAdvance.png")));
+        nextTurn.setPrefSize(184, 108);
+
+        Button call = new Button();
+        call.setGraphic(new ImgExpand(new Image("/ui/call.png")));
+        call.setPrefSize(184, 108);
+
+        Button bet = new Button();
+        bet.setGraphic(new ImgExpand(new Image("/ui/bet.png")));
+        bet.setPrefSize(184, 108);
+
+        Button fold = new Button();
+        fold.setGraphic(new ImgExpand(new Image("/ui/fold.png")));
+        fold.setPrefSize(184, 108);
+        
+        HBox buttons = new HBox(50, nextRound, nextTurn, call, bet, fold);
+
+        buttons.setAlignment(Pos.CENTER);
+
         nextTurn.setDisable(true);
         nextTurn.setOnAction(e->{
             updateFold(players, fold0, fold1, fold2, fold3);
@@ -1960,20 +1979,18 @@ public class StartScreen extends Application {
                     int take = game.pot.chipAmount / winners.size();
                     for (HoldemPlayer winner : winners) {
                         winner.chipBank.addChips(take);
+                        player1.setChips(winner.chipBank.getChips());
+                        System.out.println(player1);
                     }
                     gameState = HoldemState.END;
                     break;
                 case HoldemState.END:
-                    mainPlayer.setChips(players[2].getChips());
-                    stage.setScene(createGameSelectScene(stage, mainPlayer));
+                    stage.setScene(createGameSelectScene(stage, player1));
                     gameState = HoldemState.SETUP;
+                    break;
                     
             }
         });
-        
-        HBox buttons = new HBox(50, nextRound, nextTurn);
-
-        buttons.setAlignment(Pos.CENTER);
 
         root.getChildren().addAll(holdemBackground,imageHolder,holdemTable,gameContent,cardPane,chipPane,indicatorPane,buttons);
 
