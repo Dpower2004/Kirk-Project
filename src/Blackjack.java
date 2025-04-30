@@ -4,7 +4,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * Class representing a game of Blackjack. It inherits the abstract game class.
  * @author Thomas Huber
  *
- * @version 1.5
+ * @version 1.5eriuotghwerlkt
  */
 
 public class Blackjack extends CardGame

@@ -1,4 +1,4 @@
-;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -52,7 +52,7 @@ public class Holdem extends CardGame {
             }
         }
         super.deal(2); // Deal 2 cards to all players
-        consoleOut(); // Update the console on whats going on
+        //consoleOut(); // Update the console on whats going on
     }
 
     /**
@@ -115,7 +115,7 @@ public class Holdem extends CardGame {
                         pTurn--;
                     }
                 }
-                consoleOut(); // Update the console to show player action
+                //consoleOut(); // Update the console to show player action
             }
             // Reset players for next round
             for (Player p : playerList) { // For all the players...
@@ -180,7 +180,6 @@ public class Holdem extends CardGame {
         for (int i = 0 ; i < 3 ; i++) { // Deals 3 cards from the deck to the community cards
             addCommunityCard();
         }
-        consoleOut();
     }
 
     /**
@@ -188,7 +187,6 @@ public class Holdem extends CardGame {
      */
     public void turn() {
         addCommunityCard();
-        consoleOut();
     }
 
     /**
@@ -196,7 +194,6 @@ public class Holdem extends CardGame {
      */
     public void river() {
         addCommunityCard();
-        consoleOut();
     }
 
     /**
@@ -260,7 +257,7 @@ public class Holdem extends CardGame {
         }
     }
 
-    private boolean handleBettingRound(HoldemState state) {
+    protected boolean handleBettingRound(HoldemState state) {
         gameState = state;
         bettingRound();
         if (allPlayersFolded()) {

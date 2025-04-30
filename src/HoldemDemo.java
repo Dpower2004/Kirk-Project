@@ -1,4 +1,4 @@
-;
+
 public class HoldemDemo {
     public static void main(String[] args) {
         /*HoldemPlayer sample = new HoldemPlayer(10000000, false);
