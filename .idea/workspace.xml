@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="af03b14d-e167-438a-82d6-82b8c24ace0d" name="Changes" comment="git status">
+      <change afterPath="$PROJECT_DIR$/javadoc/Blackjack.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/BlackjackDemo.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/BlackjackPlayer.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/Card.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/CardGame.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/CardList.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/ChipStack.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/Hand.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/Holdem.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/HoldemDemo.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/HoldemHandValue.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/HoldemPlayer.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/HoldemState.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/InputValidator.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/Player.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/RetroImageView.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/SlotMachine444.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/StartScreen.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/allclasses-index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/allpackages-index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/element-list" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/help-doc.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/index-files/index-1.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/index-files/index-10.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/index-files/index-11.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/index-files/index-12.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/index-files/index-13.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/index-files/index-14.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/index-files/index-15.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/index-files/index-16.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/index-files/index-2.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/index-files/index-3.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/index-files/index-4.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/index-files/index-5.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/index-files/index-6.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/index-files/index-7.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/index-files/index-8.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/index-files/index-9.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/legal/ADDITIONAL_LICENSE_INFO" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/legal/ASSEMBLY_EXCEPTION" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/legal/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/legal/dejavufonts.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/legal/jquery.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/legal/jqueryUI.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/member-search-index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/module-search-index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/overview-tree.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/package-search-index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/package-summary.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/package-tree.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/copy.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSans-Bold.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSans-Bold.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSans-BoldOblique.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSans-BoldOblique.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSans-Oblique.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSans-Oblique.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSans.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSans.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSansMono-Bold.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSansMono-Bold.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSansMono-BoldOblique.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSansMono-BoldOblique.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSansMono-Oblique.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSansMono-Oblique.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSansMono.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSansMono.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSerif-Bold.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSerif-Bold.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSerif-BoldItalic.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSerif-BoldItalic.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSerif-Italic.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSerif-Italic.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSerif.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSerif.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/dejavu.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/glass.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/jquery-ui.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/link.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/stylesheet.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/script-files/jquery-3.7.1.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/script-files/jquery-ui.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/script-files/script.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/script-files/search-page.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/script-files/search.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/search.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/tag-search-index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc/type-search-index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sfx/DSLuigi'sCasino.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sfx/DSLuigi'sCasino.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CardList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CardList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DSLuigi'sCasino.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Holdem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Holdem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HoldemHandValue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/HoldemHandValue.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HoldemPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/HoldemPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/InputValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/InputValidator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RetroImageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RetroImageView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SlotMachine444.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SlotMachine444.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SlotMachineSong.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Stal.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/StartScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/StartScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Wanted!.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main screen with the slots" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/this is to be added into the main screen , im scared im going to delete something important in there lol.txt" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="FxmlFile" />
+        <option value="JavaFXApplication" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Dpower2004&quot;
+  }
+}</component>
+  <component name="GithubDefaultAccount">
+    <option name="defaultAccountId" value="cac5fe39-1d7e-4819-9992-e5bbbc30db8c" />
+  </component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Dpower2004/Kirk-Project.git&quot;,
+    &quot;accountId&quot;: &quot;cac5fe39-1d7e-4819-9992-e5bbbc30db8c&quot;
+  }
+}</component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2vV6UYcAfFTCgDiZHDRShycMJRM" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.BlackjackDemo.executor": "Run",
+    "Application.HelloApplication.executor": "Run",
+    "Application.HoldemDemo.executor": "Run",
+    "Application.SlotMachine444.executor": "Run",
+    "Application.StartScreen.executor": "Run",
+    "Application.StartScreen2.executor": "Run",
+    "Application.StartScreen3.executor": "Run",
+    "Application.Unnamed.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_directory_selection": "C:/Users/dariu/IdeaProjects/KirksHouseOfKards/src/main/resources/KirksHouseofKards",
+    "last_opened_file_path": "C:/Users/dariu/IdeaProjects/Kirk-Project",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.38390803",
+    "settings.editor.selected.configurable": "vcs.Git"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\dariu\IdeaProjects\Kirk-Project" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="StartScreen" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="openjdk-23" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="StartScreen" />
+      <module name="Kirk-Project" />
+      <option name="VM_PARAMETERS" value="--module-path C:\Users\dariu\IdeaProjects\Kirk-Project\lib\javafx-sdk-21.0.7\lib --add-modules javafx.controls,javafx.fxml,javafx.media --add-opens javafx.graphics/com.sun.glass.utils=ALL-UNNAMED --add-opens javafx.base/com.sun.javafx=ALL-UNNAMED --add-opens javafx.graphics/com.sun.javafx.tk=ALL-UNNAMED" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="af03b14d-e167-438a-82d6-82b8c24ace0d" name="Changes" comment="" />
+      <created>1744217914389</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1744217914389</updated>
+    </task>
+    <task id="LOCAL-00001" summary="init commit">
+      <option name="closed" value="true" />
+      <created>1745725885771</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1745725885771</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="810d38c9-1a54-4bd6-97c6-ad3e33076735" value="TOOL_WINDOW" />
+      </map>
+    </option>
+    <option name="TAB_STATES">
+      <map>
+        <entry key="810d38c9-1a54-4bd6-97c6-ad3e33076735">
+          <value>
+            <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="true" />
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="init commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="init commit" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/KirksHouseofKards/StartScreen2.java</url>
+          <line>859</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

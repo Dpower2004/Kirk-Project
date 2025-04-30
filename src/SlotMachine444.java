@@ -1,4 +1,4 @@
-;
+
 import java.io.File;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
