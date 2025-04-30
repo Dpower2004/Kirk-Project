@@ -5,111 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="af03b14d-e167-438a-82d6-82b8c24ace0d" name="Changes" comment="git status">
-      <change afterPath="$PROJECT_DIR$/javadoc/Blackjack.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/BlackjackDemo.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/BlackjackPlayer.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/Card.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/CardGame.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/CardList.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/ChipStack.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/Hand.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/Holdem.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/HoldemDemo.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/HoldemHandValue.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/HoldemPlayer.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/HoldemState.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/InputValidator.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/Player.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/RetroImageView.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/SlotMachine444.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/StartScreen.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/allclasses-index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/allpackages-index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/element-list" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/help-doc.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/index-files/index-1.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/index-files/index-10.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/index-files/index-11.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/index-files/index-12.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/index-files/index-13.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/index-files/index-14.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/index-files/index-15.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/index-files/index-16.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/index-files/index-2.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/index-files/index-3.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/index-files/index-4.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/index-files/index-5.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/index-files/index-6.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/index-files/index-7.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/index-files/index-8.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/index-files/index-9.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/legal/ADDITIONAL_LICENSE_INFO" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/legal/ASSEMBLY_EXCEPTION" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/legal/LICENSE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/legal/dejavufonts.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/legal/jquery.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/legal/jqueryUI.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/member-search-index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/module-search-index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/overview-tree.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/package-search-index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/package-summary.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/package-tree.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/copy.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSans-Bold.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSans-Bold.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSans-BoldOblique.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSans-BoldOblique.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSans-Oblique.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSans-Oblique.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSans.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSans.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSansMono-Bold.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSansMono-Bold.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSansMono-BoldOblique.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSansMono-BoldOblique.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSansMono-Oblique.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSansMono-Oblique.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSansMono.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSansMono.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSerif-Bold.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSerif-Bold.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSerif-BoldItalic.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSerif-BoldItalic.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSerif-Italic.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSerif-Italic.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSerif.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/DejaVuLGCSerif.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/fonts/dejavu.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/glass.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/jquery-ui.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/link.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/stylesheet.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/resource-files/x.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/script-files/jquery-3.7.1.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/script-files/jquery-ui.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/script-files/script.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/script-files/search-page.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/script-files/search.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/search.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/tag-search-index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/javadoc/type-search-index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sfx/DSLuigi'sCasino.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sfx/DSLuigi'sCasino.mp3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CardList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CardList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DSLuigi'sCasino.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Holdem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Holdem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HoldemHandValue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/HoldemHandValue.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HoldemPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/HoldemPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/InputValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/InputValidator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RetroImageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RetroImageView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SlotMachine444.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SlotMachine444.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SlotMachineSong.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Stal.mp3" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Kirk-Project/ImgExpand.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Kirk-Project/ItemExpand.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Kirk-Project/StartScreen$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Kirk-Project/gameAssets/chipStacks/0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Kirk-Project/gameAssets/chipStacks/1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Kirk-Project/gameAssets/chipStacks/10.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Kirk-Project/gameAssets/chipStacks/100.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Kirk-Project/gameAssets/chipStacks/250.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Kirk-Project/gameAssets/chipStacks/30.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Kirk-Project/gameAssets/chipStacks/50.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Kirk-Project/gameAssets/chipStacks/500.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Kirk-Project/gameAssets/foldMarker.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Kirk-Project/gameAssets/turnPointer.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Kirk-Project/gameAssets/winner.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Kirk-Project/ui/roundAdvance.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Kirk-Project/ui/turnAdvance.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Kirk-Project/ChipStack.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kirk-Project/ChipStack.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Kirk-Project/Holdem.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kirk-Project/Holdem.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Kirk-Project/HoldemPlayer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kirk-Project/HoldemPlayer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Kirk-Project/HoldemState.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kirk-Project/HoldemState.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Kirk-Project/StartScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kirk-Project/StartScreen.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/StartScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/StartScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Wanted!.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main screen with the slots" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/this is to be added into the main screen , im scared im going to delete something important in there lol.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -151,7 +69,7 @@
     </option>
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
@@ -162,29 +80,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.BlackjackDemo.executor": "Run",
-    "Application.HelloApplication.executor": "Run",
-    "Application.HoldemDemo.executor": "Run",
-    "Application.SlotMachine444.executor": "Run",
-    "Application.StartScreen.executor": "Run",
-    "Application.StartScreen2.executor": "Run",
-    "Application.StartScreen3.executor": "Run",
-    "Application.Unnamed.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_directory_selection": "C:/Users/dariu/IdeaProjects/KirksHouseOfKards/src/main/resources/KirksHouseofKards",
-    "last_opened_file_path": "C:/Users/dariu/IdeaProjects/Kirk-Project",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.38390803",
-    "settings.editor.selected.configurable": "vcs.Git"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.BlackjackDemo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.HoldemDemo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SlotMachine444.executor&quot;: &quot;Run&quot;,
+    &quot;Application.StartScreen.executor&quot;: &quot;Run&quot;,
+    &quot;Application.StartScreen2.executor&quot;: &quot;Run&quot;,
+    &quot;Application.StartScreen3.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_directory_selection&quot;: &quot;C:/Users/dariu/IdeaProjects/KirksHouseOfKards/src/main/resources/KirksHouseofKards&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/dariu/IdeaProjects/Kirk-Project&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.38390803&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\dariu\IdeaProjects\Kirk-Project" />

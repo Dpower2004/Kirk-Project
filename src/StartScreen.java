@@ -353,18 +353,18 @@ public class StartScreen extends Application {
         Label chipLabel = new Label(""+chipsInCart[0]);
 
         Label cashInCartLabel = new Label("Cash in Cart:"+cashInCart[0]);
-        cashInCartLabel.setLayoutX(750);
+        cashInCartLabel.setLayoutX(650);
         cashInCartLabel.setLayoutY(480);
         cashInCartLabel.setFont(myFont);
 
 
         Label chipsInCartLabel = new Label("Chips in Cart:"+chipsInCart[0]);
-        chipsInCartLabel.setLayoutX(750);
+        chipsInCartLabel.setLayoutX(650);
         chipsInCartLabel.setLayoutY(430);
         chipsInCartLabel.setFont(myFont);
 
         Button buy = new Button("Buy Chips");
-        buy.setLayoutX(430);
+        buy.setLayoutX(350);
         buy.setLayoutY(480);
         buy.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
         buy.setFont(myFont);
@@ -396,60 +396,73 @@ public class StartScreen extends Application {
             }
         });
 
-        exchange.setLayoutX(430);
+        exchange.setLayoutX(350);
         exchange.setLayoutY(430);
 
         Button Cash = new Button("Cash");
         Button Chips = new Button("Chips");
-        Cash.setLayoutX(650);
+        Cash.setLayoutX(570);
         Cash.setLayoutY(480);
         Cash.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
         Cash.setFont(myFont);
-        Chips.setLayoutX(650);
+        Chips.setLayoutX(570);
         Chips.setLayoutY(430);
         Chips.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
         Chips.setFont(myFont);
         Cash.setOnAction(e -> {
-            isCashingChips[0] = true;  // You're cashing in chips (converting chips to cash)
-            Cash.setVisible(false);
-            Cash.setDisable(true);
-            Chips.setVisible(true);
-            Chips.setDisable(false);
-            chipsInCart[0]=0;
-            cashInCart[0] = 0;
-            cashInCartLabel.setText("Cash in Cart: " + cashInCart[0]);
-            chipsInCartLabel.setText("Chips in Cart: " + chipsInCart[0]);
+            isCashingChips[0] = true;  // CASH MODE: Exchanging chips for cash
 
+            // Toggle button states
+            Cash.setDisable(true);
+            Cash.setVisible(false);
+            Chips.setDisable(false);
+            Chips.setVisible(true);
+
+            // Reset cart values
+            cashInCart[0] = 0;
+            chipsInCart[0] = 0;
+
+            // Update labels
+            cashInCartLabel.setText("Cash in Cart: " + String.format("%.2f", cashInCart[0]));
+            chipsInCartLabel.setText("Chips in Cart: " + chipsInCart[0]);
         });
 
 
         Chips.setDisable(true);
         Chips.setVisible(false);
         Chips.setOnAction(e -> {
-            isCashingChips[0] = false; // You're buying chips with cash
-            Chips.setVisible(false);
-            Chips.setDisable(true);
-            Cash.setVisible(true);
-            Cash.setDisable(false);
-            chipsInCart[0] = 0;
-            cashInCart[0] = 0;
-            chipsInCartLabel.setText("Chips in Cart: " + chipsInCart[0]);
-            cashInCartLabel.setText("Cash in Cart: " + cashInCart[0]);
+            isCashingChips[0] = false;  // CHIP MODE: Buying chips with cash
 
+            // Toggle button states
+            Chips.setDisable(true);
+            Chips.setVisible(false);
+            Cash.setDisable(false);
+            Cash.setVisible(true);
+
+            // Reset cart values
+            cashInCart[0] = 0;
+            chipsInCart[0] = 0;
+
+            // Update labels
+            cashInCartLabel.setText("Cash in Cart: " + String.format("%.2f", cashInCart[0]));
+            chipsInCartLabel.setText("Chips in Cart: " + chipsInCart[0]);
         });
 
         Button increase10 = new Button();
         increase10.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
         increase10.setLayoutX(562);
         increase10.setLayoutY(50);
-        increase10.setVisible(false);
+        increase10.setVisible(true);
+
         increase10.setOnAction(e -> {
-            if (!isCashingChips[0]) { // Buying chips
+            System.out.println("MODE: " + (isCashingChips[0] ? "Cash Mode" : "Buy Mode"));
+
+            if (!isCashingChips[0]) {
                 if (chipsInCart[0] + 10 <= mainPlayer.getMoney() / cashToChipRatio) {
                     chipsInCart[0] += 10;
                     chipsInCartLabel.setText("Chips in Cart: " + chipsInCart[0]);
                 }
-            } else { // Exchanging chips for cash
+            } else {
                 if (cashInCart[0] + 100 <= mainPlayer.getChips() * cashToChipRatio) {
                     cashInCart[0] += 100;
                     cashInCartLabel.setText("Cash in Cart: " + cashInCart[0]);
@@ -457,12 +470,12 @@ public class StartScreen extends Application {
             }
         });
 
-        increase10.setOnMouseEntered( e->{
+        /*increase10.setOnMouseEntered( e->{
             increase10.setVisible(true);
         });
         increase10.setOnMouseExited(e->{
             increase10.setVisible(false);
-        });
+        });*/
 
 
         Button decrease10 = new Button();
@@ -639,6 +652,7 @@ public class StartScreen extends Application {
         // Bank button opens it
         Bank.setOnAction(e -> {
             popupBank.setVisible(true);
+            Chips.fire();
         });
 
 
@@ -955,8 +969,9 @@ public class StartScreen extends Application {
         playerLabel.setFont(myFont);
 
         Label statusLabel = new Label("");
-        statusLabel.setLayoutX(100);
-        statusLabel.setLayoutY(620);
+        statusLabel.setLayoutX(470);
+        statusLabel.setLayoutY(540);
+        statusLabel.setFont(myFont);
 
         Label balanceLabel = new Label("Balance: "+mainPlayer.getChips());
         balanceLabel.setLayoutX(120);
