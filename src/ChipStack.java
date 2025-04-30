@@ -2,6 +2,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.paint.Color;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 
 /**
@@ -14,12 +15,11 @@ import javafx.scene.image.Image;
 public class ChipStack {
     protected int chipAmount;
     protected String imgName;
-    protected ItemExpand chipImage;
+    protected ImgExpand chipImage;
     protected StackPane chipSignature = new StackPane();
 
     public ChipStack(int amount) {
         setChips(amount);
-        updateImage();
     }
 
     public void setChips(int amount) {
@@ -42,10 +42,7 @@ public class ChipStack {
     }
 
     public void updateImage() {
-        if (chipAmount == 0) {
-            imgName = "0";
-        }
-        else if (chipAmount < 10) {
+        if (chipAmount < 10) {
             imgName = "1";
         }
         else if (chipAmount < 30) {
@@ -67,16 +64,12 @@ public class ChipStack {
             imgName = "500";
         }
         Font myFont = Font.loadFont(getClass().getResourceAsStream("Super-Mario-64-DS.ttf"), 20);
-        chipImage = new ItemExpand(new Image("/gameAssets/chipStacks/" + imgName + ".png"));
+        chipImage = new ImgExpand(new Image("/gameAssets/chipStacks/" + imgName + ".png"));
         Text chipValue = new Text("" + chipAmount);
-        if (chipAmount == 0) {
-            chipValue.setText("");
-        }
         chipValue.setTranslateY(32);
         chipValue.setFont(myFont);
-        chipValue.setFill(Color.WHITE); 
-        //chipValue.setStroke(Color.BLACK);
-        //chipValue.setStrokeWidth(2);
+        chipValue.setFill(Color.WHITE);
+        chipSignature.getChildren().clear();
         chipSignature.getChildren().addAll(chipImage, chipValue);
     }
 

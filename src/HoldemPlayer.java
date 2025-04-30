@@ -72,10 +72,10 @@ public class HoldemPlayer extends Player {
         else {
             Random rand = new Random();
             int actionInt = rand.nextInt(100);
-            if (actionInt < 70) { // Check / Call
+            if (actionInt < 60) { // Check / Call
                 currentAction = "C";
             }
-            else if (actionInt >= 70 && actionInt < 90) {
+            else if (actionInt >= 60 && actionInt < 90) {
                 if (highBet < chipBank.chipAmount) {
                     if (handChips.chipAmount != 0 || betMade == true) {
                         currentAction = "R";
@@ -102,7 +102,7 @@ public class HoldemPlayer extends Player {
 
     public int cpuBet(int highBet) {
         Random rand = new Random();
-        int bet = rand.nextInt(20) + 1;
+        int bet = rand.nextInt(22) + 4;
         if (currentAction.equals("R") && highBet + bet > chipBank.chipAmount) {
             bet = maxRoundChips - highBet;
         }
