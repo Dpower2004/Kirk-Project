@@ -1,3 +1,4 @@
+
 /**
  * Abstract class that all card games will inherit from
  * @author Luke Soda

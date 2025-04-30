@@ -3,6 +3,8 @@
 import java.util.Random;
 import java.util.Scanner;
 
+import javafx.scene.layout.HBox;
+
 /**
  * Class representing the game texas holdem. It inherits the abstract game class
  * @author Luke Soda
@@ -16,6 +18,7 @@ public class HoldemPlayer extends Player {
     protected Hand handValue;
     protected Card highCard;
     protected Card secondHighCard;
+    protected HBox cardBox = new HBox(48);
 
     private Scanner input; // User input
 
@@ -58,12 +61,13 @@ public class HoldemPlayer extends Player {
      */
     public String chooseAction(int highBet, boolean betMade) {
         if (isMain) { // If player is user, prompt in console
-            if (!betMade && handChips.chipAmount == 0) {
+            /*if (!betMade && handChips.chipAmount == 0) {
                 currentAction = InputValidator.validateCustomPrompt(input, "C, B, F", "Check, Bet, Fold? (C/B/F): ");
             }
             else {
                 currentAction = InputValidator.validateCustomPrompt(input, "C, R, F", "Check, Raise, Fold? (C/R/F): ");
-            }
+            }*/
+            currentAction = "C";
         }
         else {
             Random rand = new Random();
@@ -98,7 +102,7 @@ public class HoldemPlayer extends Player {
 
     public int cpuBet(int highBet) {
         Random rand = new Random();
-        int bet = rand.nextInt(50) + 1;
+        int bet = rand.nextInt(22) + 4;
         if (currentAction.equals("R") && highBet + bet > chipBank.chipAmount) {
             bet = maxRoundChips - highBet;
         }

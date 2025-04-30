@@ -6,18 +6,10 @@
     "configurations": [
         {
             "type": "java",
-            "name": "StartScreen",
-            "request": "launch",
-            "mainClass": "src.StartScreen",
-            "projectName": "Kirk-Project-main_d415be3",
-            "vmArgs": "--module-path ${workspaceFolder}/lib/javafx-sdk-21.0.7/lib --add-modules javafx.controls,javafx.fxml"
-        },
-        {
-            "type": "java",
             "name": "SlotMachine444",
             "request": "launch",
             "mainClass": "SlotMachine444",
-            "projectName": "TESTFX_1ea8cae4",
+            "projectName": "Kirk-Project-main_d415be3",
             "vmArgs": "--module-path ${workspaceFolder}/lib/javafx-sdk-21.0.7/lib --add-modules javafx.controls,javafx.fxml"
         },
         {
@@ -25,15 +17,15 @@
             "name": "HoldemDemo",
             "request": "launch",
             "mainClass": "HoldemDemo",
-            "projectName": "TESTFX_1ea8cae4"
+            "projectName": "Kirk-Project-main_d415be3"
         },
         {
             "type": "java",
             "name": "StartScreen",
             "request": "launch",
             "mainClass": "StartScreen",
-            "projectName": "TESTFX_1ea8cae4",
-            "vmArgs": "--module-path ${workspaceFolder}/lib/javafx-sdk-21.0.7/lib --add-modules javafx.controls,javafx.fxml"
+            "projectName": "Kirk-Project-main_d415be3",
+            "vmArgs": "--module-path ${workspaceFolder}/lib/javafx-sdk-21.0.7/lib --add-modules javafx.controls,javafx.fxml,javafx.media --add-exports=javafx.base/com.sun.javafx=ALL-UNNAMED"
         },
         {
             "type": "java",

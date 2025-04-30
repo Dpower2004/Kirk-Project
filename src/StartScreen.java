@@ -1,10 +1,9 @@
-
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -26,7 +25,7 @@ import java.util.Random;
 import java.text.NumberFormat;
 
 public class StartScreen extends Application {
-
+    HoldemState gameState = HoldemState.SETUP;
     public static void main(String[] args) {
         launch(args);
     }
@@ -1354,9 +1353,9 @@ public class StartScreen extends Application {
         MediaPlayer loseSound;
 
         try {
-            Media spinMedia = new Media(new File("/Users/dariu/IdeaProjects/Kirk-Project/resources/sfx/spin_sound_trimmed.mp3").toURI().toString());
+            Media spinMedia = new Media(new File("resources/sfx/spin_sound_trimmed.mp3").toURI().toString());
             spinSound = new MediaPlayer(spinMedia);
-            Media loseMedia = new Media(new File("/Users/dariu/IdeaProjects/Kirk-Project/resources/sfx/youtube__asNhzXq72w_audio.mp3").toURI().toString());
+            Media loseMedia = new Media(new File("resources/sfx/youtube__asNhzXq72w_audio.mp3").toURI().toString());
             loseSound = new MediaPlayer(loseMedia);
         } catch (Exception e) {
             System.out.println("Error loading sound files: " + e.getMessage());
@@ -1774,44 +1773,233 @@ public class StartScreen extends Application {
 
         Pane gameContent = new Pane();
         ImageView holdemBackground = new ImageView(new Image("/backgrounds/tableBackDrop.png"));
-        holdemBackground.setPreserveRatio(false);
         holdemBackground.setMouseTransparent(true);
-        holdemBackground.fitWidthProperty().bind(gameContent.widthProperty());
-        holdemBackground.fitHeightProperty().bind(gameContent.heightProperty());
-        ImageView holdemTable = new ImageView(new Image("/gameAssets/table.png"));
-        holdemTable.setPreserveRatio(false);
+        holdemBackground.setScaleX(4);
+        holdemBackground.setScaleY(4);
+
+        ImageView holdemTable = new ImageView(new Image("/gameAssets/holdemTable.png"));
         holdemTable.setMouseTransparent(true);
-        holdemTable.fitWidthProperty().bind(gameContent.widthProperty());
-        holdemTable.fitHeightProperty().bind(gameContent.heightProperty());
+        holdemTable.setScaleX(4);
+        holdemTable.setScaleY(4);
+        holdemTable.setTranslateY(-30);
         gameContent.setPrefSize(1366, 768);
 
         ImageView kirkDealer = new ImageView(new Image("/gameAssets/kirkDealer.png"));
-        kirkDealer.fitWidthProperty().bind(stage.widthProperty().multiply(0.3));
-        kirkDealer.fitHeightProperty().bind(stage.heightProperty().multiply(0.3));
-        kirkDealer.setTranslateY(-104);
+        kirkDealer.setScaleX(4);
+        kirkDealer.setScaleY(4);
+        kirkDealer.setTranslateY(-150);
         StackPane imageHolder = new StackPane(kirkDealer);
         imageHolder.setPrefSize(SCREEN_WIDTH, SCREEN_HEIGHT); // match your main screen size
 
+        /// HOLDEM BLOCK ///
+        Player[] players = new Player[4];
+        players[0] = new HoldemPlayer(1000, false);
+        players[1] = new HoldemPlayer(1000, false);
+        players[2] = new HoldemPlayer(mainPlayer.getChips(), true);
+        players[3] = new HoldemPlayer(1000, false);
+        Holdem game = new Holdem(players, 2);
 
+        // Setting up structures that will take from the holdem files and update images on screen
+        Pane cardPane = new Pane();
+        Pane chipPane = new Pane();
+        HBox communityBox = new HBox(48);
+        communityBox.setLayoutX(514);
+        communityBox.setLayoutY(472);
+        Image cardBack = new Image("/gameAssets/cards/back.png");
+        CardList communityCards = game.communityCards;
 
+        StackPane pot = game.pot.chipSignature;
+        pot.setLayoutX(324);
+        pot.setLayoutY(440);
+        chipPane.getChildren().addAll(pot);
 
+        ImgExpand fold0 = new ImgExpand(new Image("/gameAssets/foldMarker.png"));
+        fold0.setLayoutX(1064);
+        fold0.setLayoutY(416);
+        fold0.setVisible(false);
+        ImgExpand fold1 = new ImgExpand(new Image("/gameAssets/foldMarker.png"));
+        fold1.setLayoutX(1064);
+        fold1.setLayoutY(636);
+        fold1.setVisible(false);
+        ImgExpand fold2 = new ImgExpand(new Image("/gameAssets/foldMarker.png")); 
+        fold2.setLayoutX(652);
+        fold2.setLayoutY(636);
+        fold2.setVisible(false);
+        ImgExpand fold3 = new ImgExpand(new Image("/gameAssets/foldMarker.png")); 
+        fold3.setLayoutX(244);
+        fold3.setLayoutY(636);
+        fold3.setVisible(false);
+        Pane indicatorPane = new Pane(fold0, fold1, fold2, fold3);
 
-        Button closeButton = new Button("Close");
-        closeButton.setOnAction(e->{
-            stage.setScene(createGameSelectScene(stage, mainPlayer));
+        Button nextRound = new Button("Start Game");
+        nextRound.setPrefSize(100, 100);
+        Button nextTurn = new Button("Next Turn");
+        nextTurn.setPrefSize(100, 100);
+        nextTurn.setDisable(true);
+        nextTurn.setOnAction(e->{
+            updateFold(players, fold0, fold1, fold2, fold3);
+            game.nextTurn();
+            if (game.remainingTurns <= 0) {
+                nextTurn.setDisable(true);
+                nextRound.setDisable(false);
+            }
         });
-        Button hitButton = new Button("Hit");
-        Button standButton = new Button("Stand");
-        Button betIncrease = new Button("Increase Bet");
-        Button betDecrease = new Button("");
+        nextRound.setOnAction(e->{
+            nextTurn.setDisable(false);
+            nextRound.setText("Next Round");
+            nextRound.setDisable(true);
+            switch (gameState) {
+                case HoldemState.SETUP:
+                    game.setup();
+                    for (Player p : players) {
+                        HoldemPlayer hp = (HoldemPlayer) p;
+                        ImageView card1 = new ItemExpand(cardBack);
+                        ImageView card2 = new ItemExpand(cardBack);
+                        switch (hp.playerID) {
+                            case 0:
+                                hp.handChips.chipSignature.setLayoutX(1072);
+                                hp.handChips.chipSignature.setLayoutY(432);
+                                hp.cardBox.setLayoutX(1044);
+                                hp.cardBox.setLayoutY(388);
+                                break;
+                            case 1:
+                                hp.handChips.chipSignature.setLayoutX(1072);
+                                hp.handChips.chipSignature.setLayoutY(552);
+                                hp.cardBox.setLayoutX(1044);
+                                hp.cardBox.setLayoutY(676);
+                                break;
+                            case 2:
+                                hp.handChips.chipSignature.setLayoutX(660);
+                                hp.handChips.chipSignature.setLayoutY(552);
+                                card1 = new ItemExpand(new Image("/gameAssets/cards/" + hp.cards.getCard(0) + ".png"));
+                                card2 = new ItemExpand(new Image("/gameAssets/cards/" + hp.cards.getCard(1) + ".png"));
+                                hp.cardBox.setLayoutX(632);
+                                hp.cardBox.setLayoutY(676);
+                                break;
+                            case 3:
+                                hp.handChips.chipSignature.setLayoutX(248);
+                                hp.handChips.chipSignature.setLayoutY(552);
+                                hp.cardBox.setLayoutX(220);
+                                hp.cardBox.setLayoutY(676);
+                                break;
+                        }
+                        hp.cardBox.getChildren().addAll(card1, card2);
+                        cardPane.getChildren().addAll(hp.cardBox);
+                        chipPane.getChildren().add(hp.handChips.chipSignature);
+                    }
+                    game.handleBettingRound(HoldemState.FIRST_BET);
+                    gameState = HoldemState.FLOP;
+                    break;
 
+                case HoldemState.FLOP:
+                    game.flop();
+                    for (Card c : communityCards.getCardList()) {
+                        ImageView card = new ItemExpand(new Image("/gameAssets/cards/" + c + ".png"));
+                        communityBox.getChildren().addAll(card);
+                    }
+                    communityBox.getChildren().addAll(new ItemExpand(cardBack));
+                    communityBox.getChildren().addAll(new ItemExpand(cardBack));
+                    cardPane.getChildren().addAll(communityBox);
+                    game.handleBettingRound(HoldemState.SECOND_BET);
+                    gameState = HoldemState.TURN;
+                    break;
 
+                case HoldemState.TURN:
+                    game.turn();
+                    communityBox.getChildren().clear();
+                    for (Card c : communityCards.getCardList()) {
+                        ImageView card = new ItemExpand(new Image("/gameAssets/cards/" + c + ".png"));
+                        communityBox.getChildren().addAll(card);
+                    }
+                    communityBox.getChildren().addAll(new ItemExpand(cardBack));
+                    game.handleBettingRound(HoldemState.THIRD_BET);
+                    gameState = HoldemState.RIVER;
+                    break;
 
+                case HoldemState.RIVER:
+                    game.river();
+                    communityBox.getChildren().clear();
+                    for (Card c : communityCards.getCardList()) {
+                        ImageView card = new ItemExpand(new Image("/gameAssets/cards/" + c + ".png"));
+                        communityBox.getChildren().addAll(card);
+                    }
+                    game.handleBettingRound(HoldemState.FINAL_BET);
+                    gameState = HoldemState.SHOWDOWN;
+                    break;
+                case HoldemState.SHOWDOWN:
+                    for (Player p : players) {
+                        HoldemPlayer hp = (HoldemPlayer) p;
+                        ImageView card1 = new ItemExpand(new Image("/gameAssets/cards/" + hp.cards.getCard(0) + ".png"));
+                        ImageView card2 = new ItemExpand(new Image("/gameAssets/cards/" + hp.cards.getCard(1) + ".png"));
+                        hp.cardBox.getChildren().clear();
+                        hp.cardBox.getChildren().addAll(card1, card2);
+                    }
+                    ArrayList<HoldemPlayer> winners = game.getWinner();
+                    for (HoldemPlayer hp : winners) {
+                        ImgExpand winnerMarker = new ImgExpand(new Image("/gameAssets/winner.png"));
+                        indicatorPane.getChildren().addAll(winnerMarker);
+                        switch (hp.playerID) {
+                            case 0:
+                                winnerMarker.setLayoutX(1064);
+                                winnerMarker.setLayoutY(416);
+                                break;
+                            case 1:
+                                winnerMarker.setLayoutX(1064);
+                                winnerMarker.setLayoutY(636);
+                                break;
+                            case 2:
+                                winnerMarker.setLayoutX(652);
+                                winnerMarker.setLayoutY(636);
+                                break;
+                            case 3:
+                                winnerMarker.setLayoutX(244);
+                                winnerMarker.setLayoutY(636);
+                                break;
+                        }
+                    }
+                    int take = game.pot.chipAmount / winners.size();
+                    for (HoldemPlayer winner : winners) {
+                        winner.chipBank.addChips(take);
+                    }
+                    gameState = HoldemState.END;
+                    break;
+                case HoldemState.END:
+                    mainPlayer.setChips(players[2].getChips());
+                    stage.setScene(createGameSelectScene(stage, mainPlayer));
+                    gameState = HoldemState.SETUP;
+                    
+            }
+        });
+        
+        HBox buttons = new HBox(50, nextRound, nextTurn);
 
-        gameContent.getChildren().add(closeButton);
-        root.getChildren().addAll(holdemBackground,imageHolder,holdemTable,gameContent);
+        buttons.setAlignment(Pos.CENTER);
+
+        root.getChildren().addAll(holdemBackground,imageHolder,holdemTable,gameContent,cardPane,chipPane,indicatorPane,buttons);
 
         return new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT); // use your defined width/height
+        
+    }
+    public void updateFold(Player[] players, ImageView fold0, ImageView fold1, ImageView fold2, ImageView fold3) {
+        for (Player p : players) {
+            HoldemPlayer hp = (HoldemPlayer) p;
+            if (!hp.isActive) {
+                switch (hp.playerID) {
+                    case 0:
+                        fold0.setVisible(true);
+                        break;
+                    case 1:
+                        fold1.setVisible(true);
+                        break;
+                    case 2:
+                        fold2.setVisible(true);
+                        break;
+                    case 3:
+                        fold3.setVisible(true);
+                        break;
+                }
+            }
+        }
     }
 }
 

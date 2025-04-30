@@ -8,5 +8,6 @@ public enum HoldemState {
     THIRD_BET,
     RIVER,
     FINAL_BET,
-    SHOWDOWN
+    SHOWDOWN,
+    END
 }
