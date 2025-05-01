@@ -138,6 +138,7 @@ public class Holdem extends CardGame {
         for (Player p : playerList) {   // For all players...
             HoldemPlayer hp = (HoldemPlayer) p;
             pot.addChips(hp.handChips.chipAmount); // Add chips to pot
+            hp.maxRoundChips = hp.chipBank.chipAmount; // Update max chips
             hp.handChips.setChips(0);       // reset chips
         }
     }

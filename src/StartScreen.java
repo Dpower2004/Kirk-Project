@@ -1852,7 +1852,9 @@ public class StartScreen extends Application {
         betAmount.setPromptText("Enter Bet"); 
         betAmount.setMaxWidth(75);
 
-        VBox advanceButtons = new VBox(nextRound, nextTurn); // both advance buttons in vbox
+        Label bank = mainHoldemPlayer.bankLabel;
+
+        VBox advanceButtons = new VBox(nextRound, nextTurn, bank); // both advance buttons in vbox
 
         VBox actionButtons = new VBox(5, call, fold, bet, betAmount); // All action buttons in vbox
         actionButtons.setAlignment(Pos.TOP_CENTER);
@@ -2076,7 +2078,6 @@ public class StartScreen extends Application {
                     for (HoldemPlayer winner : winners) { // Cycle through winners
                         winner.chipBank.addChips(take); // Add the take to their chips 
                     }
-                    System.out.println(players[2].chipBank.getChips());
                     player1.setChips(players[2].chipBank.getChips()); // Set main players chips to what they now have in holdem
                     gameState = HoldemState.END; // Next state
                     break;

@@ -6,8 +6,11 @@
  */
 
 import java.util.Random;
+
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
 
 public class HoldemPlayer extends Player {
     protected ChipStack handChips; // Chips up for a given round
@@ -20,6 +23,8 @@ public class HoldemPlayer extends Player {
     protected HBox cardBox = new HBox(48); // Box that holds each player's card images for javafx
     protected String mainPlayerAction; // JavaFX sets this when using buttons for things like betting
     protected int mainPlayerBet; // Same as above but for entering an integer bet / raise
+    protected Font myFont = Font.loadFont(getClass().getResourceAsStream("Super-Mario-64-DS.ttf"), 20); // Declare font
+    protected Label bankLabel; // Bank display for holdem main player
     protected ImgExpand foldMarker = new ImgExpand(new Image("/gameAssets/foldMarker.png")); // Every player has a fold marker
                                                                                              // which is visible when they fold
 
@@ -34,6 +39,9 @@ public class HoldemPlayer extends Player {
         foldMarker.setVisible(false);
         isActive = true; // Player is set to active by default (they have not folded)
         handChips = new ChipStack(0);
+        bankLabel = new Label("Bank: " + chipBank.chipAmount);
+        bankLabel.setFont(myFont);
+        bankLabel.setStyle("-fx-text-fill: white;");
     }
   
     /**
@@ -59,6 +67,7 @@ public class HoldemPlayer extends Player {
                 break;
         }
     }
+
     /**
      * Adds chips to what the player has up in front of them
      * Used on calls, checks, bets, raises
@@ -67,6 +76,9 @@ public class HoldemPlayer extends Player {
     public void setHandChips(int amount) {
         chipBank.setChips(maxRoundChips - amount);
         handChips.setChips(amount); // Add the bet to the chips in play for the round
+        if (isMain) {
+            bankLabel.setText("Bank: " + chipBank.chipAmount);
+        }
     }
 
     /**
