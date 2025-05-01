@@ -1,3 +1,9 @@
+/**
+ * Used to automatically scale javaFX images by a factor of 4
+ * @author Luke Soda
+ * @version 1.0
+ */
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 

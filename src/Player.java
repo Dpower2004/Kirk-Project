@@ -1,5 +1,3 @@
-;
-
 /**
  * Player class, represents a player in one of the games
  * @author Luke Soda
@@ -8,7 +6,7 @@
 
 public  class Player {
     protected int playerID; // The player's ID
-    protected double money;
+    protected double money; // Player money, different from chips
     protected CardList cards; // A card list, the player's hand
     protected ChipStack chipBank; // Amount of chips (Will probably be an object later, this is a placeholder)
     protected boolean isMain; // Is the player the user?
@@ -22,7 +20,7 @@ public  class Player {
     public Player (int chips, boolean isMain, Double money) {
         this.isMain = isMain;
         this.money = money;
-        chipBank = new ChipStack(chips);
+        chipBank = new ChipStack(chips); // Make new chipBank based on passed in chips
         cards = new CardList(true); // Create new empty hand for the player
     }
 

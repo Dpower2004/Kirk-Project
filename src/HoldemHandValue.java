@@ -1,13 +1,14 @@
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Class evaluates the hand of a given player
  * @author Luke Soda
  * @version 1.0
  */
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 public final class HoldemHandValue {
     protected HoldemPlayer player; // The player passed in
     protected CardList communityCards; // The 5 shared cards
