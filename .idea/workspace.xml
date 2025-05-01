@@ -4,29 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="af03b14d-e167-438a-82d6-82b8c24ace0d" name="Changes" comment="git status">
-      <change afterPath="$PROJECT_DIR$/out/production/Kirk-Project/ImgExpand.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Kirk-Project/ItemExpand.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Kirk-Project/StartScreen$1.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Kirk-Project/gameAssets/chipStacks/0.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Kirk-Project/gameAssets/chipStacks/1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Kirk-Project/gameAssets/chipStacks/10.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Kirk-Project/gameAssets/chipStacks/100.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Kirk-Project/gameAssets/chipStacks/250.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Kirk-Project/gameAssets/chipStacks/30.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Kirk-Project/gameAssets/chipStacks/50.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Kirk-Project/gameAssets/chipStacks/500.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Kirk-Project/gameAssets/foldMarker.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Kirk-Project/gameAssets/turnPointer.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Kirk-Project/gameAssets/winner.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Kirk-Project/ui/roundAdvance.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Kirk-Project/ui/turnAdvance.png" afterDir="false" />
+    <list default="true" id="af03b14d-e167-438a-82d6-82b8c24ace0d" name="Changes" comment="fixed store">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Kirk-Project/ChipStack.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kirk-Project/ChipStack.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Kirk-Project/Holdem.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kirk-Project/Holdem.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Kirk-Project/HoldemPlayer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kirk-Project/HoldemPlayer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Kirk-Project/HoldemState.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kirk-Project/HoldemState.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Kirk-Project/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kirk-Project/Player.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Kirk-Project/StartScreen$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kirk-Project/StartScreen$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Kirk-Project/StartScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kirk-Project/StartScreen.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/StartScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/StartScreen.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -137,7 +120,23 @@
       <option name="project" value="LOCAL" />
       <updated>1745725885771</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="fixed store">
+      <option name="closed" value="true" />
+      <created>1746053728435</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1746053728435</updated>
+    </task>
+    <task id="LOCAL-00003" summary="fixed store">
+      <option name="closed" value="true" />
+      <created>1746053789143</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1746053789143</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -181,7 +180,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="init commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="init commit" />
+    <MESSAGE value="fixed store" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed store" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

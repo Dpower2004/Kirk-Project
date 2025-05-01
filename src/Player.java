@@ -12,6 +12,7 @@ public  class Player {
     protected CardList cards; // A card list, the player's hand
     protected ChipStack chipBank; // Amount of chips (Will probably be an object later, this is a placeholder)
     protected boolean isMain; // Is the player the user?
+    protected boolean[] achievementsUnlockStatus = {false,false,false, false};
 
     /**
      * Constructor for player class
@@ -42,6 +43,13 @@ public  class Player {
     }
 
     /**
+     * getUnlockStatusAtIndex - method to set current chip Balance of PLayer
+     * @param index - index of prize unlock status
+     * @return boolean achievement unlock status
+     */
+    public boolean getUnlockStatusAtIndex(int index){return achievementsUnlockStatus[index];}
+
+    /**
      * setMoney method - method to set the current cash balance of a Player
      * @param money - new balance of player
      */
@@ -58,6 +66,14 @@ public  class Player {
     }
 
     /**
+     * setUnlockStatusAtIndex - method to set current chip Balance of PLayer
+     * @param index - index of prize unlock status
+     */
+    public void switchUnlockStatusAtIndex(int index){achievementsUnlockStatus[index] = true;}
+
+
+
+    /**
      * toString for player class
      * @return String representing the players status. Contains name, isMain, chips, and current hand
      */
@@ -66,3 +82,4 @@ public  class Player {
         return "\nPlayer " + playerID + "\nBank: " + chipBank.chipAmount;
     }
 }
+

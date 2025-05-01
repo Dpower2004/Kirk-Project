@@ -39,7 +39,7 @@ public class StartScreen extends Application {
         final double MINI_SCREEN_WIDTH = 960;
         final double MINI_SCREEN_HEIGHT = 540;
 
-        Player mainPlayer = new Player(1000,false,10000.0);
+        Player mainPlayer = new Player(1000,false,5000.0);
 
 
         Button START = new Button("");
@@ -296,6 +296,40 @@ public class StartScreen extends Application {
             }
         });
 
+        Button playBlackJack = new Button("Play BlackJack");
+        playBlackJack.setPrefSize(85, 195);
+        playBlackJack.setLayoutX(460);
+        playBlackJack.setLayoutY(325);
+        playBlackJack.setRotate(-20);
+
+        playBlackJack.setOnAction(e -> {
+            Scene blackjackScene = createBlackJackScene(stage,mainPlayer);
+            stage.setScene(blackjackScene);
+        });
+
+        // Add Slots button
+        Button playSlots = new Button("Play Slots");
+        playSlots.setPrefSize(190, 150);
+        playSlots.setLayoutX(550);
+        playSlots.setLayoutY(140);
+        playSlots.setOnAction(e -> {
+            Scene slotsScene = createSlotsScene(stage, mainPlayer);
+            stage.setScene(slotsScene);
+
+        });
+
+        // Add Holdem button
+        Button playHoldem = new Button("Play Texas Holdem");
+        playHoldem.setPrefSize(105, 199);
+        playHoldem.setLayoutX(729);
+        playHoldem.setLayoutY(325);
+        playHoldem.setRotate(20);
+
+        playHoldem.setOnAction(e -> {
+            Scene HoldemScene = createTexasHoldemScene(stage, mainPlayer);
+            stage.setScene(HoldemScene);
+        });
+
 
         Button Bank = new Button("Bank");
         Bank.setLayoutX(125); // Place anywhere
@@ -352,7 +386,7 @@ public class StartScreen extends Application {
         Label cashLabel = new Label(""+cashInCart[0]);
         Label chipLabel = new Label(""+chipsInCart[0]);
 
-        Label cashInCartLabel = new Label("Cash in Cart:"+cashInCart[0]);
+        Label cashInCartLabel = new Label("Cash in Cart:"+String.format("%.2f",cashInCart[0]));
         cashInCartLabel.setLayoutX(650);
         cashInCartLabel.setLayoutY(480);
         cashInCartLabel.setFont(myFont);
@@ -657,7 +691,7 @@ public class StartScreen extends Application {
 
 
 
-        // ⬇️ Popup overlay
+        // Achievement Popup overlay
         Pane popupAchievements = new Pane();
        ImageView AchievementMenuImage = new ImageView(new Image("/backgrounds/achievments.png"));
         AchievementMenuImage.setPreserveRatio(false);
@@ -679,24 +713,28 @@ public class StartScreen extends Application {
         ringStatus.setFitWidth(180);
         ringStatus.setFitHeight(48);
         ringStatus.setSmooth(true);
+        ringStatus.setMouseTransparent(true);
 
         ImageView carStatus = new ImageView(achievesStatusImage.get(1));
         carStatus.setPreserveRatio(false);
         carStatus.setFitWidth(180);
         carStatus.setFitHeight(48);
         carStatus.setSmooth(true);
+        carStatus.setMouseTransparent(true);
 
         ImageView houseStatus = new ImageView(achievesStatusImage.get(1));
         houseStatus.setPreserveRatio(false);
         houseStatus.setFitWidth(180);
         houseStatus.setFitHeight(48);
         houseStatus.setSmooth(true);
+        houseStatus.setMouseTransparent(true);
 
         ImageView islandStatus = new ImageView(achievesStatusImage.get(1));
         islandStatus.setPreserveRatio(false);
         islandStatus.setFitWidth(180);
         islandStatus.setFitHeight(48);
         islandStatus.setSmooth(true);
+        islandStatus.setMouseTransparent(true);
 
         Label prizes = new Label("Prizes");
         prizes.setLayoutX(740);
@@ -704,8 +742,8 @@ public class StartScreen extends Application {
         prizes.setFont(myFont);
         prizes.setTextFill(Color.GOLD);
 
-        Label achieveCashBalance = new Label(""+ mainPlayer.getMoney());
-        achieveCashBalance.setLayoutX(750);
+        Label achieveCashBalance = new Label(String.format("%.2f",mainPlayer.getMoney()));
+        achieveCashBalance.setLayoutX(725);
         achieveCashBalance.setLayoutY(43);
         achieveCashBalance.setFont(myFont);
         achieveCashBalance.setTextFill(Color.GOLD);
@@ -729,12 +767,14 @@ public class StartScreen extends Application {
         unlock1.setPrefSize(180, 48);
         unlock1.setGraphic(ringStatus);
         unlock1.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
-        unlock1.addEventFilter(MouseEvent.MOUSE_PRESSED, MouseEvent::consume);
         unlock1.setOnAction(e -> {
             if (mainPlayer.getMoney() >= 8000) {
-                ringStatus.setImage(achievesStatusImage.getFirst()); // FIXED
+
+                ringStatus.setImage(achievesStatusImage.get(0)); // FIXED
+                unlock1.setGraphic(ringStatus);
                 mainPlayer.setMoney(mainPlayer.getMoney() - 8000);
-                achievemntUnlocked[0] = true;
+                mainPlayer.switchUnlockStatusAtIndex(0);
+                achieveCashBalance.setText(String.format("%.2f",mainPlayer.getMoney()));
             }
         });
 
@@ -748,8 +788,10 @@ public class StartScreen extends Application {
         unlock2.setOnAction(e -> {
             if (mainPlayer.getMoney() >= 150000) {
                 carStatus.setImage(achievesStatusImage.get(0)); // FIXED
+                unlock2.setGraphic(carStatus);
                 mainPlayer.setMoney(mainPlayer.getMoney() - 150000);
-                achievemntUnlocked[1] = true;
+                mainPlayer.switchUnlockStatusAtIndex(1);
+                achieveCashBalance.setText(String.format("%.2f",mainPlayer.getMoney()));
             }
         });
 
@@ -763,8 +805,10 @@ public class StartScreen extends Application {
         unlock3.setOnAction(e -> {
             if (mainPlayer.getMoney() >= 1600000) {
                 houseStatus.setImage(achievesStatusImage.get(0)); // FIXED
+                unlock3.setGraphic(houseStatus);
                 mainPlayer.setMoney(mainPlayer.getMoney() - 1600000);
-                achievemntUnlocked[2] = true;
+                mainPlayer.switchUnlockStatusAtIndex(2);
+                achieveCashBalance.setText(String.format("%.2f",mainPlayer.getMoney()));
             }
         });
 
@@ -777,54 +821,22 @@ public class StartScreen extends Application {
         unlock4.setOnAction(e -> {
             if (mainPlayer.getMoney() >= 25000000) {
                 islandStatus.setImage(achievesStatusImage.get(0)); // This one was correct
+                unlock4.setGraphic(islandStatus);
+                achieveCashBalance.setText(String.format("%.2f",mainPlayer.getMoney()));
                 mainPlayer.setMoney(mainPlayer.getMoney() - 25000000);
-                achievemntUnlocked[3] = true;
+                mainPlayer.switchUnlockStatusAtIndex(3);
+                achieveCashBalance.setText(String.format("%.2f",mainPlayer.getMoney()));
             }
         });
 
-        popupAchievements.getChildren().addAll(AchievementMenuImage,unlock1,unlock2,unlock3,unlock4,prizes,achieveCashBalance,closeAchieve);
+        popupAchievements.getChildren().addAll(closeAchieve,AchievementMenuImage,unlock1,unlock2,unlock3,unlock4,prizes,achieveCashBalance);
 
 
 
         // Popup control
         Achievement.setOnAction(e -> popupAchievements.setVisible(true));
-        Button resume = (Button) popupAchievements.getChildren().get(1);
-        resume.setOnAction(e -> popupAchievements.setVisible(false));
 
 
-        Button playBlackJack = new Button("Play BlackJack");
-        playBlackJack.setPrefSize(85, 195);
-        playBlackJack.setLayoutX(460);
-        playBlackJack.setLayoutY(325);
-        playBlackJack.setRotate(-20);
-
-        playBlackJack.setOnAction(e -> {
-            Scene blackjackScene = createBlackJackScene(stage,mainPlayer);
-            stage.setScene(blackjackScene);
-        });
-
-        // Add Slots button
-        Button playSlots = new Button("Play Slots");
-        playSlots.setPrefSize(190, 150);
-        playSlots.setLayoutX(550);
-        playSlots.setLayoutY(140);
-        playSlots.setOnAction(e -> {
-            Scene slotsScene = createSlotsScene(stage, mainPlayer);
-            stage.setScene(slotsScene);
-
-        });
-
-        // Add Holdem button
-        Button playHoldem = new Button("Play Texas Holdem");
-        playHoldem.setPrefSize(105, 199);
-        playHoldem.setLayoutX(729);
-        playHoldem.setLayoutY(325);
-        playHoldem.setRotate(20);
-
-        playHoldem.setOnAction(e -> {
-            Scene HoldemScene = createTexasHoldemScene(stage, mainPlayer);
-            stage.setScene(HoldemScene);
-        });
 
         // ⬇️ Jukebox layout
         Label jukeboxLabel = new Label("Kirk's Jukebox");
@@ -947,9 +959,9 @@ public class StartScreen extends Application {
         blackJackTable.fitHeightProperty().bind(gameContent.heightProperty());
 
         ImageView kirkDealer = new ImageView(new Image("/gameAssets/kirkDealer.png"));
-        kirkDealer.setScaleX(4);
-        kirkDealer.setScaleY(4);
-        kirkDealer.setTranslateY(-104);
+        kirkDealer.setScaleX(3);
+        kirkDealer.setScaleY(3);
+        kirkDealer.setTranslateY(-144);
         StackPane imageHolder = new StackPane(kirkDealer);
         imageHolder.setPrefSize(SCREEN_WIDTH, SCREEN_HEIGHT);
         root.getChildren().add(imageHolder);
