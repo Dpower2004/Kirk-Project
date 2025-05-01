@@ -8,178 +8,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="af03b14d-e167-438a-82d6-82b8c24ace0d" name="Changes" comment="fixed achievement window">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="af03b14d-e167-438a-82d6-82b8c24ace0d" name="Changes" comment="javadocs update plus select screen comments">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Blackjack.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/BlackjackDemo.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/BlackjackPlayer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Card.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/CardGame.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/CardList.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/ChipStack.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Hand.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Holdem.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/HoldemHandValue.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/HoldemPlayer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/HoldemState.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/ImgExpand.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/InputValidator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/ItemExpand.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Player.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/SlotMachine444.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/StartScreen.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Super-Mario-64-DS.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/backgrounds/E_title.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/backgrounds/achievments.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/backgrounds/chipExchange.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/backgrounds/lobby.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/backgrounds/slots.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/backgrounds/tableBackDrop.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/10C.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/10D.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/10H.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/10S.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/2C.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/2D.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/2H.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/2S.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/3C.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/3D.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/3H.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/3S.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/4C.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/4D.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/4H.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/4S.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/5C.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/5D.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/5H.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/5S.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/6C.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/6D.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/6H.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/6S.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/7C.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/7D.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/7H.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/7S.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/8C.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/8D.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/8H.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/8S.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/9C.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/9D.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/9H.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/9S.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/AC.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/AD.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/AH.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/AS.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/JC.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/JD.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/JH.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/JS.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/KC.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/KD.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/KH.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/KS.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/QC.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/QD.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/QH.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/QS.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/back.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/cards/blank.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/chipStacks/0.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/chipStacks/1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/chipStacks/10.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/chipStacks/100.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/chipStacks/250.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/chipStacks/30.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/chipStacks/50.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/chipStacks/500.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/foldMarker.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/holdemTable.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/kirkDealer.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/kirkFull.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/slots/Cherry.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/slots/grape.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/slots/kirkDealer.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/slots/lemon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/slots/orange.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/table.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/turnPointer.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/gameAssets/winner.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/sfx/DSLuigi'sCasino.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/sfx/SlotMachineSong.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/sfx/Stal.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/sfx/Wanted!.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/sfx/spin_sound_trimmed.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/sfx/youtube__asNhzXq72w_audio.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/ui/arrows.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/ui/bet.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/ui/blackJackCardHolder.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/ui/call.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/ui/check.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/ui/doublDown.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/ui/fold.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/ui/greenArrowHighlight.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/ui/hit.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/ui/holdemCardHolder.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/ui/owned.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/ui/purchase.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/ui/raise.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/ui/redArrowHighlight.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/ui/roundAdvance.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/ui/stand.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/ui/turnAdvance.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/ui/uiButton.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/ui/uiButtonHover.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/ui/uiButtonPressed.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/Blackjack.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/Blackjack.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/BlackjackDemo.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/BlackjackDemo.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/BlackjackPlayer.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/BlackjackPlayer.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/Card.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/Card.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/CardGame.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/CardGame.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/CardList.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/CardList.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/ChipStack.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/ChipStack.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/Hand.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/Hand.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/Holdem.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/Holdem.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/HoldemDemo.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/HoldemHandValue.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/HoldemHandValue.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/HoldemPlayer.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/HoldemPlayer.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/HoldemState.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/HoldemState.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/InputValidator.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/InputValidator.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/Player.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/Player.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/RetroImageView.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/SlotMachine444.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/SlotMachine444.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/StartScreen.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/StartScreen.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/allclasses-index.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/allclasses-index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/allpackages-index.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/allpackages-index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/help-doc.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/help-doc.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-1.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/index-files/index-1.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-10.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/index-files/index-10.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-11.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/index-files/index-11.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-12.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/index-files/index-12.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-13.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/index-files/index-13.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-14.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/index-files/index-14.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-15.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/index-files/index-15.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-16.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/index-files/index-16.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-2.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/index-files/index-2.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-3.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/index-files/index-3.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-4.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/index-files/index-4.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-5.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/index-files/index-5.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-6.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/index-files/index-6.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-7.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/index-files/index-7.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-8.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/index-files/index-8.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/index-files/index-9.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/index-files/index-9.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/member-search-index.js" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/member-search-index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/overview-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/overview-tree.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/package-summary.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/package-tree.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/search.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/search.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadoc/type-search-index.js" beforeDir="false" afterPath="$PROJECT_DIR$/javadoc/type-search-index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Kirk-Project/StartScreen$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kirk-Project/StartScreen$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Kirk-Project/StartScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kirk-Project/StartScreen.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/StartScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/StartScreen.java" afterDir="false" />
@@ -324,7 +154,23 @@
       <option name="project" value="LOCAL" />
       <updated>1746059145688</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="javadocs update plus select screen comments">
+      <option name="closed" value="true" />
+      <created>1746064403107</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1746064403107</updated>
+    </task>
+    <task id="LOCAL-00007" summary="javadocs update plus select screen comments">
+      <option name="closed" value="true" />
+      <created>1746064503139</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1746064503139</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -370,7 +216,8 @@
     <MESSAGE value="init commit" />
     <MESSAGE value="fixed store" />
     <MESSAGE value="fixed achievement window" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed achievement window" />
+    <MESSAGE value="javadocs update plus select screen comments" />
+    <option name="LAST_COMMIT_MESSAGE" value="javadocs update plus select screen comments" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

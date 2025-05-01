@@ -1131,6 +1131,9 @@ saveLabel.setMouseTransparent(true);
         playAgainButton.setLayoutX(850);
         playAgainButton.setLayoutY(650);
         playAgainButton.setPrefSize(150, 50);
+        playAgainButton.setFont(myFont);
+        playAgainButton.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
+
         playAgainButton.setVisible(false); // Hidden until round ends
 
 // Button to return to game selection screen
@@ -1211,55 +1214,82 @@ saveLabel.setMouseTransparent(true);
                 game[0].deck.remove(card);
             }
 
-            // Get final scores
+            // Final scores
             int playerScore = player[0].getScore();
             int dealerScore = dealer[0].getScore();
-            dealerLabel.setText("Dealer Score: " + dealerScore); // Display dealer score
-            updateCardDisplay(dealerCardsBox, dealer[0].cards);  // Show full hand
+            dealerLabel.setText("Dealer Score: " + dealerScore);
+            updateCardDisplay(dealerCardsBox, dealer[0].cards);
 
-            // Determine result
+            // Resolve game outcome
             if (playerScore > 21) {
                 statusLabel.setText("You bust!");
-                playerBalance[0] -= betAmount[0];
+                // Bet already deducted if double down, otherwise subtract once
+                if (!wasDoubleDown[0]) {
+                    playerBalance[0] -= betAmount[0];
+                }
             } else if (dealerScore > 21 || playerScore > dealerScore) {
                 statusLabel.setText("You win!");
-                playerBalance[0] += betAmount[0];
+                playerBalance[0] += betAmount[0]; // Add full winnings
             } else if (playerScore == dealerScore) {
                 statusLabel.setText("Push.");
+                if (wasDoubleDown[0]) {
+                    playerBalance[0] += betAmount[0] / 2; // Return original half of doubled bet
+                }
             } else {
                 statusLabel.setText("You lose.");
-                playerBalance[0] -= betAmount[0];
+                if (!wasDoubleDown[0]) {
+                    playerBalance[0] -= betAmount[0];
+                }
+                // If double down, we already deducted in doubleButton logic
             }
 
-            // Update UI
+            // Reset flags and update labels
+            wasDoubleDown[0] = false;
             balanceLabel.setText("Balance: " + playerBalance[0] + " chips");
-            player1.setChips(playerBalance[0]); // Sync to main player
+            player1.setChips(playerBalance[0]);
             hitButton.setDisable(true);
             standButton.setDisable(true);
             doubleButton.setDisable(true);
             playAgainButton.setVisible(true);
         });
 
-// "Double Down" Button - Doubles bet, draws one card, then ends turn
+
+// "Double Down" Button - Doubles the bet, draws one card, and ends the player's turn
         doubleButton.setOnAction(e -> {
+            // Ensure player has enough chips to double the current bet
             if (playerBalance[0] >= betAmount[0]) {
-                playerBalance[0] -= betAmount[0];        // Pay additional chips
-                betAmount[0] *= 2;                       // Double bet value
-                wasDoubleDown[0] = true;                 // Mark as doubled
+                // Deduct chips equal to the current bet (doubling it)
+                playerBalance[0] -= betAmount[0];
+                betAmount[0] *= 2;
+                wasDoubleDown[0] = true;  // Mark that this round is a double down
+
+                // Update the on-screen bet display
                 betLabel.setText("Bet: " + betAmount[0] + " chips");
 
-                // Draw 1 final card
+                // Deal one final card to the player
                 Card card = game[0].deck.getCard(0);
                 player[0].cards.add(card);
                 game[0].deck.remove(card);
                 updateUI(player[0], dealer[0], dealerLabel, playerLabel, dealerCardsBox, playerCardsBox);
 
-                // Force turn end
+                // Disable additional input actions
                 hitButton.setDisable(true);
                 doubleButton.setDisable(true);
-                standButton.fire(); // Auto-stand after card
+
+                // If the player busts from the double down card
+                if (player[0].getScore() > 21) {
+                    statusLabel.setText("You bust!");
+                    balanceLabel.setText("Balance: " + playerBalance[0] + " chips");
+                    player1.setChips(playerBalance[0]);
+                    standButton.setDisable(true);
+                    playAgainButton.setVisible(true);
+                } else {
+                    // Otherwise proceed to the dealer's turn automatically
+                    standButton.fire();
+                }
+
             } else {
-                // Not enough chips warning
+                // Player does not have enough chips to double down
                 new Alert(Alert.AlertType.WARNING, "You do not have enough chips to double down.").showAndWait();
             }
         });
@@ -1268,6 +1298,7 @@ saveLabel.setMouseTransparent(true);
         playAgainButton.setOnAction(e -> {
             resetGame(player, game, dealer, dealerLabel, playerLabel, statusLabel, dealerCardsBox, playerCardsBox, hitButton, standButton, playAgainButton);
             doubleButton.setDisable(false);
+            wasDoubleDown[0] = false; // Reset double down flag
             betAmount[0] = 10;  // Reset to base bet
             betLabel.setText("Bet: " + betAmount[0] + " chips");
             balanceLabel.setText("Balance: " + playerBalance[0] + " chips");
