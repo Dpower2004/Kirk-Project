@@ -468,7 +468,6 @@ saveLabel.setMouseTransparent(true);
         increase10.setLayoutY(50);
         increase10.setVisible(true);
         increase10.setOnAction(e -> {
-            System.out.println("MODE: " + (isCashingChips[0] ? "Cash Mode" : "Buy Mode"));
             if (!isCashingChips[0]) {
                 if (chipsInCart[0] + 10 <= mainPlayer.getMoney() / cashToChipRatio) {
                     chipsInCart[0] += 10;
@@ -2096,7 +2095,6 @@ saveLabel.setMouseTransparent(true);
                     for (HoldemPlayer winner : winners) {
                         winner.chipBank.addChips(take);
                         player1.setChips(winner.chipBank.getChips());
-                        System.out.println(player1);
                     }
                     gameState = HoldemState.END;
             }
