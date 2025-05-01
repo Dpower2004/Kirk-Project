@@ -1,4 +1,9 @@
-;
+/**
+ * Hand value enum. Allows for a numerical value to be assigned to each enum state as well.
+ * @author Luke Soda
+ * @version 1.0
+ */
+
 public enum Hand {
     ROYAL_FLUSH(9),
     STRAIGHT_FLUSH(8),

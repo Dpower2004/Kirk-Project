@@ -1,14 +1,14 @@
+/**
+ * Class to help validate various thingies.
+ * @author Luke Soda & Thomas Huber
+ * @version 1.3
+ */
 
 import java.util.Scanner;
 import java.util.HashSet;
 import java.util.Arrays;
 import java.util.Set;
 
-/**
- * Class to help validate various thingies.
- * @author Luke Soda & Thomas Huber
- * @version 1.3
- */
 public class InputValidator {
 
     /**
@@ -19,24 +19,25 @@ public class InputValidator {
      * @param playerBank player's total amount of chips in reserve
      * @param highBet bet that needs to be matched
      */
-    public static int validateBet(Scanner scanner, String prompt, int playerBank, int highBet) {
+    public static boolean validateBet(String input, int playerBank, int highBet) {
         while (true) {
-            System.out.print(prompt);
-            String input = scanner.nextLine();
-
             // Check if the input is all digits and not starting with zero (unless it's just "0")
             if (input.matches("[1-9][0-9]*")) {
                 if (Integer.parseInt(input) > playerBank || highBet + Integer.parseInt(input) > playerBank) {
-                    System.out.println("Value exceeds bank!");
+                    return false;
                 }
                 else {
-                    return Integer.parseInt(input);
+                    return true;
                 }
+            }
+            else {
+                return false;
             }
         }
     }
 
     /**
+     * NOT USED IN FINAL VERSION, ONLY FOR CONSOLE
      * validates various custom inputs
      * @param scanner Scanner object for user input
      * @param validString String of consecutive valid inputs to act as a key

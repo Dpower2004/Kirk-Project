@@ -1,12 +1,10 @@
-
-import java.util.ArrayList;
-import java.util.Scanner;
-
 /**
  * Class representing the game texas holdem. It inherits the abstract game class
  * @author Luke Soda
  * @version 1.0
  */
+
+import java.util.ArrayList;
 
 public class Holdem extends CardGame {
     protected HoldemState gameState; // Enum representing the state of the game
@@ -18,12 +16,10 @@ public class Holdem extends CardGame {
     protected ArrayList<HoldemPlayer> activePlayers = new ArrayList<>(); // List of players who haven't folded
     protected ArrayList<HoldemPlayer> winners = new ArrayList<>(); // List of players who split the pot at the end of the game
 
-    private final Scanner advanceIn = new Scanner(System.in); // Used for advancing the game by pressing enter
     private boolean betMade; // Keeps track of if a bet has been made to change raise / bet prompt
-    private boolean allIn; // Keeps track of if a player has gone all in. I didn't have time to implement side pots. If someone
-                           // goes all in, no more betting happens and the round advances to the end of the game
-    protected int turnIndex;
-    protected int remainingTurns;
+
+    protected int turnIndex; // Keeps track of the index of the current player betting
+    protected int remainingTurns; // Keeps track of the turns left in a betting round
 
     /**
      * Constructor for a round of texas holdem
@@ -45,6 +41,7 @@ public class Holdem extends CardGame {
         for (int i = 0; i < playerList.length ; i++) { // Cycle through all players to set up blinds
             playerList[i].playerID = i;
             HoldemPlayer currentPlayer = (HoldemPlayer) playerList[i]; // Type casting for HoldemPlayer method calls
+            currentPlayer.setFoldPosition(); // Sets JavaFX position of imageView containing fold marker
             activePlayers.add(currentPlayer); // Add all players to active players arrayList
             if (i == 1) { // Player at index 1 will ALWAYS be little blind
                 currentPlayer.setHandChips(highBet / 2);
@@ -54,15 +51,33 @@ public class Holdem extends CardGame {
             }
         }
         super.deal(2); // Deal 2 cards to all players
-        consoleOut(); // Update the console on whats going on
     }
 
+    /**
+     * Initiates a betting round that will eventually cycle through all players
+     */
     public void bettingRound() {
-        remainingTurns = activePlayers.size();
-        turnIndex = 3;
-        bettingTurn();
+        remainingTurns = activePlayers.size(); // Remaining turns equal to number of active players
+        if (gameState == HoldemState.FIRST_BET) { // If its the first bet (blinds present) start from 4th player (3)
+            turnIndex = 3;
+        }
+        else {                              // Else start at dealer (0)
+            turnIndex = 0;
+        }
+        nextTurn();                         // Initiate the first turn
     }
 
+    /**
+     * Called on button press in JavaFX main
+     */
+    public void nextTurn() {
+        bettingTurn();                      // Initiate a betting turn. Prompts all 4 players for what they want to do
+        remainingTurns--; turnIndex++;      // take away a turn, move to next index
+    }
+    
+    /**
+     * Handles possible user inputs for a betting round
+     */
     public void bettingTurn() {
         // If turn goes above player count, cycle back to player 0
         if (turnIndex > activePlayers.size() - 1) {
@@ -78,7 +93,6 @@ public class Holdem extends CardGame {
                 if (currentPlayer.chipBank.chipAmount < highBet) {
                     currentPlayer.setHandChips(currentPlayer.handChips.chipAmount + currentPlayer.chipBank.chipAmount);
                     currentPlayer.currentAction = "A";
-                    allIn = true;
                 }
                 else {
                     currentPlayer.setHandChips(highBet); // Match the current high bet
@@ -92,7 +106,6 @@ public class Holdem extends CardGame {
                 resetPlayerResponses(currentPlayer, turnIndex); // Resets the responses of all other players
                 betMade = true; // Tell the game that a bet was made 
                 if (currentPlayer.chipBank.chipAmount <= 0) {
-                    allIn = true;
                     currentPlayer.currentAction = "A";
                 }
                 remainingTurns = activePlayers.size(); // RESET the number of turns remaining, other players must respond
@@ -104,7 +117,6 @@ public class Holdem extends CardGame {
                 highBet += raise; // Add the raise onto the current highBet
                 resetPlayerResponses(currentPlayer, turnIndex); // Resets the responses of other players
                 if (currentPlayer.chipBank.chipAmount <= 0) {
-                    allIn = true;
                     currentPlayer.currentAction = "A";
                 }
                 remainingTurns = activePlayers.size(); // // RESET the number of turns remaining, other players must respond
@@ -116,19 +128,18 @@ public class Holdem extends CardGame {
                 turnIndex--;
             }
         }
-        if (remainingTurns <= 0) {
-            highBet = 0;
-            for (Player p : playerList) {
-                HoldemPlayer hp = (HoldemPlayer) p;
-                pot.addChips(hp.handChips.chipAmount);
-                hp.handChips.setChips(0);
-            }
-        }
-        consoleOut();
     }
-    public void nextTurn() {
-        remainingTurns--; turnIndex++;
-        bettingTurn();
+
+    /**
+     * Updates the state of the pot and resets player chips for next betting round
+     */
+    public void updatePot() {
+        highBet = 0;             // Reset high bet
+        for (Player p : playerList) {   // For all players...
+            HoldemPlayer hp = (HoldemPlayer) p;
+            pot.addChips(hp.handChips.chipAmount); // Add chips to pot
+            hp.handChips.setChips(0);       // reset chips
+        }
     }
 
     /**
@@ -150,15 +161,20 @@ public class Holdem extends CardGame {
         }
     }
 
+    /**
+     * Gets the bet for the currentPlayer turn. Used in bettingTurn()
+     * @param currentPlayer Current player turn
+     * @return Integer bet
+     */
     public int getBet(HoldemPlayer currentPlayer) {
         int bet;
         if (currentPlayer.isMain) {
-            bet = currentPlayer.promptAmount(highBet); // Get the bet to be put up
+            bet = currentPlayer.mainPlayerBet; // If player is user, set bet equal to what is determined by javaFX main file
         }
         else {
-            bet = currentPlayer.cpuBet(highBet);
+            bet = currentPlayer.cpuBet(highBet); // Else calculate random in cpuBet() HoldemPlayer method
         }
-        return bet;
+        return bet; // Return bet to bettingTurn()
     }
 
     /**
@@ -177,7 +193,6 @@ public class Holdem extends CardGame {
         for (int i = 0 ; i < 3 ; i++) { // Deals 3 cards from the deck to the community cards
             addCommunityCard();
         }
-        consoleOut();
     }
 
     /**
@@ -185,7 +200,6 @@ public class Holdem extends CardGame {
      */
     public void turn() {
         addCommunityCard();
-        consoleOut();
     }
 
     /**
@@ -193,79 +207,61 @@ public class Holdem extends CardGame {
      */
     public void river() {
         addCommunityCard();
-        consoleOut();
     }
 
+    /**
+     * Determins which players have the best hand
+     * @return List of winners (only ever > 1 if there is a tie)
+     */
     public ArrayList<HoldemPlayer> getWinner() {
-        int highHandVal = -1;
-        for (Player p : activePlayers) {
-            HoldemPlayer hp = (HoldemPlayer) p;
-            hp.assignHandValue(communityCards);
-            System.out.println("Player " + hp.playerID + " got a " + hp.handValue + "\nHand: " + hp.cards + "\nHigh Card: " + hp.highCard + "\n");
-            if (hp.getHandValue() > highHandVal) {
-                highHandVal = hp.getHandValue();
-                winners.clear();
+        int highHandVal = -1; // Set val to lowest possible (0 is used for high card)
+        for (Player p : activePlayers) { // Cycle through active players
+            HoldemPlayer hp = (HoldemPlayer) p; // type cast p to HoldemPlayer type
+            hp.assignHandValue(communityCards); // Assign hand value in HoldemPlayer method. Finds the type of hand a player has
+            if (hp.getHandValue() > highHandVal) { // If current players hand is better than the previous
+                highHandVal = hp.getHandValue(); // current players is now the highest
+                winners.clear(); // clear the winners and add current in
                 winners.add(hp);
             }
-            else if (hp.getHandValue() == highHandVal) {
-                if (winners.get(0).highCard.value < hp.highCard.value) {
-                    winners.clear();
-                    winners.add(hp);
+            else if (hp.getHandValue() == highHandVal) { // If hand values are equal...
+                if (winners.get(0).highCard.value < hp.highCard.value) { // If current winner's high card is less than current player
+                    winners.clear(); // ERASE HIM
+                    winners.add(hp); // Add in current player
                 }
-                else if (winners.get(0).highCard.value == hp.highCard.value) {
-                    if (winners.get(0).secondHighCard.value < hp.secondHighCard.value) {
+                else if (winners.get(0).highCard.value == hp.highCard.value) { // If the high cards are equal...
+                    if (winners.get(0).secondHighCard.value < hp.secondHighCard.value) { // Look at the second high card (of 2 card hand)
                         winners.clear();
                         winners.add(hp);
                     }
-                    else if (winners.get(0).secondHighCard.value == hp.secondHighCard.value) {
+                    else if (winners.get(0).secondHighCard.value == hp.secondHighCard.value) { // If all is equal, the two tie
                         winners.add(hp);
                     }
                 }
             }
         }
-        return winners;
-    }
-    public void showWinner() {
-        int take = pot.chipAmount / winners.size();
-        for (HoldemPlayer winner : winners) {
-            winner.chipBank.addChips(take);
-        }
+        return winners; // Return list of winners
     }
 
+    /**
+     * Sets state of current bet and initiates a betting round
+     * @param state Passed in state to be set for the betting round
+     */
     protected void handleBettingRound(HoldemState state) {
         gameState = state;
         bettingRound();
     }
     
-    private boolean allPlayersFolded() {
+    /**
+     * Test if all players have folded
+     * @return Boolean if folded or not
+     */
+    protected boolean allPlayersFolded() {
         // Logic to check if all players have folded
         if (activePlayers.size() > 1) {
             return false;
         }
-        winners.add(activePlayers.get(0));
+        winners.add(activePlayers.get(0)); // Add the only player to winners
         return true;  // All players have folded
-    }
-
-    public void consoleOut() {
-        String statusString = "Round: " + gameState + "\n";
-        statusString += playerStrings();
-        statusString += "\nPot: " + pot + "\nCommunity Cards: " + communityCards;
-        System.out.println(statusString);
-        //consoleAdvance(advanceIn);
-    }
-
-    public String playerStrings() {
-        String statusString = "";
-        for (Player p : playerList) {
-            HoldemPlayer hp = (HoldemPlayer) p;
-            statusString += hp.toString();
-        }
-        return statusString;
-    }
-
-    public void consoleAdvance(Scanner advanceIn) {
-        System.out.println("Press [Enter] to continue");
-        advanceIn.nextLine();
     }
 
     /**
@@ -274,51 +270,5 @@ public class Holdem extends CardGame {
     @Override
     public String toString() {
         return super.toString() + "Pot: " + pot + "\nCommunity Cards: " + communityCards + "\nDeck: " + super.deck;
-    }
-
-    
-    public void test() {
-        for (int i = 0; i < playerList.length ; i++) { // Cycle through all players to set up blinds
-            playerList[i].playerID = i;
-            HoldemPlayer currentPlayer = (HoldemPlayer) playerList[i]; // Type casting for HoldemPlayer method calls
-            activePlayers.add(currentPlayer); // Add all players to active players arrayList
-        }
-        activePlayers.get(0).cards.add(new Card("9", "H"));
-        activePlayers.get(0).cards.add(new Card("A", "C"));
-        activePlayers.get(1).cards.add(new Card("Q", "C"));
-        activePlayers.get(1).cards.add(new Card("A", "H"));
-        communityCards.add(new Card("5", "D"));
-        communityCards.add(new Card("8", "H"));
-        communityCards.add(new Card("5", "C"));
-        communityCards.add(new Card("3", "S"));
-        communityCards.add(new Card("3", "H"));
-        System.out.println(communityCards);
-        int highHandVal = -1;
-        for (Player p : activePlayers) {
-            HoldemPlayer hp = (HoldemPlayer) p;
-            hp.assignHandValue(communityCards);
-            System.out.println("Player " + hp.playerID + " got a " + hp.handValue + "\nHand: " + hp.cards + "\nHigh Card: " + hp.highCard + "\n");
-            if (hp.getHandValue() > highHandVal) {
-                highHandVal = hp.getHandValue();
-                winners.clear();
-                winners.add(hp);
-            }
-            else if (hp.getHandValue() == highHandVal) {
-                if (winners.get(0).highCard.value < hp.highCard.value) {
-                    winners.clear();
-                    winners.add(hp);
-                }
-                else if (winners.get(0).highCard.value == hp.highCard.value) {
-                    if (winners.get(0).secondHighCard.value < hp.secondHighCard.value) {
-                        winners.clear();
-                        winners.add(hp);
-                    }
-                    else if (winners.get(0).secondHighCard.value == hp.secondHighCard.value) {
-                        winners.add(hp);
-                    }
-                }
-            }
-        }
-        showWinner();
     }
 }

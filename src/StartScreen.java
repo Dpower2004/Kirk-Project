@@ -1765,116 +1765,207 @@ public class StartScreen extends Application {
      * @return a Scene object representing the Texas Hold'em game interface
      */
     private Scene createTexasHoldemScene(Stage stage, Player player1) {
-        final double SCREEN_WIDTH = 1366;
+        final double SCREEN_WIDTH = 1366; // Set window params
         final double SCREEN_HEIGHT = 768;
-        Player mainPlayer = new Player(player1.getChips(),false, player1.getMoney());
-        StackPane root = new StackPane();
 
-        Pane gameContent = new Pane();
-        ImageView holdemBackground = new ImageView(new Image("/backgrounds/tableBackDrop.png"));
+        Player mainPlayer = new Player(player1.getChips(),false, player1.getMoney()); // mainPlayer has attributes as global player
+        StackPane root = new StackPane(); // Declare root to draw
+
+        Pane gameContent = new Pane(); // Pane containing all of the game content
+        ImageView holdemBackground = new ImageView(new Image("/backgrounds/tableBackDrop.png")); // Holdem backdrop
         holdemBackground.setMouseTransparent(true);
-        holdemBackground.setScaleX(4);
+        holdemBackground.setScaleX(4); // scale up 4x
         holdemBackground.setScaleY(4);
 
-        ImageView holdemTable = new ImageView(new Image("/gameAssets/holdemTable.png"));
+        ImageView holdemTable = new ImageView(new Image("/gameAssets/holdemTable.png")); // table sprite
         holdemTable.setMouseTransparent(true);
-        holdemTable.setScaleX(4);
+        holdemTable.setScaleX(4); // scale up 4 times
         holdemTable.setScaleY(4);
-        holdemTable.setTranslateY(-30);
+        holdemTable.setTranslateY(-30); // Move down a bit
         gameContent.setPrefSize(1366, 768);
 
-        ImageView kirkDealer = new ImageView(new Image("/gameAssets/kirkDealer.png"));
-        kirkDealer.setScaleX(4);
+        ImageView kirkDealer = new ImageView(new Image("/gameAssets/kirkDealer.png")); // MAKE KIRK
+        kirkDealer.setScaleX(4); // scale up 4
         kirkDealer.setScaleY(4);
-        kirkDealer.setTranslateY(-150);
+        kirkDealer.setTranslateY(-150); // adjust pos
         StackPane imageHolder = new StackPane(kirkDealer);
         imageHolder.setPrefSize(SCREEN_WIDTH, SCREEN_HEIGHT); // match your main screen size
 
-        /// HOLDEM BLOCK ///
-        Player[] players = new Player[4];
-        players[0] = new HoldemPlayer(1000, false);
+        HoldemPlayer mainHoldemPlayer = new HoldemPlayer(mainPlayer.getChips(), true); // Create holdemPlayer with mainPlayer
+                                                                                              // attributes
+        /// CREATE HOLDEM GAME ///
+        Player[] players = new Player[4]; // array of players
+        players[0] = new HoldemPlayer(1000, false); // Create players
         players[1] = new HoldemPlayer(1000, false);
-        players[2] = new HoldemPlayer(mainPlayer.getChips(), true);
+        players[2] = mainHoldemPlayer;
         players[3] = new HoldemPlayer(1000, false);
-        Holdem game = new Holdem(players, 2);
+        Holdem game = new Holdem(players, 2); // create game, pass in players and big blind
 
-        // Setting up structures that will take from the holdem files and update images on screen
-        Pane cardPane = new Pane();
-        Pane chipPane = new Pane();
-        HBox communityBox = new HBox(48);
+        Pane cardPane = new Pane(); // Pane holding all of the cards
+        Pane chipPane = new Pane(); // Pane holding all of the chips
+
+        HBox communityBox = new HBox(48); // HBox for community cards
         communityBox.setLayoutX(514);
         communityBox.setLayoutY(472);
-        Image cardBack = new Image("/gameAssets/cards/back.png");
-        CardList communityCards = game.communityCards;
 
-        StackPane pot = game.pot.chipSignature;
-        pot.setLayoutX(324);
-        pot.setLayoutY(440);
-        chipPane.getChildren().addAll(pot);
+        Image cardBack = new Image("/gameAssets/cards/back.png"); // Declare path to back of card
+        CardList communityCards = game.communityCards; // Declare community cards reference
 
-        ImgExpand fold0 = new ImgExpand(new Image("/gameAssets/foldMarker.png"));
-        fold0.setLayoutX(1064);
-        fold0.setLayoutY(416);
-        fold0.setVisible(false);
-        ImgExpand fold1 = new ImgExpand(new Image("/gameAssets/foldMarker.png"));
-        fold1.setLayoutX(1064);
-        fold1.setLayoutY(636);
-        fold1.setVisible(false);
-        ImgExpand fold2 = new ImgExpand(new Image("/gameAssets/foldMarker.png")); 
-        fold2.setLayoutX(652);
-        fold2.setLayoutY(636);
-        fold2.setVisible(false);
-        ImgExpand fold3 = new ImgExpand(new Image("/gameAssets/foldMarker.png")); 
-        fold3.setLayoutX(244);
-        fold3.setLayoutY(636);
-        fold3.setVisible(false);
-        Pane indicatorPane = new Pane(fold0, fold1, fold2, fold3);
+        StackPane pot = game.pot.chipSignature; // Reference pot stackpane image signature
+        pot.setLayoutX(320); // adjust position
+        pot.setLayoutY(452);
+        chipPane.getChildren().addAll(pot); // add it to the chip pane
 
-        Button nextRound = new Button("Start Game");
+        Pane indicatorPane = new Pane(); // Pane holds fold indicators and win indicators (Overlays over player spots)
+
+        for (Player p : players) { // Add all of the fold indicators to indicator pane
+            HoldemPlayer hp = (HoldemPlayer) p;
+            indicatorPane.getChildren().add(hp.foldMarker);
+        }
+
+        Button nextRound = new Button(); // Create nextRound button. Advances between betting rounds
         nextRound.setGraphic(new ImgExpand(new Image("/ui/roundAdvance.png")));
         nextRound.setPrefSize(184, 108);
-        
-        Button nextTurn = new Button("Next Turn");
+        nextRound.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
+
+        Button nextTurn = new Button(); // Create nextTurn button. Advances between player turns for visual continuity
         nextTurn.setGraphic(new ImgExpand(new Image("/ui/turnAdvance.png")));
         nextTurn.setPrefSize(184, 108);
+        nextTurn.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
 
-        Button call = new Button();
+        Button call = new Button(); // Call button
         call.setGraphic(new ImgExpand(new Image("/ui/call.png")));
         call.setPrefSize(184, 108);
+        call.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
 
-        Button bet = new Button();
+        Button bet = new Button(); // Bet / Raise button
         bet.setGraphic(new ImgExpand(new Image("/ui/bet.png")));
         bet.setPrefSize(184, 108);
+        bet.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
 
-        Button fold = new Button();
+        Button fold = new Button(); // Fold button
         fold.setGraphic(new ImgExpand(new Image("/ui/fold.png")));
         fold.setPrefSize(184, 108);
-        
-        HBox buttons = new HBox(50, nextRound, nextTurn, call, bet, fold);
+        fold.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
 
-        buttons.setAlignment(Pos.CENTER);
+        TextField betAmount = new TextField(); // Amount you want to bet is placed here
+        betAmount.setPromptText("Enter Bet"); 
+        betAmount.setMaxWidth(75);
 
-        nextTurn.setDisable(true);
-        nextTurn.setOnAction(e->{
-            updateFold(players, fold0, fold1, fold2, fold3);
-            game.nextTurn();
-            if (game.remainingTurns <= 0) {
-                nextTurn.setDisable(true);
-                nextRound.setDisable(false);
+        VBox advanceButtons = new VBox(nextRound, nextTurn); // both advance buttons in vbox
+
+        VBox actionButtons = new VBox(5, call, fold, bet, betAmount); // All action buttons in vbox
+        actionButtons.setAlignment(Pos.TOP_CENTER);
+
+        HBox buttons = new HBox(1004, advanceButtons,actionButtons); // HBox contains both vbox above
+
+        // By default, disable the call button because it is the default action
+        call.setDisable(true);
+        mainHoldemPlayer.mainPlayerAction = "C"; // default action = call
+
+        call.setOnAction(e->{ // When call but is pressed toggle other buttons and set action to call
+            call.setDisable(true);
+            bet.setDisable(false);
+            fold.setDisable(false);
+            mainHoldemPlayer.mainPlayerAction = "C";
+        });
+
+        bet.setOnAction(e->{ // Textfield must have a valid bet / raise in before bet button can be pressed succesfully
+            if (!betAmount.getText().isEmpty()) { // If not empty...
+                // If input is valid based on bank../
+                if (InputValidator.validateBet(betAmount.getText(), mainHoldemPlayer.chipBank.getChips(), game.highBet)) {
+                    call.setDisable(false); // Toggle buttons 
+                    bet.setDisable(true);
+                    fold.setDisable(false);
+                    mainHoldemPlayer.mainPlayerAction = "B"; // action = bet
+                    mainHoldemPlayer.mainPlayerBet = Integer.parseInt(betAmount.getText()); // bet = whats in text field
+                }
+                else { // if NOT valid display warning and reset box
+                    new Alert(Alert.AlertType.WARNING, "Enter a valid value! It must not excede what you can afford.").showAndWait();
+                    betAmount.setText("");
+                }
+            }
+            else { // If IS empty display warning
+                new Alert(Alert.AlertType.WARNING, "Enter a bet!").showAndWait();
             }
         });
-        nextRound.setOnAction(e->{
-            nextTurn.setDisable(false);
-            nextRound.setText("Next Round");
+
+        fold.setOnAction(e->{ // Toggle same as with others
+            call.setDisable(false);
+            bet.setDisable(false);
+            fold.setDisable(true);
+            mainHoldemPlayer.mainPlayerAction = "F";
+        });
+
+        nextTurn.setDisable(true); // Disable next turn button to start. Only next round button is on
+        nextTurn.setOnAction(e->{ // When nextTurn is pressed...
+            if (game.allPlayersFolded()) { // If all the players have folded calculate a winner
+                // This block is copy and pasted from below. Better comments down there. Not the best practice but im out of time
+                nextTurn.setDisable(true);
+                nextRound.setDisable(false);
+                game.updatePot();
+                for (Player p : players) {
+                    HoldemPlayer hp = (HoldemPlayer) p;
+                    ImageView card1 = new ItemExpand(new Image("/gameAssets/cards/" + hp.cards.getCard(0) + ".png"));
+                    ImageView card2 = new ItemExpand(new Image("/gameAssets/cards/" + hp.cards.getCard(1) + ".png"));
+                    hp.cardBox.getChildren().clear();
+                    hp.cardBox.getChildren().addAll(card1, card2);
+                }
+                ArrayList<HoldemPlayer> winners = game.getWinner();
+                for (HoldemPlayer hp : winners) {
+                    ImgExpand winnerMarker = new ImgExpand(new Image("/gameAssets/winner.png"));
+                    indicatorPane.getChildren().addAll(winnerMarker);
+                    switch (hp.playerID) {
+                        case 0:
+                            winnerMarker.setLayoutX(1064);
+                            winnerMarker.setLayoutY(416);
+                            break;
+                        case 1:
+                            winnerMarker.setLayoutX(1064);
+                            winnerMarker.setLayoutY(636);
+                            break;
+                        case 2:
+                            winnerMarker.setLayoutX(652);
+                            winnerMarker.setLayoutY(636);
+                            break;
+                        case 3:
+                            winnerMarker.setLayoutX(244);
+                            winnerMarker.setLayoutY(636);
+                            break;
+                    }
+                }
+                int take = game.pot.chipAmount / winners.size();
+                    for (HoldemPlayer winner : winners) {
+                        winner.chipBank.addChips(take);
+                        player1.setChips(winner.chipBank.getChips());
+                        System.out.println(player1);
+                    }
+                    gameState = HoldemState.END;
+            }
+            else { // If all players have not folded
+                if (game.remainingTurns > 0) { // Advance to next turn if there are more than 0 turns remaing
+                    game.nextTurn();
+                }
+                else { // Otherwise disable button and enable next round. update pot
+                    nextTurn.setDisable(true);
+                    nextRound.setDisable(false);
+                    game.updatePot();
+                }
+            }
+        });
+
+        nextRound.setOnAction(e->{ // When next round pushed....
+            nextTurn.setDisable(false); // Disable button, enable nextTurn button
             nextRound.setDisable(true);
-            switch (gameState) {
-                case HoldemState.SETUP:
-                    game.setup();
-                    for (Player p : players) {
+            switch (gameState) { // Check states. This acts as a kind of game controller / state machine
+                case HoldemState.SETUP: // If in setup
+                    game.setup(); // Run setup function in Holdem
+                    for (Player p : players) { // Cycle through players
                         HoldemPlayer hp = (HoldemPlayer) p;
-                        ImageView card1 = new ItemExpand(cardBack);
+                        // Declare players cards
+                        ImageView card1 = new ItemExpand(cardBack); // Both cards are flipped over by default
                         ImageView card2 = new ItemExpand(cardBack);
-                        switch (hp.playerID) {
+                        switch (hp.playerID) { // Cycle through players to determine position for card HBox on table
                             case 0:
                                 hp.handChips.chipSignature.setLayoutX(1072);
                                 hp.handChips.chipSignature.setLayoutY(432);
@@ -1888,8 +1979,8 @@ public class StartScreen extends Application {
                                 hp.cardBox.setLayoutY(676);
                                 break;
                             case 2:
-                                hp.handChips.chipSignature.setLayoutX(660);
-                                hp.handChips.chipSignature.setLayoutY(552);
+                                hp.handChips.chipSignature.setLayoutX(660); // Little different. Main player is always id 2, also need
+                                hp.handChips.chipSignature.setLayoutY(552); // to be able to see cards. Below lines specify path
                                 card1 = new ItemExpand(new Image("/gameAssets/cards/" + hp.cards.getCard(0) + ".png"));
                                 card2 = new ItemExpand(new Image("/gameAssets/cards/" + hp.cards.getCard(1) + ".png"));
                                 hp.cardBox.setLayoutX(632);
@@ -1902,40 +1993,41 @@ public class StartScreen extends Application {
                                 hp.cardBox.setLayoutY(676);
                                 break;
                         }
+                        // Add the two cards to cardBox HBox for every player
                         hp.cardBox.getChildren().addAll(card1, card2);
-                        cardPane.getChildren().addAll(hp.cardBox);
-                        chipPane.getChildren().add(hp.handChips.chipSignature);
+                        cardPane.getChildren().addAll(hp.cardBox); // Add HBoxes to cardPane
+                        chipPane.getChildren().add(hp.handChips.chipSignature); // Add chip signatures to chipPane
                     }
-                    game.handleBettingRound(HoldemState.FIRST_BET);
-                    gameState = HoldemState.FLOP;
+                    game.handleBettingRound(HoldemState.FIRST_BET); // Initiate first betting round
+                    gameState = HoldemState.FLOP; // Set next state
                     break;
 
-                case HoldemState.FLOP:
+                case HoldemState.FLOP: // If in flop
                     game.flop();
-                    for (Card c : communityCards.getCardList()) {
-                        ImageView card = new ItemExpand(new Image("/gameAssets/cards/" + c + ".png"));
-                        communityBox.getChildren().addAll(card);
+                    for (Card c : communityCards.getCardList()) { // Add community card images to community box from earlier
+                        ImageView card = new ItemExpand(new Image("/gameAssets/cards/" + c + ".png")); // Filepath based on toString
+                        communityBox.getChildren().addAll(card); 
                     }
+                    communityBox.getChildren().addAll(new ItemExpand(cardBack)); // Add 2 face down cards
                     communityBox.getChildren().addAll(new ItemExpand(cardBack));
-                    communityBox.getChildren().addAll(new ItemExpand(cardBack));
-                    cardPane.getChildren().addAll(communityBox);
-                    game.handleBettingRound(HoldemState.SECOND_BET);
-                    gameState = HoldemState.TURN;
+                    cardPane.getChildren().addAll(communityBox); // Add community cards to cardPane
+                    game.handleBettingRound(HoldemState.SECOND_BET); // start second bet
+                    gameState = HoldemState.TURN; // advance state
                     break;
 
-                case HoldemState.TURN:
+                case HoldemState.TURN: // All of these follow a similar pattern
                     game.turn();
                     communityBox.getChildren().clear();
-                    for (Card c : communityCards.getCardList()) {
+                    for (Card c : communityCards.getCardList()) { // Update card images
                         ImageView card = new ItemExpand(new Image("/gameAssets/cards/" + c + ".png"));
                         communityBox.getChildren().addAll(card);
                     }
-                    communityBox.getChildren().addAll(new ItemExpand(cardBack));
-                    game.handleBettingRound(HoldemState.THIRD_BET);
-                    gameState = HoldemState.RIVER;
+                    communityBox.getChildren().addAll(new ItemExpand(cardBack)); // Add only one flipped over card
+                    game.handleBettingRound(HoldemState.THIRD_BET); // next betting round
+                    gameState = HoldemState.RIVER; // river state
                     break;
 
-                case HoldemState.RIVER:
+                case HoldemState.RIVER: // same thing
                     game.river();
                     communityBox.getChildren().clear();
                     for (Card c : communityCards.getCardList()) {
@@ -1943,22 +2035,25 @@ public class StartScreen extends Application {
                         communityBox.getChildren().addAll(card);
                     }
                     game.handleBettingRound(HoldemState.FINAL_BET);
-                    gameState = HoldemState.SHOWDOWN;
+                    gameState = HoldemState.SHOWDOWN; // advance to SHOWDOWN
                     break;
-                case HoldemState.SHOWDOWN:
-                    for (Player p : players) {
+                case HoldemState.SHOWDOWN: // Flips over cards, determines a winner
+                    for (Player p : players) { // Cycle through players
                         HoldemPlayer hp = (HoldemPlayer) p;
+                        // Set all cards to face up
                         ImageView card1 = new ItemExpand(new Image("/gameAssets/cards/" + hp.cards.getCard(0) + ".png"));
                         ImageView card2 = new ItemExpand(new Image("/gameAssets/cards/" + hp.cards.getCard(1) + ".png"));
-                        hp.cardBox.getChildren().clear();
+                        hp.cardBox.getChildren().clear(); // Clear cardBox for each player, add new cards in
                         hp.cardBox.getChildren().addAll(card1, card2);
                     }
-                    ArrayList<HoldemPlayer> winners = game.getWinner();
-                    for (HoldemPlayer hp : winners) {
+                    // Find the winners
+                    ArrayList<HoldemPlayer> winners = game.getWinner(); // Returns list of winners 
+                    for (HoldemPlayer hp : winners) { // Cycle through winners
+                        // For each winner, add a winner indicator
                         ImgExpand winnerMarker = new ImgExpand(new Image("/gameAssets/winner.png"));
                         indicatorPane.getChildren().addAll(winnerMarker);
                         switch (hp.playerID) {
-                            case 0:
+                            case 0: // Sets positions for all 4 players if they happen to be a winner
                                 winnerMarker.setLayoutX(1064);
                                 winnerMarker.setLayoutY(416);
                                 break;
@@ -1976,47 +2071,26 @@ public class StartScreen extends Application {
                                 break;
                         }
                     }
-                    int take = game.pot.chipAmount / winners.size();
-                    for (HoldemPlayer winner : winners) {
-                        winner.chipBank.addChips(take);
-                        player1.setChips(winner.chipBank.getChips());
-                        System.out.println(player1);
+                    // Distribute pot
+                    int take = game.pot.chipAmount / winners.size(); // Split among winners (typically one)
+                    for (HoldemPlayer winner : winners) { // Cycle through winners
+                        winner.chipBank.addChips(take); // Add the take to their chips 
                     }
-                    gameState = HoldemState.END;
+                    System.out.println(players[2].chipBank.getChips());
+                    player1.setChips(players[2].chipBank.getChips()); // Set main players chips to what they now have in holdem
+                    gameState = HoldemState.END; // Next state
                     break;
-                case HoldemState.END:
+                case HoldemState.END: // Close window
                     stage.setScene(createGameSelectScene(stage, player1));
                     gameState = HoldemState.SETUP;
                     break;
                     
             }
         });
-
+        // Add stuff to root
         root.getChildren().addAll(holdemBackground,imageHolder,holdemTable,gameContent,cardPane,chipPane,indicatorPane,buttons);
-
+        // Return root to draw
         return new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT); // use your defined width/height
-        
-    }
-    public void updateFold(Player[] players, ImageView fold0, ImageView fold1, ImageView fold2, ImageView fold3) {
-        for (Player p : players) {
-            HoldemPlayer hp = (HoldemPlayer) p;
-            if (!hp.isActive) {
-                switch (hp.playerID) {
-                    case 0:
-                        fold0.setVisible(true);
-                        break;
-                    case 1:
-                        fold1.setVisible(true);
-                        break;
-                    case 2:
-                        fold2.setVisible(true);
-                        break;
-                    case 3:
-                        fold3.setVisible(true);
-                        break;
-                }
-            }
-        }
     }
 }
 

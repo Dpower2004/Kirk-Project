@@ -1,4 +1,9 @@
-;
+/**
+ * HoldemState enum. Keeps track of game state 
+ * @author Luke Soda
+ * @version 1.0
+ */
+
 public enum HoldemState {
     SETUP,
     FIRST_BET,
